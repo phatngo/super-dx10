@@ -1,0 +1,10 @@
+[SETTINGS]
+start	1
+#id		path					type
+[SCENES]
+0	worldscene.txt	                                 1
+1	scene1.txt	                                 2
+2	scene1_Extra.txt	                         2
+4	scene4.txt	                                 2
+5	scene4_Extra.txt	                         2
+6	introscene.txt	                                 0
