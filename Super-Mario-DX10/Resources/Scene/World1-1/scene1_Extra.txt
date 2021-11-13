@@ -43,3 +43,7 @@ Resources\Scene\World1-1\world1-1-1.txt
 5	2802
 # HUD Initial Pos
 6	126	417	127	1	3	0
+# HUD Live Position
+7	35	5
+# HUD First Timer Digit Position
+8	132	5

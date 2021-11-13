@@ -4,14 +4,22 @@
 #include "Camera.h"
 #include "Font.h"
 #include "Mario.h"
+#include "PlayScence.h"
 
 
 
 HUD::HUD() {
-
+	game_time = TOTAL_GAME_TIME;
+	timer.Start();
 }
 
 void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	//Change timer
+	if (timer.IsStarted() && timer.ElapsedTime() >= TIME_TO_CHANGE_SECOND) {
+		game_time--;
+		timer.Reset();
+		timer.Start();
+	}
 	//Modify HUD y
 	if (CCamera::GetInstance()->IsAbove()) {
 		this->y = this->start_Y - CGame::GetInstance()->GetScreenHeight() + CAMERA_EXTRA_Y;
@@ -254,6 +262,66 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	default:
 		break;
 	}
+
+	// Update game timer, only let game timer displays when in playscene
+	gameTimerDigits.clear();
+	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
+		for (i = 0; i < TIMER_DIGIT_NUMBER; i++) {
+			Font* font;
+			if (i == 0) {
+				font = new Font(
+					firstTimerPositionX,
+					this->y + firstTimerPositionY
+				);
+			}
+			else {
+				float last_font_X, last_font_Y;
+				gameTimerDigits[i - 1]->GetPosition(last_font_X, last_font_Y);
+				font = new Font(last_font_X + FONT_WIDTH, last_font_Y);
+			}
+			gameTimerDigits.push_back(font);
+		}
+		int time = game_time;
+		for (i = TIMER_DIGIT_NUMBER - 1; i >= 0; i--) {
+			int digit = time % 10;
+			time = time / 10;
+			switch (digit)
+			{
+			case DIGIT_0:
+				gameTimerDigits[i]->SetAni(ANI_0);
+				break;
+			case DIGIT_1:
+				gameTimerDigits[i]->SetAni(ANI_1);
+				break;
+			case DIGIT_2:
+				gameTimerDigits[i]->SetAni(ANI_2);
+				break;
+			case DIGIT_3:
+				gameTimerDigits[i]->SetAni(ANI_3);
+				break;
+			case DIGIT_4:
+				gameTimerDigits[i]->SetAni(ANI_4);
+				break;
+			case DIGIT_5:
+				gameTimerDigits[i]->SetAni(ANI_5);
+				break;
+			case DIGIT_6:
+				gameTimerDigits[i]->SetAni(ANI_6);
+				break;
+			case DIGIT_7:
+				gameTimerDigits[i]->SetAni(ANI_7);
+				break;
+			case DIGIT_8:
+				gameTimerDigits[i]->SetAni(ANI_8);
+				break;
+			case DIGIT_9:
+				gameTimerDigits[i]->SetAni(ANI_9);
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }
 
 void HUD::Render() {
@@ -267,6 +335,9 @@ void HUD::Render() {
 		moneyDigits[i]->Render();
 	}
 	mario_lives->Render();
+	for (int i = 0; i < gameTimerDigits.size(); i++) {
+		gameTimerDigits[i]->Render();
+	}
 }
 
 

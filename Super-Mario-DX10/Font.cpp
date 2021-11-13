@@ -8,6 +8,7 @@ Font::Font(float x, float y) {
 }
 void Font::Render() {
 	animation_set->at(ani)->Render(CCamera::GetInstance()->GetCameraX() + x, y);
+	//RenderBoundingBox();
 }
 
 void Font::SetAni(int ani) {

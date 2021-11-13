@@ -2,6 +2,7 @@
 #include"GameObject.h"
 #include"Sprites.h"
 #include "Font.h"
+#include "Timer.h"
 
 #define FONT_BBOX_WIDTH						8
 #define DEFAULT_TIME						300
@@ -19,9 +20,11 @@
 #define HUD_HEIGHT                          32
 #define HUD_CY                              395
 #define POINT_DIGIT_NUMBER                  7
+#define TIMER_DIGIT_NUMBER                  3
 
 #define UNKNOWN_VALUE -1.0f
-
+#define TOTAL_GAME_TIME 300
+#define TIME_TO_CHANGE_SECOND 800
 
 
 class HUD : public CGameObject
@@ -29,6 +32,7 @@ class HUD : public CGameObject
 	int type;
 	vector<Font*>pointDigits;
 	vector<Font*>moneyDigits;
+	vector<Font*>gameTimerDigits;
 	float firstPointPositionX = UNKNOWN_VALUE;
 	float firstPointPositionY = UNKNOWN_VALUE;
 	float lastMoneyPositionX = UNKNOWN_VALUE;
@@ -37,17 +41,22 @@ class HUD : public CGameObject
 	Font* mario_lives;
 	float livePositionX;
 	float livePositionY;
+	float firstTimerPositionX;
+	float firstTimerPositionY;
+	int game_time;
+	Timer timer;
 public:
+
 	void SetYPosition(float y) {this->start_Y = y; }
 	void SetPreSceneYPosition(float y) { this->preScene_y = y; }
 	float GetPreSceneYPosition() { return this->preScene_y; }
-
 	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	virtual void GetBoundingBox(float& oLeft, float& oTop, float& oRight, float& oBottom) {};
 	void SetFirstPointPosition(float x, float y) { firstPointPositionX = x; firstPointPositionY = y; }
 	void SetLivePosition(float x, float y) { livePositionX = x; livePositionY = y; }
 	void SetLastMoneyPosition(float x, float y) { lastMoneyPositionX = x; lastMoneyPositionY = y; }
+	void SetFirstTimerDigitPosition(float x, float y) { firstTimerPositionX = x; firstTimerPositionY = y; }
 	HUD();
 };
 

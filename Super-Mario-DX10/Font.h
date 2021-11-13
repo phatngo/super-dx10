@@ -4,6 +4,7 @@
 
 #define FONT_ANI_SET_ID 134
 #define FONT_WIDTH 8
+#define FONT_HEIGHT 8
 
 #define DIGIT_0 0
 #define DIGIT_1 1
@@ -25,7 +26,7 @@
 #define ANI_6 6
 #define ANI_7 7
 #define ANI_8 8
-#define ANI_9 0
+#define ANI_9 9
 
 
 
