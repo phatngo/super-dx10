@@ -629,8 +629,11 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 	}
 	else if (game->IsKeyDown(DIK_T)) {
 		//This is for testing when teleporting to another position
-		mario->SetPosition(2258.0f, 50.0f);
-		//mario->SetPosition(1488, 150);
+		// On top of pipe
+		//mario->SetPosition(2258.0f, 50.0f);
+		//On cloudy brick
+		mario->SetPosition(1488.0f, 150.0f);
+
 	}
 	else if (game->IsKeyDown(DIK_Z)) {
 		if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT)) {

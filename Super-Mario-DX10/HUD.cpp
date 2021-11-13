@@ -269,7 +269,6 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	}
 
 	// Update game timer, only let game timer displays when in playscene
-	
 	gameTimerDigits.clear();
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
 		for (i = 0; i < TIMER_DIGIT_NUMBER; i++) {
@@ -328,24 +327,35 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			}
 		}
 	}
+
+	//Update mario's power
+	if ((player->GetSpeedX() != 0 && CGame::GetInstance()->IsKeyDown(DIK_Z))|| power != 0) {
+		power = abs(player->GetSpeedX())* NUMBER_OF_POWER_ARROW /MARIO_SPEED_RUN_FLY_MAX;
+	}
+	else {
+		power = 0;
+	}
+
 }
 
 void HUD::Render() {
 	animation_set->at(0)->Render(this->x + CCamera::GetInstance()->GetCameraX(),this->y);
-
-	for (int i = 0; i < POINT_DIGIT_NUMBER; i++) {
+	int i;
+	for (i = 0; i < POINT_DIGIT_NUMBER; i++) {
 		pointDigits[i]->Render();
 	}
 
-	for (int i = 0; i < moneyDigits.size(); i++) {
+	for (i = 0; i < moneyDigits.size(); i++) {
 		moneyDigits[i]->Render();
 	}
 	mario_lives->Render();
 	
-	for (int i = 0; i < gameTimerDigits.size(); i++) {
+	for (i = 0; i < gameTimerDigits.size(); i++) {
 		gameTimerDigits[i]->Render();
 	}
-	
+	for (i = 0; i < power; i++) {
+	  CSprites::GetInstance()->Get(POWERMELTER_FILLED_ARROW_SPRITE)->Draw(CCamera::GetInstance()->GetCameraX() + 58 + (i*ARROW_WIDTH), this->y + -4);
+	}
 }
 
 

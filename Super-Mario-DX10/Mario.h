@@ -234,4 +234,5 @@ public:
 	bool IsPipeDown() { return this->isPipedDown; }
 	void SetIsPipe(int pipeDirection);
 	Timer GetPipeTimer() { return this->pipeTimer; }
+	float GetSpeedX() { return this->vx; }
 };
