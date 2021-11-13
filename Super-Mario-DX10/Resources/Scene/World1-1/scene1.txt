@@ -1161,5 +1161,5 @@ Resources\Scene\World1-1\world1-1.txt
 9	58	-4
 # HUD IconP Position
 10	111	-4
-# HUD Live Position
-11	30	5
+# HUD Icon Mario Position
+11	18	5

@@ -75,6 +75,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION 8
 #define EXTRA_INFO_FIRST_POWER_ARROW_IN_HUD_POSITION 9
 #define EXTRA_INFO_ICONP_IN_HUD_POSITION 10
+#define EXTRA_INFO_ICON_MARIO_IN_HUD_POSITION 11
 
 #define UNKNOWN_VALUE -1
 
@@ -238,6 +239,9 @@ void CPlayScene::_ParseSection_EXTRA_INFORMATION(string line)
 		break;
 	case EXTRA_INFO_ICONP_IN_HUD_POSITION:
 		hud->SetIconPPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+		break;
+	case EXTRA_INFO_ICON_MARIO_IN_HUD_POSITION:
+		hud->SetIconMarioPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
 		break;
 	default:
 		break;

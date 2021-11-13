@@ -54,6 +54,8 @@ class HUD : public CGameObject
 	float firstPowerArrowPositionY;
 	float iconPPositionX;
 	float iconPPositionY;
+	float iconMarioPositionX;
+	float iconMarioPositionY;
 	int game_time;
 	Timer timer;
 	Timer iconPTimerOn;
@@ -74,6 +76,7 @@ public:
 	void SetFirstTimerDigitPosition(float x, float y) { firstTimerPositionX = x; firstTimerPositionY = y; }
 	void SetFirstPowerArrowPosition(float x, float y) { firstPowerArrowPositionX = x; firstPowerArrowPositionY = y; }
 	void SetIconPPosition(float x, float y) { iconPPositionX = x; iconPPositionY = y; }
+	void SetIconMarioPosition(float x, float y) { iconMarioPositionX = x; iconMarioPositionY = y; }
 	HUD();
 };
 

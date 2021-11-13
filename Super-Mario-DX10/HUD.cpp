@@ -394,8 +394,8 @@ void HUD::Render() {
 			this->y + iconPPositionY);
 	}
 	CSprites::GetInstance()->Get(MARIO_ICON_SPRITE)->Draw(
-		CCamera::GetInstance()->GetCameraX() + 18,
-		this->y + 5);
+		CCamera::GetInstance()->GetCameraX() + iconMarioPositionX,
+		this->y + iconMarioPositionY);
 }
 
 
