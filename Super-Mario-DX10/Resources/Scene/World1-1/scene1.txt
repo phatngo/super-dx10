@@ -1157,3 +1157,5 @@ Resources\Scene\World1-1\world1-1.txt
 7	35	5
 # HUD First Timer Digit Position
 8	132	5
+# HUD First Power Arrow Position
+9	58	-4

@@ -73,6 +73,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define HUD_INITIAL_POSITION_COORDINATE 6
 #define EXTRA_INFO_LIVE_IN_HUD_POSITION 7
 #define EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION 8
+#define EXTRA_INFO_FIRST_POWER_ARROW_IN_HUD_POSITION 9
 
 #define UNKNOWN_VALUE -1
 
@@ -230,6 +231,9 @@ void CPlayScene::_ParseSection_EXTRA_INFORMATION(string line)
 		break;
 	case EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION:
 		hud->SetFirstTimerDigitPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+		break;
+	case EXTRA_INFO_FIRST_POWER_ARROW_IN_HUD_POSITION:
+		hud->SetFirstPowerArrowPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
 		break;
 	default:
 		break;

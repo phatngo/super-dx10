@@ -47,6 +47,8 @@ class HUD : public CGameObject
 	float livePositionY;
 	float firstTimerPositionX;
 	float firstTimerPositionY;
+	float firstPowerArrowPositionX;
+	float firstPowerArrowPositionY;
 	int game_time;
 	Timer timer;
 public:
@@ -61,6 +63,7 @@ public:
 	void SetLivePosition(float x, float y) { livePositionX = x; livePositionY = y; }
 	void SetLastMoneyPosition(float x, float y) { lastMoneyPositionX = x; lastMoneyPositionY = y; }
 	void SetFirstTimerDigitPosition(float x, float y) { firstTimerPositionX = x; firstTimerPositionY = y; }
+	void SetFirstPowerArrowPosition(float x, float y) { firstPowerArrowPositionX = x; firstPowerArrowPositionY = y; }
 	HUD();
 };
 

@@ -354,7 +354,9 @@ void HUD::Render() {
 		gameTimerDigits[i]->Render();
 	}
 	for (i = 0; i < power; i++) {
-	  CSprites::GetInstance()->Get(POWERMELTER_FILLED_ARROW_SPRITE)->Draw(CCamera::GetInstance()->GetCameraX() + 58 + (i*ARROW_WIDTH), this->y + -4);
+	  CSprites::GetInstance()->Get(POWERMELTER_FILLED_ARROW_SPRITE)->Draw(
+		  CCamera::GetInstance()->GetCameraX() + firstPowerArrowPositionX + (i*ARROW_WIDTH),
+		  this->y + firstPowerArrowPositionY);
 	}
 }
 
