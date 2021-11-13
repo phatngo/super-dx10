@@ -364,6 +364,8 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		iconPTimerOff.Reset();
 		iconPTimerOn.Start();
 	}
+
+
 }
 
 void HUD::Render() {
@@ -391,6 +393,9 @@ void HUD::Render() {
 			CCamera::GetInstance()->GetCameraX() + iconPPositionX,
 			this->y + iconPPositionY);
 	}
+	CSprites::GetInstance()->Get(MARIO_ICON_SPRITE)->Draw(
+		CCamera::GetInstance()->GetCameraX() + 18,
+		this->y + 5);
 }
 
 
