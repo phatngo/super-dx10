@@ -50,6 +50,8 @@ class HUD : public CGameObject
 	float firstTimerPositionY;
 	float firstPowerArrowPositionX;
 	float firstPowerArrowPositionY;
+	float iconPPositionX;
+	float iconPPositionY;
 	int game_time;
 	Timer timer;
 	Timer iconPTimerOn;
@@ -68,6 +70,7 @@ public:
 	void SetLastMoneyPosition(float x, float y) { lastMoneyPositionX = x; lastMoneyPositionY = y; }
 	void SetFirstTimerDigitPosition(float x, float y) { firstTimerPositionX = x; firstTimerPositionY = y; }
 	void SetFirstPowerArrowPosition(float x, float y) { firstPowerArrowPositionX = x; firstPowerArrowPositionY = y; }
+	void SetIconPPosition(float x, float y) { iconPPositionX = x; iconPPositionY = y; }
 	HUD();
 };
 

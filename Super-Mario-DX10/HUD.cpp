@@ -338,7 +338,6 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	}
 
 	//Update iconP
-	DebugOut(L"power: %d \n", power);
 	if (power == NUMBER_OF_POWER_ARROW) {
 		isIconPBlinking = true;
 	}
@@ -389,8 +388,8 @@ void HUD::Render() {
 	}
 	if (iconPTimerOn.IsStarted() && iconPTimerOn.ElapsedTime() < ICON_P_ON_TIME) {
 		CSprites::GetInstance()->Get(POWERMELTER_FILLED_ICONP_SPRITE)->Draw(
-			CCamera::GetInstance()->GetCameraX() + 111,
-			this->y + firstPowerArrowPositionY);
+			CCamera::GetInstance()->GetCameraX() + iconPPositionX,
+			this->y + iconPPositionY);
 	}
 }
 

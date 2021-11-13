@@ -1142,7 +1142,7 @@ Resources\Tilemap\world1-1.txt
 Resources\Scene\World1-1\world1-1.txt
 [EXTRA INFORMATION]
 # HUD First Point Position
-1	58	5
+1	58	5.5
 # HUD Last Money Position
 2	146	-4
 # Camera standard y coordinate
@@ -1159,3 +1159,5 @@ Resources\Scene\World1-1\world1-1.txt
 8	132	5
 # HUD First Power Arrow Position
 9	58	-4
+# HUD IconP Position
+10	111	-4
