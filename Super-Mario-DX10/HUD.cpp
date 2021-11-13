@@ -230,8 +230,8 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	
 	// Update Mario's lives
 	mario_lives = new Font(
-		35,
-		this->y + 5
+		livePositionX,
+		this->y + livePositionY
 	);
 	int lives = player->GetMarioLives();
 	switch (lives)

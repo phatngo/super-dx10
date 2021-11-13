@@ -71,6 +71,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define EXTRA_INFO_CAMERA_FURTHEST_Y_COORDINATE 4
 #define EXTRA_INFO_MARIO_MAX_X_COORDINATE 5
 #define HUD_INITIAL_POSITION_COORDINATE 6
+#define EXTRA_INFO_LIVE_IN_HUD_POSITION 7
 
 #define UNKNOWN_VALUE -1
 
@@ -220,8 +221,8 @@ void CPlayScene::_ParseSection_EXTRA_INFORMATION(string line)
 	case EXTRA_INFO_MARIO_MAX_X_COORDINATE:
 		player->SetMaxXCoordinate(atoi(tokens[1].c_str()));
 		break;
-	case HUD_INITIAL_POSITION_COORDINATE:
-		hud->SetPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+	case EXTRA_INFO_LIVE_IN_HUD_POSITION:
+		hud->SetLivePosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
 		break;
 	default:
 		break;

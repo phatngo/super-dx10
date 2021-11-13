@@ -35,6 +35,8 @@ class HUD : public CGameObject
 	float lastMoneyPositionY = UNKNOWN_VALUE;
 	float preScene_y;
 	Font* mario_lives;
+	float livePositionX;
+	float livePositionY;
 public:
 	void SetYPosition(float y) {this->start_Y = y; }
 	void SetPreSceneYPosition(float y) { this->preScene_y = y; }
@@ -44,6 +46,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	virtual void GetBoundingBox(float& oLeft, float& oTop, float& oRight, float& oBottom) {};
 	void SetFirstPointPosition(float x, float y) { firstPointPositionX = x; firstPointPositionY = y; }
+	void SetLivePosition(float x, float y) { livePositionX = x; livePositionY = y; }
 	void SetLastMoneyPosition(float x, float y) { lastMoneyPositionX = x; lastMoneyPositionY = y; }
 	HUD();
 };
