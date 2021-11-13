@@ -168,6 +168,8 @@
 
 #define MARIO_DY_GET_OUT_FROM_PIPE 40
 
+#define MARIO_INITIAL_LIVES 4
+
 
 
 class CMario : public CGameObject
@@ -202,7 +204,9 @@ class CMario : public CGameObject
 	bool isPipedDown = false;
 	int pipeDirection = -1;
 	Timer stopPipingTimer;
+	int lives;
 public: 
+	int GetMarioLives() { return this->lives; }
 	Timer GetStopPipingTimer() { return this->stopPipingTimer; }
 	CMario(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL, vector<LPGAMEOBJECT>* objects=NULL);

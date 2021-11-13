@@ -26,10 +26,10 @@
 
 CMario::CMario(float x, float y) : CGameObject()
 {
-	level = MARIO_LEVEL_BIG;
+	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
 	SetState(MARIO_STATE_IDLE);
-
+	lives = MARIO_INITIAL_LIVES;
 	start_x = x; 
 	start_y = y; 
 	this->x = x; 
@@ -1080,6 +1080,9 @@ void CMario::SetState(int state)
 	case MARIO_STATE_DIE:
 		vy = -MARIO_DIE_DEFLECT_SPEED;
 		isFlyingToTheSky = false;
+		if (lives != 0) {
+			lives--;
+		}
 		break;
 	case MARIO_STATE_SIT:
 		if (level != MARIO_LEVEL_SMALL) {

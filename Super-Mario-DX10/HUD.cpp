@@ -12,13 +12,17 @@ HUD::HUD() {
 }
 
 void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+	//Modify HUD y
 	if (CCamera::GetInstance()->IsAbove()) {
 		this->y = this->start_Y - CGame::GetInstance()->GetScreenHeight() + CAMERA_EXTRA_Y;
 	}
 	else {
 		this->y = this->start_Y;
 	}
+
 	CMario* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+
+	// Update Mario's point
 	pointDigits.clear();
 	//Mario's point update
 	int totalPoint = player->GetPoint();
@@ -79,7 +83,7 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		}
 	}
 
-	//Mario's money update
+	// Update Mario's money
 	moneyDigits.clear();
 	i = 0;
 	int totalMoney = player->GetMoney();
@@ -222,9 +226,34 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			break;
 		}
 	}
-
 	moneyDigits.push_back(font);
 	
+	// Update Mario's lives
+	mario_lives = new Font(
+		35,
+		this->y + 5
+	);
+	int lives = player->GetMarioLives();
+	switch (lives)
+	{
+	case DIGIT_0:
+		mario_lives->SetAni(ANI_0);
+		break;
+	case DIGIT_1:
+		mario_lives->SetAni(ANI_1);
+		break;
+	case DIGIT_2:
+		mario_lives->SetAni(ANI_2);
+		break;
+	case DIGIT_3:
+		mario_lives->SetAni(ANI_3);
+		break;
+	case DIGIT_4:
+		mario_lives->SetAni(ANI_4);
+		break;
+	default:
+		break;
+	}
 }
 
 void HUD::Render() {
@@ -237,6 +266,7 @@ void HUD::Render() {
 	for (int i = 0; i < moneyDigits.size(); i++) {
 		moneyDigits[i]->Render();
 	}
+	mario_lives->Render();
 }
 
 

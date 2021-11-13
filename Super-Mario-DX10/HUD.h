@@ -34,6 +34,7 @@ class HUD : public CGameObject
 	float lastMoneyPositionX = UNKNOWN_VALUE;
 	float lastMoneyPositionY = UNKNOWN_VALUE;
 	float preScene_y;
+	Font* mario_lives;
 public:
 	void SetYPosition(float y) {this->start_Y = y; }
 	void SetPreSceneYPosition(float y) { this->preScene_y = y; }
