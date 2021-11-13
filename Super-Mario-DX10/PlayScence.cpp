@@ -636,7 +636,8 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		// On top of pipe
 		//mario->SetPosition(2258.0f, 50.0f);
 		//On cloudy brick
-		mario->SetPosition(1488.0f, 150.0f);
+		//mario->SetPosition(1488.0f, 150.0f);
+		mario->SetPosition(673.0f, 350.0f);
 
 	}
 	else if (game->IsKeyDown(DIK_Z)) {

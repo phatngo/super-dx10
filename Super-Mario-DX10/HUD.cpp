@@ -11,6 +11,7 @@
 HUD::HUD() {
 	game_time = TOTAL_GAME_TIME;
 	timer.Start();
+	isIconPBlinking = false;
 }
 
 void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
@@ -336,6 +337,34 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		power = 0;
 	}
 
+	//Update iconP
+	DebugOut(L"power: %d \n", power);
+	if (power == NUMBER_OF_POWER_ARROW) {
+		isIconPBlinking = true;
+	}
+	else {
+		isIconPBlinking = false;
+		iconPTimerOn.Reset();
+		iconPTimerOff.Reset();
+	}
+
+	
+	if (isIconPBlinking) {
+		if (!iconPTimerOn.IsStarted()) 
+			iconPTimerOn.Start();
+		else 
+			iconPTimerOff.Start();
+	}
+
+	if (iconPTimerOn.IsStarted() && iconPTimerOn.ElapsedTime() >= ICON_P_ON_TIME) {
+		iconPTimerOn.Reset();
+		iconPTimerOff.Start();
+	}
+
+	if (iconPTimerOff.IsStarted() && iconPTimerOff.ElapsedTime() >= ICON_P_OFF_TIME) {
+		iconPTimerOff.Reset();
+		iconPTimerOn.Start();
+	}
 }
 
 void HUD::Render() {
@@ -357,6 +386,11 @@ void HUD::Render() {
 	  CSprites::GetInstance()->Get(POWERMELTER_FILLED_ARROW_SPRITE)->Draw(
 		  CCamera::GetInstance()->GetCameraX() + firstPowerArrowPositionX + (i*ARROW_WIDTH),
 		  this->y + firstPowerArrowPositionY);
+	}
+	if (iconPTimerOn.IsStarted() && iconPTimerOn.ElapsedTime() < ICON_P_ON_TIME) {
+		CSprites::GetInstance()->Get(POWERMELTER_FILLED_ICONP_SPRITE)->Draw(
+			CCamera::GetInstance()->GetCameraX() + 111,
+			this->y + firstPowerArrowPositionY);
 	}
 }
 

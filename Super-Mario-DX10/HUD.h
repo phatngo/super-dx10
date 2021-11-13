@@ -28,7 +28,8 @@
 #define TIME_TO_CHANGE_SECOND 800
 #define POWERMELTER_FILLED_ARROW_SPRITE 50005
 #define POWERMELTER_FILLED_ICONP_SPRITE 50006
-
+#define ICON_P_ON_TIME 100
+#define ICON_P_OFF_TIME 500
 
 class HUD : public CGameObject
 {
@@ -51,6 +52,9 @@ class HUD : public CGameObject
 	float firstPowerArrowPositionY;
 	int game_time;
 	Timer timer;
+	Timer iconPTimerOn;
+	bool isIconPBlinking;
+	Timer iconPTimerOff;
 public:
 
 	void SetYPosition(float y) {this->start_Y = y; }
