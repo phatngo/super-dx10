@@ -1162,4 +1162,4 @@ Resources\Scene\World1-1\world1-1.txt
 # HUD IconP Position
 10	111	-4
 # HUD Icon Mario Position
-11	18	5
+11	15	4
