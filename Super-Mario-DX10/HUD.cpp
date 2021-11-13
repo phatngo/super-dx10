@@ -16,7 +16,12 @@ HUD::HUD() {
 void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	//Change timer
 	if (timer.IsStarted() && timer.ElapsedTime() >= TIME_TO_CHANGE_SECOND) {
-		game_time--;
+		if (game_time != 0) {
+			game_time--;
+		}
+		else {
+			game_time = TOTAL_GAME_TIME;
+		}
 		timer.Reset();
 		timer.Start();
 	}
@@ -264,6 +269,7 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	}
 
 	// Update game timer, only let game timer displays when in playscene
+	
 	gameTimerDigits.clear();
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
 		for (i = 0; i < TIMER_DIGIT_NUMBER; i++) {
@@ -335,9 +341,11 @@ void HUD::Render() {
 		moneyDigits[i]->Render();
 	}
 	mario_lives->Render();
+	
 	for (int i = 0; i < gameTimerDigits.size(); i++) {
 		gameTimerDigits[i]->Render();
 	}
+	
 }
 
 

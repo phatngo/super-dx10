@@ -225,6 +225,9 @@ void CPlayScene::_ParseSection_EXTRA_INFORMATION(string line)
 	case EXTRA_INFO_LIVE_IN_HUD_POSITION:
 		hud->SetLivePosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
 		break;
+	case HUD_INITIAL_POSITION_COORDINATE:
+		hud->SetPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+		break;
 	case EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION:
 		hud->SetFirstTimerDigitPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
 		break;
