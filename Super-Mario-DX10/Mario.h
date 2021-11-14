@@ -174,29 +174,29 @@
 
 class CMario : public CGameObject
 {
-	int level;
-	int untouchable;
+	int level = 0;
+	int untouchable = 0;
 	ULONGLONG untouchable_start;
 	ULONGLONG marioDT;
-	float maxVx;
-	int ani;
+	float maxVx = 0.0f;
+	int ani = 0;
 
-	float start_x;			// initial position of Mario at scene
-	float start_y; 
+	float start_x = 0.0f;			// initial position of Mario at scene
+	float start_y = 0.0f;
 	Timer transformTimer;
 	int totalPoint=0;
 	int totalMoney=0;
-	bool isKickingKoopas;
-	bool isOnGround;
+	bool isKickingKoopas = false;
+	bool isOnGround = true;
 	Timer kickTimer;
 	Timer pipeTimer;
 	bool isChangeDirection;
-	float postion_y;
-	bool isSitDown;
-	bool isStandUpAgain;
-	float maxXcoordinate;
-	bool isHold;
-	bool isThrow;
+	float postion_y = 0.0f;
+	bool isSitDown = false;
+	bool isStandUpAgain = false;
+	float maxXcoordinate = 0.0f;
+	bool isHold = false;
+	bool isThrow = false;
 	bool isReadyToHold = false;
 	bool isReadyToRunMax = false;
 	bool isFlyingToTheSky = false;
@@ -204,7 +204,7 @@ class CMario : public CGameObject
 	bool isPipedDown = false;
 	int pipeDirection = -1;
 	Timer stopPipingTimer;
-	int lives;
+	int lives = 0;
 public: 
 	int GetMarioLives() { return this->lives; }
 	Timer GetStopPipingTimer() { return this->stopPipingTimer; }

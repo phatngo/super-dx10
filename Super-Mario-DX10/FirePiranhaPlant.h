@@ -33,12 +33,12 @@ class CFirePiranhaPlant : public CGameObject
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	void CreateFireBullet();
-	int ani;
+	int ani = 0;
 	Timer up_Timer;
 	Timer down_Timer;
 	Timer shoot_Timer;
-	bool isFireBulletCreated;
-	float firePiranhaPlant_y;
+	bool isFireBulletCreated = false;
+	float firePiranhaPlant_y = 0.0f;
 public:
 	CFirePiranhaPlant(int objTag);
 	virtual void SetState(int state);

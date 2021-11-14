@@ -23,7 +23,7 @@ class CFireBullet : public CGameObject
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
-	int ani;
+	int ani = 0;
 
 public:
 	CFireBullet(float x, float y, int FirePiranhaPlant_CurrentState);

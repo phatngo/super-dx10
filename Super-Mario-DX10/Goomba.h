@@ -72,19 +72,19 @@ class CGoomba : public CGameObject
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render();
-	int lowFallingTime;
-	int killingKoopasDirection;
-	bool isOnGround;
+	int lowFallingTime = 0;
+	int killingKoopasDirection = 0;
+	bool isOnGround = true;
 	Timer transformToNonExistTimer;
 	Timer redWalkWingTimer;
-	bool isQuestionBrickAboveTouched;
-	bool isTouchedByKoopas;
+	bool isQuestionBrickAboveTouched = false;
+	bool isTouchedByKoopas = false;
 	void updateYellowGoomba(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void updateRedGoomba(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	bool isTouchedByLeaf;
-	bool isQuestionBrickBelowTouched;
-	bool isTouchedAnotherGoomba;
-	float touchedBrickTop;
+	bool isTouchedByLeaf = false;
+	bool isQuestionBrickBelowTouched = false;
+	bool isTouchedAnotherGoomba = false;
+	float touchedBrickTop = 0.0f;
 public: 	
 	CGoomba(int tag);
 	virtual void SetState(int state);

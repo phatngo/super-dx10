@@ -9,16 +9,16 @@ class CCamera
 {
 
 	static CCamera* __instance;
-	int cameraPositionY_prescene;
-	int cameraPositionX;
-	int cameraPositionY;
-	float playerStartX;
-	int standardCameraPositionY;
-	int cameraFurthestPositionY;
-	int preScene_standardCameraPositionY;
-	int preScene_furthestCameraPositionY;
+	int cameraPositionY_prescene = 0;
+	int cameraPositionX = 0;
+	int cameraPositionY = 0;
+	float playerStartX = 0.0f;
+	int standardCameraPositionY = 0;
+	int cameraFurthestPositionY = 0;
+	int preScene_standardCameraPositionY = 0;
+	int preScene_furthestCameraPositionY = 0;
 	bool isAbove = false;
-	int mapWidth;
+	int mapWidth = 0;
 public:
 	void SetPreSceneStandardCameraPositionY(int camY) { this->preScene_standardCameraPositionY = camY; }
 	int GetPreSceneStandardCameraPositionY() { return this->preScene_standardCameraPositionY; }
