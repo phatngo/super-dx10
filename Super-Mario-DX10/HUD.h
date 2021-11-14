@@ -30,6 +30,8 @@
 #define MARIO_ICON_SPRITE 50003
 #define ICON_P_ON_TIME 100
 #define ICON_P_OFF_TIME 500
+#define HUD_GENERAL_ANI 0
+#define HUD_ANI_SET_ID 127
 
 
 class HUD : public CGameObject

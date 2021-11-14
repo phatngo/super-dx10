@@ -369,7 +369,7 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 }
 
 void HUD::Render() {
-	animation_set->at(0)->Render(this->x + CCamera::GetInstance()->GetCameraX(),this->y);
+	animation_set->at(HUD_GENERAL_ANI)->Render(this->x + CCamera::GetInstance()->GetCameraX(),this->y);
 	unsigned int i;
 	for (i = 0; i < POINT_DIGIT_NUMBER; i++) {
 		pointDigits[i]->Render();

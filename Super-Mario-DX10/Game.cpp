@@ -592,7 +592,7 @@ void CGame::SwitchExtraScene(int scene_id, float start_x, float start_y, bool pi
 	if (isHaveToReload)
 		s->Load();
 	omario->SetIsPipe(isPipeDown);
-	((CPlayScene*)scenes[current_scene])->GetHUD()->SetAnimationSet(CAnimationSets::GetInstance()->Get(127));
+	((CPlayScene*)scenes[current_scene])->GetHUD()->SetAnimationSet(CAnimationSets::GetInstance()->Get(HUD_ANI_SET_ID));
 }
 
 void CGame::SwitchBackToOldScene(int scene_id, float start_x, float start_y, bool pipeUp) {
@@ -622,7 +622,7 @@ void CGame::SwitchBackToOldScene(int scene_id, float start_x, float start_y, boo
 	omario->SetPosition(start_x, start_y);
 	((CPlayScene*)scenes[current_scene])->SetPlayer(omario);
 
-	((CPlayScene*)scenes[current_scene])->GetHUD()->SetAnimationSet(CAnimationSets::GetInstance()->Get(127));
+	((CPlayScene*)scenes[current_scene])->GetHUD()->SetAnimationSet(CAnimationSets::GetInstance()->Get(HUD_ANI_SET_ID));
 
 	//load extra scene if necessary
 	if (isHaveToReload) {
