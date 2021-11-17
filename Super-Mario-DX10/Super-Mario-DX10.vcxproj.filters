@@ -171,6 +171,9 @@
     <ClCompile Include="Font.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
+    <ClCompile Include="WorldScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -274,6 +277,9 @@
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldScene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

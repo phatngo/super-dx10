@@ -8,6 +8,8 @@
 
 #define UNKNOW_VALUE -1 
 
+#define WORLD_SCENE 0
+
 
 class CScene
 {
