@@ -16,7 +16,6 @@ CWorldScene::CWorldScene(int id, LPCWSTR filePath) :
 	CScene(id, filePath)
 {
 	key_handler = new CWorldScenceKeyHandler(this);
-	isSceneDone = false;
 }
 
 /*
@@ -353,18 +352,35 @@ void CWorldScene::SetSceneObjects(vector<LPGAMEOBJECT> newObjects)
 
 void CWorldScenceKeyHandler::OnKeyDown(int KeyCode)
 {
+	CWorldPlayer* player = ((CWorldScene*)scence)->GetWorldPlayer();
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-
-	switch (KeyCode)
+	if (player != NULL)
 	{
-	case DIK_RIGHT:
-		break;
-	case DIK_LEFT:
-		break;
-	case DIK_UP:
-		break;
-	case DIK_DOWN:
-		break;
+		switch (KeyCode)
+		{
+		case DIK_RIGHT:
+			if (player->cgRight)
+				player->SetState(PLAYER_STATE_RIGHT);
+			break;
+		case DIK_LEFT:
+			if (player->cgLeft)
+				player->SetState(PLAYER_STATE_LEFT);
+			break;
+		case DIK_UP:
+			if (player->cgUp)
+				player->SetState(PLAYER_STATE_UP);
+			break;
+		case DIK_DOWN:
+			if (player->cgDown)
+				player->SetState(PLAYER_STATE_DOWN);
+			break;
+		case DIK_S:
+			if (player->sceneId > 0)
+				player->ChooseScene();
+			DebugOut(L"Enter Map");
+			break;
+
+		}
 	}
 }
 

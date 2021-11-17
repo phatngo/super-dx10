@@ -33,7 +33,7 @@ public:
 	virtual void Render();
 	virtual void Unload();
 	virtual vector<LPGAMEOBJECT> GetSceneObjects();
-
+	CWorldPlayer* GetWorldPlayer() { return player; }
 
 	//Added by myself
 	virtual void  SetSceneObjects(vector<LPGAMEOBJECT> objects);
