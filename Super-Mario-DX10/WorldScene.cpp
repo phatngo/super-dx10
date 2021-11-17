@@ -1,38 +1,21 @@
 #include "WorldScene.h"
 #include <iostream>
 #include <fstream>
-#include "PlayScence.h"
-#include "Textures.h"
 #include "Sprites.h"
 #include "Utils.h"
 #include "Portal.h"
-#include "QuestionBrick.h"
-#include "FlashAnimationBrick.h"
 #include "Map.h"
-#include "Block.h"
-#include "Coin.h"
-#include "Mushroom.h"
-#include "Leaf.h"
-#include "Switch.h"
-#include "Goomba.h"
-#include "Koopas.h"
-#include "PiranhaPlant.h"
-#include "FirePiranhaPlant.h"
-#include "Piece.h"
 #include "HUD.h"
-#include "EffectPoint.h"
-#include "FireBullet.h"
-#include "Card.h"
 #include "Camera.h"
-#include "CourseClear.h"
-#include "Pipe.h"
 #include "Textures.h"
+#include "WorldMapObject.h"
+#include "WorldPlayer.h"
 using namespace std;
 
 CWorldScene::CWorldScene(int id, LPCWSTR filePath) :
 	CScene(id, filePath)
 {
-	key_handler = new CPlayScenceKeyHandler(this);
+	key_handler = new CWorldScenceKeyHandler(this);
 	isSceneDone = false;
 }
 
@@ -200,18 +183,71 @@ void CWorldScene::_ParseSection_OBJECTS(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 2) return; // skip invalid lines - an animation set must at least id and one animation id
+	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
 
+	if (tokens.size() < 3) return; // skip invalid lines - an object set must have at least id, x, y
+	int tag = 0, option_tag_1 = 0, option_tag_2 = 0;
 	int object_type = atoi(tokens[0].c_str());
+	float x = (float)atof(tokens[1].c_str());
+	float y = (float)atof(tokens[2].c_str());
+
+	int ani_set_id = (int)atoi(tokens[3].c_str());
+	if (tokens.size() >= 5)
+		tag = (int)atof(tokens[4].c_str());
+	if (tokens.size() >= 6)
+		option_tag_1 = (int)atof(tokens[5].c_str());
+	if (tokens.size() >= 7)
+		option_tag_2 = (int)atof(tokens[6].c_str());
+
+
+	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	CGameObject* obj = NULL;
 
 	switch (object_type)
 	{
-	case WORLD_SCENE_OBJECT:
-		break;
 	case WORLD_SCENE_PLAYER:
+		if (player != NULL)
+		{
+			DebugOut(L"[ERROR] PLAYER object was created before!\n");
+			return;
+		}
+		obj = new CWorldPlayer(x, y);
+		player = (CWorldPlayer*)obj;
+		DebugOut(L"[INFO] Player object created!\n");
 		break;
+	case WORLD_SCENE_OBJECT:
+		if (tag == OBJECT_TYPE_PORTAL || tag == OBJECT_TYPE_STOP)
+		{
+			bool cgLeft, cgRight, cgUp, cgDown;
+			cgLeft = atof(tokens[5].c_str());
+			cgUp = atof(tokens[6].c_str());
+			cgRight = atof(tokens[7].c_str());
+			cgDown = atof(tokens[8].c_str());
+			int sceneid = (int)atof(tokens[9].c_str());
+			obj = new CWorldMapObject(sceneid);
+			((CWorldMapObject*)obj)->SetMove(cgLeft, cgUp, cgRight, cgDown);
+			obj->SetTag(tag);
+		}
+		else
+		{
+			obj = new CWorldMapObject();
+			obj->SetTag(tag);
+			if (tag == OBJECT_TYPE_HAMMER)
+				obj->SetSpeed(MARIO_WALKING_SPEED_MIN / 2, 0);
+		}
+		break;
+	default:
+		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
+		return;
 	}
+
+	// General object setup
+	obj->SetPosition(x, y);
+
+	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+	obj->SetAnimationSet(ani_set);
+
+	objects.push_back(obj);
 }
 
 void CWorldScene::Load()

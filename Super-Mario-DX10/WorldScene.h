@@ -4,6 +4,12 @@
 #include "Map.h"
 #include "Camera.h"
 #include "HUD.h"
+#include "WorldPlayer.h"
+
+#define OBJECT_TYPE_PLAYER 0
+#define OBJECT_TYPE_STOP 2
+#define OBJECT_TYPE_PORTAL 3
+
 class CWorldScene:public CScene
 {
 protected:			
@@ -11,7 +17,7 @@ protected:
 	CMap* current_map = NULL;
 	HUD* hud = nullptr;
 	CCamera* cam = NULL;
-
+	CWorldPlayer* player = NULL;
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_TILEMAP_DATA(string line);
 	void _ParseSection_SPRITES(string line);
