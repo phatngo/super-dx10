@@ -67,6 +67,9 @@
     <Filter Include="Map Objects\Pipe">
       <UniqueIdentifier>{f17a5edc-2d61-4adb-9f12-1fea70ec9d4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map Objects\WorldScene">
+      <UniqueIdentifier>{5814e78a-21f9-40c9-9781-13085bdb81a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -174,6 +177,12 @@
     <ClCompile Include="WorldScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="WorldMapObject.cpp">
+      <Filter>Map Objects\WorldScene</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldPlayer.cpp">
+      <Filter>Map Objects\WorldScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -280,6 +289,12 @@
     </ClInclude>
     <ClInclude Include="WorldScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapObject.h">
+      <Filter>Map Objects\WorldScene</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldPlayer.h">
+      <Filter>Map Objects\WorldScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
