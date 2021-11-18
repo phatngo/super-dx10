@@ -37,5 +37,6 @@ public:
 	bool IsAbove() { return this->isAbove; }
 	void SetIsAbove(bool b) { this->isAbove = b; }
 	void SetCameraPosition(float marioX);
+	void SetCameraPosition(float x, float y) { CGame::GetInstance()->SetCamPos(cameraPositionX, cameraPositionY); }
 };
 

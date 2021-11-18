@@ -5,6 +5,7 @@
 #include "WorldPlayer.h"
 #include "WorldScene.h"
 #include "WorldMapObject.h"
+#include "Game.h"
 
 CWorldPlayer::CWorldPlayer(float x, float y) : CGameObject()
 {
@@ -44,6 +45,7 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	coEvents.clear();
 
 	CalcPotentialCollisions(coObjects, coEvents);
+	
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
@@ -72,6 +74,7 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(PLAYER_STATE_IDLE);
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
+			DebugOut(L"collision \n");
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			x = e->obj->x;
 			y = e->obj->y;

@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "HUD.h"
 #include "WorldPlayer.h"
+#include "Mario.h"
 
 #define OBJECT_TYPE_PLAYER 0
 #define OBJECT_TYPE_STOP 2
@@ -34,7 +35,7 @@ public:
 	virtual void Unload();
 	virtual vector<LPGAMEOBJECT> GetSceneObjects();
 	CWorldPlayer* GetWorldPlayer() { return player; }
-
+	CMario* GetPlayer() { return (CMario*)player; }
 	//Added by myself
 	virtual void  SetSceneObjects(vector<LPGAMEOBJECT> objects);
 	void AddObjects(CGameObject* gameObj) {

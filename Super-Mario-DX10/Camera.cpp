@@ -17,7 +17,7 @@ void CCamera::SetCameraPosition(float marioX, int mapWidth) {
 
 	}
 	else if ((int)marioX + CGame::GetInstance()->GetScreenWidth() <= cameraFurthestPositionY) {
-		cameraPositionX = (int) (marioX - playerStartX);
+		cameraPositionX = (int)(marioX - playerStartX);
 
 	}
 	else {
@@ -33,7 +33,10 @@ void CCamera::SetCameraPosition(float marioX, int mapWidth) {
 		cameraPositionY = standardCameraPositionY - CGame::GetInstance()->GetScreenHeight() + CAMERA_EXTRA_Y;
 	}
 	CGame::GetInstance()->SetCamPos(cameraPositionX, cameraPositionY);
+
 }
+
+
 
 void CCamera::SetCameraPosition(float marioX) {
 	CMario* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();

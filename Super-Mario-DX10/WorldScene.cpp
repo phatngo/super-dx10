@@ -173,10 +173,61 @@ void CWorldScene::_ParseSection_ANIMATION_SETS(string line)
 
 void CWorldScene::_ParseSection_EXTRA_INFORMATION(string line)
 {
+	DebugOut(L"[INFO] Start loading extra info \n");
 
-	
+	vector<string> tokens = split(line);
+
+	DebugOut(L"[INFO] size: %d \n", tokens.size());
+
+	if (tokens.size() < 1) return; // skip invalid lines
+
+
+	switch (atoi(tokens[0].c_str()))
+	{
+	case EXTRA_INFO_FIRST_POINT_IN_HUD_POSITION:
+		hud->SetFirstPointPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
+		DebugOut(L"[INFO] EXTRA_INFO_FIRST_POINT_IN_HUD_POSITION \n");
+		break;
+	case EXTRA_INFO_LAST_POINT_IN_HUD_POSITION:
+		hud->SetLastMoneyPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
+		DebugOut(L"[INFO] EXTRA_INFO_LAST_POINT_IN_HUD_POSITION \n");
+		break;
+	case EXTRA_INFO_CAMERA_STANDARD_Y_COORDINATE:
+		CCamera::GetInstance()->SetStandardCameraPositionY(atoi(tokens[1].c_str()));
+		DebugOut(L"[INFO] EXTRA_INFO_CAMERA_STANDARD_Y_COORDINATE \n");
+		break;
+	case EXTRA_INFO_CAMERA_FURTHEST_Y_COORDINATE:
+		CCamera::GetInstance()->SetCameraFurthestPositionY(atoi(tokens[1].c_str()));
+		DebugOut(L"[INFO] EXTRA_INFO_CAMERA_FURTHEST_Y_COORDINATE \n");
+		break;
+	case EXTRA_INFO_LIVE_IN_HUD_POSITION:
+		hud->SetLivePosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
+		DebugOut(L"EXTRA_INFO_LIVE_IN_HUD_POSITION \n");
+		break;
+	case HUD_INITIAL_POSITION_COORDINATE:
+		hud->SetPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
+		DebugOut(L"HUD_INITIAL_POSITION_COORDINATE \n");
+		break;
+	case EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION:
+		hud->SetFirstTimerDigitPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
+		DebugOut(L"EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION \n");
+		break;
+	case EXTRA_INFO_FIRST_POWER_ARROW_IN_HUD_POSITION:
+		hud->SetFirstPowerArrowPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
+		DebugOut(L"EXTRA_INFO_FIRST_POWER_ARROW_IN_HUD_POSITION \n");
+		break;
+	case EXTRA_INFO_ICONP_IN_HUD_POSITION:
+		hud->SetIconPPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
+		DebugOut(L"EXTRA_INFO_ICONP_IN_HUD_POSITION \n");
+		break;
+	case EXTRA_INFO_ICON_MARIO_IN_HUD_POSITION:
+		hud->SetIconMarioPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
+		DebugOut(L"EXTRA_INFO_ICON_MARIO_IN_HUD_POSITION \n");
+		break;
+	default:
+		break;
+	}
 }
-
 
 void CWorldScene::_ParseSection_OBJECTS(string line)
 {
@@ -239,18 +290,17 @@ void CWorldScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
 	}
-
 	// General object setup
 	obj->SetPosition(x, y);
-
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 	obj->SetAnimationSet(ani_set);
-
 	objects.push_back(obj);
 }
 
 void CWorldScene::Load()
 {
+	cam = CCamera::GetInstance();
+	cam->SetCameraPosition(0.0f, 0.0f);
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
 
 	ifstream f;
@@ -307,22 +357,29 @@ void CWorldScene::Load()
 
 void CWorldScene::Update(DWORD dt)
 {
+	vector<LPGAMEOBJECT> coObjects;
+	for (size_t i = 1; i < objects.size(); i++)
+	{
+		coObjects.push_back(objects[i]);
+	}
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt);
+		objects[i]->Update(dt, &coObjects);
 	}
-
+	player->Update(dt, &coObjects);
 }
 
 void CWorldScene::Render()
 {
+	current_map->Render();
+	DebugOut(L"[INFO] Render \n");
+	DebugOut(L"[INFO] size2 %d \n", objects.size());
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Render();
 	}
-
-	hud->Render();
+	player->Render();
 }
 
 /*

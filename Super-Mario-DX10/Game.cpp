@@ -8,7 +8,7 @@
 #include "HUD.h"
 #include "Camera.h"
 #include "Textures.h"
-
+#include "WorldScene.h"
 
 CGame* CGame::__instance = NULL;
 
@@ -497,7 +497,8 @@ void CGame::_ParseSection_SCENES(string line)
 	LPCWSTR path = ToLPCWSTR(tokens[1]);
 
 	if(id == WORLD_SCENE){
-
+		LPSCENE scene = new CWorldScene(id, path);
+		scenes[id] = scene;
 	}
 	else {
 		LPSCENE scene = new CPlayScene(id, path);
