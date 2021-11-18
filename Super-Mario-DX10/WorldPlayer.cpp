@@ -37,7 +37,7 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-
+	
 	CGame* game = CGame::GetInstance();
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -101,7 +101,7 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 void CWorldPlayer::Render()
 {
-	
+	animation_set->at(0)->Render(x, y);
 	//DebugAlpha = 128;
 	RenderBoundingBox();
 }
