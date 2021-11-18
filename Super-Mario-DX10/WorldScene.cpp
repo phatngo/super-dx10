@@ -373,8 +373,6 @@ void CWorldScene::Update(DWORD dt)
 void CWorldScene::Render()
 {
 	current_map->Render();
-	DebugOut(L"[INFO] Render \n");
-	DebugOut(L"[INFO] size2 %d \n", objects.size());
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Render();
@@ -416,19 +414,19 @@ void CWorldScenceKeyHandler::OnKeyDown(int KeyCode)
 		switch (KeyCode)
 		{
 		case DIK_RIGHT:
-			if (player->cgRight)
+			//if (player->cgRight)
 				player->SetState(PLAYER_STATE_RIGHT);
 			break;
 		case DIK_LEFT:
-			if (player->cgLeft)
+			//if (player->cgLeft)
 				player->SetState(PLAYER_STATE_LEFT);
 			break;
 		case DIK_UP:
-			if (player->cgUp)
+			//if (player->cgUp)
 				player->SetState(PLAYER_STATE_UP);
 			break;
 		case DIK_DOWN:
-			if (player->cgDown)
+			//if (player->cgDown)
 				player->SetState(PLAYER_STATE_DOWN);
 			break;
 		case DIK_S:

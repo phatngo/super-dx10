@@ -25,12 +25,9 @@ CMap::~CMap()
 
 void CMap::Render()
 {
-	DebugOut(L"Map render \n");
 	float mx, my;
 	mx = CGame::GetInstance()->GetCamPosX();
 	my = CGame::GetInstance()->GetCamPosY();
-	DebugOut(L"mx: %f\n",mx);
-	DebugOut(L"my: %f\n", my);
 	int FirstColumn = (int)floor(mx / TILE_WIDTH);
 	int LastColumn = (int)ceil((mx + CGame::GetInstance()->GetScreenWidth()) / TILE_WIDTH);
 	if (LastColumn >= TotalColumnsOfMap)

@@ -54,6 +54,7 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
+		DebugOut(L"collided \n");
 		float min_tx, min_ty;
 		float nx = 0, ny = 0;
 		float rdx = 0;
@@ -74,7 +75,6 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(PLAYER_STATE_IDLE);
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			DebugOut(L"collision \n");
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			x = e->obj->x;
 			y = e->obj->y;
