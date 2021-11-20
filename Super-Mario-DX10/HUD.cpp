@@ -15,32 +15,20 @@ HUD::HUD() {
 }
 
 void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-	//Change timer
-	if (timer.IsStarted() && timer.ElapsedTime() >= TIME_TO_CHANGE_SECOND) {
-		if (game_time != 0) {
-			game_time--;
-		}
-		else {
-			game_time = TOTAL_GAME_TIME;
-		}
-		timer.Reset();
-		timer.Start();
-	}
-	//Modify HUD y
-	if (CCamera::GetInstance()->IsAbove()) {
-		this->y = this->start_Y - CGame::GetInstance()->GetScreenHeight() + CAMERA_EXTRA_Y;
-	}
-	else {
-		this->y = this->start_Y;
-	}
+	
 
 	CMario* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
-
+	int totalPoint;
 	// Update Mario's point
-	pointDigits.clear();
-	//Mario's point update
-	int totalPoint = player->GetPoint();
+	if (!player) {
+		totalPoint = player->GetPoint();
+	}
+	else {
+		totalPoint = 0;
+	}
+
 	int i;
+	pointDigits.clear();
 	for (i = 0; i < POINT_DIGIT_NUMBER; i++) {
 		Font* font;
 		if (i == 0) {
@@ -100,6 +88,24 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	
 	// Update things only happening when in playscene
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
+		//Update game timer
+		if (timer.IsStarted() && timer.ElapsedTime() >= TIME_TO_CHANGE_SECOND) {
+			if (game_time != 0) {
+				game_time--;
+			}
+			else {
+				game_time = TOTAL_GAME_TIME;
+			}
+			timer.Reset();
+			timer.Start();
+		}
+		//Modify HUD y
+		if (CCamera::GetInstance()->IsAbove()) {
+			this->y = this->start_Y - CGame::GetInstance()->GetScreenHeight() + CAMERA_EXTRA_Y;
+		}
+		else {
+			this->y = this->start_Y;
+		}
 		// Update Mario's money
 		moneyDigits.clear();
 		i = 0;
