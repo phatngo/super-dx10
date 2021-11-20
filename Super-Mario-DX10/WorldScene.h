@@ -11,6 +11,7 @@
 #define OBJECT_TYPE_STOP 2
 #define OBJECT_TYPE_PORTAL 3
 
+
 class CWorldScene:public CScene
 {
 protected:			

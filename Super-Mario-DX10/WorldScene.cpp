@@ -34,13 +34,11 @@ CWorldScene::CWorldScene(int id, LPCWSTR filePath) :
 
 #define WORLD_SCENE_OBJECT    10
 #define WORLD_SCENE_PLAYER    0
+#define WORLD_SCENE_HUD 58
 
 
 #define EXTRA_INFO_FIRST_POINT_IN_HUD_POSITION 1
 #define EXTRA_INFO_LAST_POINT_IN_HUD_POSITION 2
-#define EXTRA_INFO_CAMERA_STANDARD_Y_COORDINATE 3
-#define EXTRA_INFO_CAMERA_FURTHEST_Y_COORDINATE 4
-#define EXTRA_INFO_MARIO_MAX_X_COORDINATE 5
 #define HUD_INITIAL_POSITION_COORDINATE 6
 #define EXTRA_INFO_LIVE_IN_HUD_POSITION 7
 #define EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION 8
@@ -189,14 +187,6 @@ void CWorldScene::_ParseSection_EXTRA_INFORMATION(string line)
 		hud->SetLastMoneyPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
 		DebugOut(L"[INFO] EXTRA_INFO_LAST_POINT_IN_HUD_POSITION \n");
 		break;
-	case EXTRA_INFO_CAMERA_STANDARD_Y_COORDINATE:
-		CCamera::GetInstance()->SetStandardCameraPositionY(atoi(tokens[1].c_str()));
-		DebugOut(L"[INFO] EXTRA_INFO_CAMERA_STANDARD_Y_COORDINATE \n");
-		break;
-	case EXTRA_INFO_CAMERA_FURTHEST_Y_COORDINATE:
-		CCamera::GetInstance()->SetCameraFurthestPositionY(atoi(tokens[1].c_str()));
-		DebugOut(L"[INFO] EXTRA_INFO_CAMERA_FURTHEST_Y_COORDINATE \n");
-		break;
 	case EXTRA_INFO_LIVE_IN_HUD_POSITION:
 		hud->SetLivePosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
 		DebugOut(L"EXTRA_INFO_LIVE_IN_HUD_POSITION \n");
@@ -283,15 +273,26 @@ void CWorldScene::_ParseSection_OBJECTS(string line)
 				obj->SetSpeed(MARIO_WALKING_SPEED_MIN / 2, 0);
 		}
 		break;
+	case WORLD_SCENE_HUD:
+		hud = new HUD();
+		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
 	}
 	// General object setup
-	obj->SetPosition(x, y);
-	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-	obj->SetAnimationSet(ani_set);
-	objects.push_back(obj);
+	if (hud != NULL)
+	{
+		hud->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		hud->SetAnimationSet(ani_set);
+	}
+	if(object_type != WORLD_SCENE_HUD) {
+		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		objects.push_back(obj);
+	}
 }
 
 void CWorldScene::Load()
@@ -365,6 +366,7 @@ void CWorldScene::Update(DWORD dt)
 		objects[i]->Update(dt, &coObjects);
 	}
 	player->Update(dt, &coObjects);
+	hud->Update(dt);
 }
 
 void CWorldScene::Render()
@@ -375,6 +377,7 @@ void CWorldScene::Render()
 		objects[i]->Render();
 	}
 	player->Render();
+	hud->Render();
 }
 
 /*
