@@ -26,12 +26,14 @@
 
 #define MARIO	0
 #define LUIGI	1
+#define WORLD_PLAYER_INITAL_ANI_SET_ID 0
 
 class CWorldPlayer : public CGameObject
 {
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
+	int ani;
 	
 public:
 	bool cgLeft, cgRight, cgUp, cgDown;

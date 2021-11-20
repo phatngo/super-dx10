@@ -357,9 +357,6 @@ void CWorldScene::Load()
 
 void CWorldScene::Update(DWORD dt)
 {
-	float x, y;
-	cam->GetWorldSceneCameraPosition(x, y);
-	DebugOut(L"[INFO] x,y : %d, %d \n",x,y);
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 1; i < objects.size(); i++)
 	{

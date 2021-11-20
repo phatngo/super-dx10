@@ -15,6 +15,7 @@ CWorldPlayer::CWorldPlayer(float x, float y) : CGameObject()
 	this->x = x;
 	this->y = y;
 	SetMove(false, false, true, false);
+	ani = WORLD_PLAYER_INITAL_ANI_SET_ID;
 }
 void CWorldPlayer::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents)
 {
@@ -94,15 +95,12 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
-		//coEvents[i]->obj->SetDebugAlpha(coEvents[i]->obj->DebugAlpha - 50);
 		delete coEvents[i];
 	}
-	//DebugOut(L"[MARIO] l: %d\tt: %d r: %d\tb: %d\n", cgLeft,cgUp, cgRight,cgDown);
 }
 void CWorldPlayer::Render()
 {
-	animation_set->at(0)->Render(x, y);
-	//DebugAlpha = 128;
+	animation_set->at(ani)->Render(x, y);
 	RenderBoundingBox();
 }
 void CWorldPlayer::SetState(int state)
