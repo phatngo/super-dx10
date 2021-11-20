@@ -384,6 +384,10 @@ void HUD::Render() {
 		pointDigits[i]->Render();
 	}
 
+	CSprites::GetInstance()->Get(MARIO_ICON_SPRITE)->Draw(
+		CCamera::GetInstance()->GetCameraX() + iconMarioPositionX,
+		this->y + iconMarioPositionY);
+
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
 		for (i = 0; i < moneyDigits.size(); i++) {
 			moneyDigits[i]->Render();
@@ -404,10 +408,8 @@ void HUD::Render() {
 				CCamera::GetInstance()->GetCameraX() + iconPPositionX,
 				this->y + iconPPositionY);
 		}
-		CSprites::GetInstance()->Get(MARIO_ICON_SPRITE)->Draw(
-			CCamera::GetInstance()->GetCameraX() + iconMarioPositionX,
-			this->y + iconMarioPositionY);
 	}
+
 }
 
 
