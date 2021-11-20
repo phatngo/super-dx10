@@ -21,7 +21,8 @@ void CWorldPlayer::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vect
 {
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
-		if (coObjects->at(i)->tag == OBJECT_TYPE_BUSH || coObjects->at(i)->tag == OBJECT_TYPE_HAMMER)
+		if (coObjects->at(i)->tag == OBJECT_TYPE_BUSH || 
+			coObjects->at(i)->tag == OBJECT_TYPE_HAMMER)
 			continue;
 		else
 		{
@@ -55,7 +56,6 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		DebugOut(L"collided \n");
 		float min_tx, min_ty;
 		float nx = 0, ny = 0;
 		float rdx = 0;
@@ -77,19 +77,20 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			x = e->obj->x;
-			y = e->obj->y;
-			if (e->obj->tag == OBJECT_TYPE_PORTAL || e->obj->tag == OBJECT_TYPE_STOP)
-			{
-				CWorldMapObject* tmp = dynamic_cast<CWorldMapObject*>(e->obj);
-				bool cl, cr, cu, cd;
-				tmp->GetMove(cl, cu, cr, cd);
-				SetMove(cl, cu, cr, cd);
-				if (e->obj->tag == OBJECT_TYPE_PORTAL)
-					sceneId = tmp->GetSceneId();
-				else
-					sceneId = -1;
-			}
+				x = e->obj->x;
+				y = e->obj->y;
+				if (e->obj->tag == OBJECT_TYPE_PORTAL || e->obj->tag == OBJECT_TYPE_STOP)
+				{
+					CWorldMapObject* tmp = dynamic_cast<CWorldMapObject*>(e->obj);
+					bool cl, cr, cu, cd;
+					tmp->GetMove(cl, cu, cr, cd);
+					SetMove(cl, cu, cr, cd);
+					if (e->obj->tag == OBJECT_TYPE_PORTAL)
+						sceneId = tmp->GetSceneId();
+					else
+						sceneId = -1;
+				}
+
 		}
 	}
 	// clean up collision events

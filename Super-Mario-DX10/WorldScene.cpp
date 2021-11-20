@@ -51,9 +51,6 @@ CWorldScene::CWorldScene(int id, LPCWSTR filePath) :
 #define UNKNOWN_VALUE -1
 
 
-
-#define OBJECT_TYPE_PORTAL	50
-
 #define MAX_SCENE_LINE 1024
 
 
@@ -414,19 +411,19 @@ void CWorldScenceKeyHandler::OnKeyDown(int KeyCode)
 		switch (KeyCode)
 		{
 		case DIK_RIGHT:
-			//if (player->cgRight)
+			if (player->cgRight)
 				player->SetState(PLAYER_STATE_RIGHT);
 			break;
 		case DIK_LEFT:
-			//if (player->cgLeft)
+			if (player->cgLeft)
 				player->SetState(PLAYER_STATE_LEFT);
 			break;
 		case DIK_UP:
-			//if (player->cgUp)
+			if (player->cgUp)
 				player->SetState(PLAYER_STATE_UP);
 			break;
 		case DIK_DOWN:
-			//if (player->cgDown)
+			if (player->cgDown)
 				player->SetState(PLAYER_STATE_DOWN);
 			break;
 		case DIK_S:
