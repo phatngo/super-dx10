@@ -3,6 +3,8 @@
 
 
 #define CAMERA_EXTRA_Y 40
+#define CAMERA_WORLD_SCENE_POSTION_X -8.9f
+#define CAMERA_WORLD_SCENE_POSTION_Y 0.0f
 
 
 class CCamera
@@ -37,6 +39,7 @@ public:
 	bool IsAbove() { return this->isAbove; }
 	void SetIsAbove(bool b) { this->isAbove = b; }
 	void SetCameraPosition(float marioX);
-	void SetCameraPosition(float x, float y) { CGame::GetInstance()->SetCamPos(cameraPositionX, cameraPositionY); }
+	void SetCameraPosition(float x, float y) { CGame::GetInstance()->SetCamPos(x, y); cameraPositionX = (int)x; cameraPositionY = (int)y; }
+	void GetWorldSceneCameraPosition(float& x, float& y) { x = (float) cameraPositionX; y = (float) cameraPositionY; }
 };
 

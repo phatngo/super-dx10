@@ -300,7 +300,7 @@ void CWorldScene::_ParseSection_OBJECTS(string line)
 void CWorldScene::Load()
 {
 	cam = CCamera::GetInstance();
-	cam->SetCameraPosition(0.0f, 0.0f);
+	cam->SetCameraPosition(CAMERA_WORLD_SCENE_POSTION_X, CAMERA_WORLD_SCENE_POSTION_Y);
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
 
 	ifstream f;
@@ -357,6 +357,9 @@ void CWorldScene::Load()
 
 void CWorldScene::Update(DWORD dt)
 {
+	float x, y;
+	cam->GetWorldSceneCameraPosition(x, y);
+	DebugOut(L"[INFO] x,y : %d, %d \n",x,y);
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
