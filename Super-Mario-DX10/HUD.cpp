@@ -5,6 +5,7 @@
 #include "Font.h"
 #include "Mario.h"
 #include "PlayScence.h"
+#include "BackUp.h"
 
 
 
@@ -17,15 +18,7 @@ HUD::HUD() {
 void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	
 
-	CMario* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
-	int totalPoint;
-	// Update Mario's point
-	if (player != NULL) {
-		totalPoint = player->GetPoint();
-	}
-	else {
-		totalPoint = 0;
-	}
+	int totalPoint = BackUp::GetInstance()->GetPoint();
 	int i;
 	pointDigits.clear();
 	for (i = 0; i < POINT_DIGIT_NUMBER; i++) {
@@ -84,9 +77,155 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		}
 	}
 
+	// Update Mario's money
+	moneyDigits.clear();
+	i = 0;
+	int totalMoney = BackUp::GetInstance()->GetMoney();
+	while (totalMoney / 10 != 0) {
+		int digit = totalMoney % 10;
+		totalMoney = totalMoney / 10;
+		Font* font;
+		if (i == 0) {
+			font = new Font(
+				lastMoneyPositionX,
+				this->y + lastMoneyPositionY
+			);
+		}
+		else {
+			float last_font_X, last_font_Y;
+			moneyDigits[i - 1]->GetPosition(last_font_X, last_font_Y);
+			font = new Font(
+				last_font_X - FONT_WIDTH,
+				this->start_Y + lastMoneyPositionY
+			);
+		}
+		switch (digit)
+		{
+		case DIGIT_0:
+			font->SetAni(ANI_0);
+			break;
+		case DIGIT_1:
+			font->SetAni(ANI_1);
+			break;
+		case DIGIT_2:
+			font->SetAni(ANI_2);
+			break;
+		case DIGIT_3:
+			font->SetAni(ANI_3);
+			break;
+		case DIGIT_4:
+			font->SetAni(ANI_4);
+			break;
+		case DIGIT_5:
+			font->SetAni(ANI_5);
+			break;
+		case DIGIT_6:
+			font->SetAni(ANI_6);
+			break;
+		case DIGIT_7:
+			font->SetAni(ANI_7);
+			break;
+		case DIGIT_8:
+			font->SetAni(ANI_8);
+			break;
+		case DIGIT_9:
+			font->SetAni(ANI_9);
+			break;
+		default:
+			break;
+		}
+		moneyDigits.push_back(font);
+		i++;
+	}
+	Font* font;
+	if (moneyDigits.size() == 0) {
+		font = new Font(
+			lastMoneyPositionX,
+			this->y + lastMoneyPositionY
+		);
+		switch (totalMoney)
+		{
+		case DIGIT_0:
+			font->SetAni(ANI_0);
+			break;
+		case DIGIT_1:
+			font->SetAni(ANI_1);
+			break;
+		case DIGIT_2:
+			font->SetAni(ANI_2);
+			break;
+		case DIGIT_3:
+			font->SetAni(ANI_3);
+			break;
+		case DIGIT_4:
+			font->SetAni(ANI_4);
+			break;
+		case DIGIT_5:
+			font->SetAni(ANI_5);
+			break;
+		case DIGIT_6:
+			font->SetAni(ANI_6);
+			break;
+		case DIGIT_7:
+			font->SetAni(ANI_7);
+			break;
+		case DIGIT_8:
+			font->SetAni(ANI_8);
+			break;
+		case DIGIT_9:
+			font->SetAni(ANI_9);
+			break;
+		default:
+			break;
+		}
+	}
+	else {
+		float last_font_X, last_font_Y;
+		moneyDigits[moneyDigits.size() - 1]->GetPosition(last_font_X, last_font_Y);
+		font = new Font(last_font_X - FONT_WIDTH,
+			this->y + lastMoneyPositionY);
+		switch (totalMoney)
+		{
+		case DIGIT_0:
+			font->SetAni(ANI_0);
+			break;
+		case DIGIT_1:
+			font->SetAni(ANI_1);
+			break;
+		case DIGIT_2:
+			font->SetAni(ANI_2);
+			break;
+		case DIGIT_3:
+			font->SetAni(ANI_3);
+			break;
+		case DIGIT_4:
+			font->SetAni(ANI_4);
+			break;
+		case DIGIT_5:
+			font->SetAni(ANI_5);
+			break;
+		case DIGIT_6:
+			font->SetAni(ANI_6);
+			break;
+		case DIGIT_7:
+			font->SetAni(ANI_7);
+			break;
+		case DIGIT_8:
+			font->SetAni(ANI_8);
+			break;
+		case DIGIT_9:
+			font->SetAni(ANI_9);
+			break;
+		default:
+			break;
+		}
+	}
+	moneyDigits.push_back(font);
+
 	
 	// Update things only happening when in playscene
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
+		CMario* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 		//Update game timer
 		if (timer.IsStarted() && timer.ElapsedTime() >= TIME_TO_CHANGE_SECOND) {
 			if (game_time != 0) {
@@ -105,150 +244,6 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		else {
 			this->y = this->start_Y;
 		}
-		// Update Mario's money
-		moneyDigits.clear();
-		i = 0;
-		int totalMoney = player->GetMoney();
-		while (totalMoney / 10 != 0) {
-			int digit = totalMoney % 10;
-			totalMoney = totalMoney / 10;
-			Font* font;
-			if (i == 0) {
-				font = new Font(
-					lastMoneyPositionX,
-					this->y + lastMoneyPositionY
-				);
-			}
-			else {
-				float last_font_X, last_font_Y;
-				moneyDigits[i - 1]->GetPosition(last_font_X, last_font_Y);
-				font = new Font(
-					last_font_X - FONT_WIDTH,
-					this->start_Y + lastMoneyPositionY
-				);
-			}
-			switch (digit)
-			{
-			case DIGIT_0:
-				font->SetAni(ANI_0);
-				break;
-			case DIGIT_1:
-				font->SetAni(ANI_1);
-				break;
-			case DIGIT_2:
-				font->SetAni(ANI_2);
-				break;
-			case DIGIT_3:
-				font->SetAni(ANI_3);
-				break;
-			case DIGIT_4:
-				font->SetAni(ANI_4);
-				break;
-			case DIGIT_5:
-				font->SetAni(ANI_5);
-				break;
-			case DIGIT_6:
-				font->SetAni(ANI_6);
-				break;
-			case DIGIT_7:
-				font->SetAni(ANI_7);
-				break;
-			case DIGIT_8:
-				font->SetAni(ANI_8);
-				break;
-			case DIGIT_9:
-				font->SetAni(ANI_9);
-				break;
-			default:
-				break;
-			}
-			moneyDigits.push_back(font);
-			i++;
-		}
-		Font* font;
-		if (moneyDigits.size() == 0) {
-			font = new Font(
-				lastMoneyPositionX,
-				this->y + lastMoneyPositionY
-			);
-			switch (totalMoney)
-			{
-			case DIGIT_0:
-				font->SetAni(ANI_0);
-				break;
-			case DIGIT_1:
-				font->SetAni(ANI_1);
-				break;
-			case DIGIT_2:
-				font->SetAni(ANI_2);
-				break;
-			case DIGIT_3:
-				font->SetAni(ANI_3);
-				break;
-			case DIGIT_4:
-				font->SetAni(ANI_4);
-				break;
-			case DIGIT_5:
-				font->SetAni(ANI_5);
-				break;
-			case DIGIT_6:
-				font->SetAni(ANI_6);
-				break;
-			case DIGIT_7:
-				font->SetAni(ANI_7);
-				break;
-			case DIGIT_8:
-				font->SetAni(ANI_8);
-				break;
-			case DIGIT_9:
-				font->SetAni(ANI_9);
-				break;
-			default:
-				break;
-			}
-		}
-		else {
-			float last_font_X, last_font_Y;
-			moneyDigits[moneyDigits.size() - 1]->GetPosition(last_font_X, last_font_Y);
-			font = new Font(last_font_X - FONT_WIDTH,
-				this->y + lastMoneyPositionY);
-			switch (totalMoney)
-			{
-			case DIGIT_0:
-				font->SetAni(ANI_0);
-				break;
-			case DIGIT_1:
-				font->SetAni(ANI_1);
-				break;
-			case DIGIT_2:
-				font->SetAni(ANI_2);
-				break;
-			case DIGIT_3:
-				font->SetAni(ANI_3);
-				break;
-			case DIGIT_4:
-				font->SetAni(ANI_4);
-				break;
-			case DIGIT_5:
-				font->SetAni(ANI_5);
-				break;
-			case DIGIT_6:
-				font->SetAni(ANI_6);
-				break;
-			case DIGIT_7:
-				font->SetAni(ANI_7);
-				break;
-			case DIGIT_8:
-				font->SetAni(ANI_8);
-				break;
-			case DIGIT_9:
-				font->SetAni(ANI_9);
-				break;
-			default:
-				break;
-			}
-		}
-		moneyDigits.push_back(font);
 
 		// Update Mario's lives
 		mario_lives = new Font(
@@ -383,14 +378,15 @@ void HUD::Render() {
 		pointDigits[i]->Render();
 	}
 
+	for (i = 0; i < moneyDigits.size(); i++) {
+		moneyDigits[i]->Render();
+	}
+
 	CSprites::GetInstance()->Get(MARIO_ICON_SPRITE)->Draw(
 		CCamera::GetInstance()->GetCameraX() + iconMarioPositionX,
 		this->y + iconMarioPositionY);
 
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
-		for (i = 0; i < moneyDigits.size(); i++) {
-			moneyDigits[i]->Render();
-		}
 
 		mario_lives->Render();
 

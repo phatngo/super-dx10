@@ -70,6 +70,9 @@
     <Filter Include="Map Objects\WorldScene">
       <UniqueIdentifier>{5814e78a-21f9-40c9-9781-13085bdb81a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BackUp">
+      <UniqueIdentifier>{ae66c186-cd8b-418b-8978-b1b6bf0a7ba4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -183,6 +186,9 @@
     <ClCompile Include="WorldPlayer.cpp">
       <Filter>Map Objects\WorldScene</Filter>
     </ClCompile>
+    <ClCompile Include="BackUp.cpp">
+      <Filter>BackUp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -295,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="WorldPlayer.h">
       <Filter>Map Objects\WorldScene</Filter>
+    </ClInclude>
+    <ClInclude Include="BackUp.h">
+      <Filter>BackUp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
