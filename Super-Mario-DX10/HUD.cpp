@@ -20,13 +20,12 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	CMario* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 	int totalPoint;
 	// Update Mario's point
-	if (!player) {
+	if (player != NULL) {
 		totalPoint = player->GetPoint();
 	}
 	else {
 		totalPoint = 0;
 	}
-
 	int i;
 	pointDigits.clear();
 	for (i = 0; i < POINT_DIGIT_NUMBER; i++) {
