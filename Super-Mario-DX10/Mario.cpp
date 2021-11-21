@@ -23,6 +23,7 @@
 #include "Card.h"
 #include "Scence.h"
 #include "Sprites.h"
+#include "BackUp.h"
 
 CMario::CMario(float x, float y) : CGameObject()
 {
@@ -1161,6 +1162,7 @@ void CMario::AddPoint(float x, float y, int point) {
 		break;
 	}
 	this->totalPoint += point;
+	BackUp::GetInstance()->SetPoint(this->totalPoint);
 	EffectPoint* effectPoint = new EffectPoint();
 	effectPoint->SetPosition(x, y);
 	effectPoint->SetAnimationSet(tmp_ani_set);

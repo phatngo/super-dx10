@@ -3,6 +3,7 @@
 #include "Timer.h"
 #include "EffectPoint.h"
 #include "Utils.h"
+#include "BackUp.h"
 
 #define MARIO_WALKING_SPEED_START	0.0001f 
 #define MARIO_WALKING_SPEED_MAX		0.15f
@@ -218,7 +219,7 @@ public:
 	void Reset();
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void AddPoint(float x, float y, int point = EFFECT_POINT_100);
-	void AddMoney() { this->totalMoney++; }
+	void AddMoney() { ++this->totalMoney; BackUp::GetInstance()->SetMoney(this->totalMoney);}
 	int GetPoint() { return this->totalPoint; }
 	int GetMoney() { return this->totalMoney; }
 	void SetMaxXCoordinate(float maxXCoordinate) { this->maxXcoordinate = maxXCoordinate; }
