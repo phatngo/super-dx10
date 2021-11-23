@@ -48,6 +48,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(true);
 		switchSceneTimer.Reset();
 		CGame::GetInstance()->SwitchScene(WORLD_SCENE);
+		isDestroyed = true;
+		return;
 	}
 	if (isPipedUp) {
 		if (start_Y - y >= MARIO_DY_GET_OUT_FROM_PIPE) {
@@ -569,6 +571,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 
 void CMario::Render()
 {
+	if (isDestroyed) return;
 	float alpha = ALPHA;
 	if (untouchable) alpha = UNTOUCHABLE_ALPHA;
 	ani = -1;

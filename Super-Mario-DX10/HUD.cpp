@@ -374,7 +374,9 @@ void HUD::Render() {
 	animation_set->at(HUD_GENERAL_ANI)->Render(this->x + CCamera::GetInstance()->GetCameraX(),this->y);
 	unsigned int i;
 	for (i = 0; i < POINT_DIGIT_NUMBER; i++) {
-		pointDigits[i]->Render();
+		if (pointDigits.size() != 0) {
+			pointDigits[i]->Render();
+		}
 	}
 
 	for (i = 0; i < moneyDigits.size(); i++) {

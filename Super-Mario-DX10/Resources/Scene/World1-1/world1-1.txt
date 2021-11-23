@@ -3,7 +3,7 @@
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas, 4 = Block
 # MARIO
 #0	2200	300	1
-0	2680	384	1
+0	80	384	1
 #0	580	384	1
 # === Brick === 
 # ---- platform brick ----
