@@ -363,11 +363,6 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			iconPTimerOn.Start();
 		}
 	}
-
-
-	
-
-
 }
 
 void HUD::Render() {
