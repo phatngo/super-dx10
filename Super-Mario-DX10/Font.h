@@ -36,7 +36,7 @@ class Font : public CGameObject
 public:
 	Font(float x, float y);
 	virtual void Render();
-	virtual void Update(DWORD dt) {};
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void GetBoundingBox(float& oLeft, float& oTop, float& oRight, float& oBottom) {};
 	void SetAni(int ani);
 };

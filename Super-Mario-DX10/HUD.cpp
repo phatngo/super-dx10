@@ -17,7 +17,6 @@ HUD::HUD() {
 
 void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	
-
 	int totalPoint = BackUp::GetInstance()->GetPoint();
 	int i;
 	pointDigits.clear();
@@ -403,6 +402,7 @@ void HUD::Render() {
 				CCamera::GetInstance()->GetCameraX() + iconPPositionX,
 				this->y + iconPPositionY);
 		}
+		
 	}
 
 }

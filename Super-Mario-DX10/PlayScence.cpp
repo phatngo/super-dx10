@@ -555,12 +555,22 @@ void CPlayScene::Render()
 */
 void CPlayScene::Unload()
 {
-	for (unsigned int i = 0; i < objects.size(); i++)
-		delete objects[i];
+	if (player != nullptr)
+		delete player;
 
 	objects.clear();
+	units.clear();
+
+	objectsRenderFirst.clear();
+	objectsRenderSecond.clear();
+	objectsRenderThird.clear();
 	
-	player = NULL;
+	delete hud;
+
+	current_map = nullptr;
+	player = nullptr;
+	grid = nullptr;
+	hud = nullptr;
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }

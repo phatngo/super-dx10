@@ -44,6 +44,11 @@ CMario::CMario(float x, float y) : CGameObject()
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJECT> *objects)
 {
+	if (switchSceneTimer.IsStarted() && switchSceneTimer.ElapsedTime() >= 1000) {
+		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(true);
+		switchSceneTimer.Reset();
+		CGame::GetInstance()->SwitchScene(WORLD_SCENE);
+	}
 	if (isPipedUp) {
 		if (start_Y - y >= MARIO_DY_GET_OUT_FROM_PIPE) {
 			//isPipedDown = false;
@@ -524,7 +529,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 			Card* card = dynamic_cast<Card*>(e->obj);
 			if (e->ny > 0) {
 				card->SetState(CARD_STATE_FLY_UP);
-				CGame::GetInstance()->GetCurrentScene()->SetSceneDone();
+				CGame::GetInstance()->GetCurrentScene()->SetSceneDone(true);
+				switchSceneTimer.Start();
 			}
             }
 		}

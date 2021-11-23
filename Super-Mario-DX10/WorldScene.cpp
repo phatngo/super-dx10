@@ -172,8 +172,6 @@ void CWorldScene::_ParseSection_EXTRA_INFORMATION(string line)
 
 	vector<string> tokens = split(line);
 
-	DebugOut(L"[INFO] size: %d \n", tokens.size());
-
 	if (tokens.size() < 1) return; // skip invalid lines
 
 
@@ -181,15 +179,12 @@ void CWorldScene::_ParseSection_EXTRA_INFORMATION(string line)
 	{
 	case EXTRA_INFO_FIRST_POINT_IN_HUD_POSITION:
 		hud->SetFirstPointPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
-		DebugOut(L"[INFO] EXTRA_INFO_FIRST_POINT_IN_HUD_POSITION \n");
 		break;
 	case EXTRA_INFO_LAST_POINT_IN_HUD_POSITION:
 		hud->SetLastMoneyPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
-		DebugOut(L"[INFO] EXTRA_INFO_LAST_POINT_IN_HUD_POSITION \n");
 		break;
 	case EXTRA_INFO_LIVE_IN_HUD_POSITION:
 		hud->SetLivePosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
-		DebugOut(L"EXTRA_INFO_LIVE_IN_HUD_POSITION \n");
 		break;
 	case HUD_INITIAL_POSITION_COORDINATE:
 		hud->SetPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
@@ -197,19 +192,15 @@ void CWorldScene::_ParseSection_EXTRA_INFORMATION(string line)
 		break;
 	case EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION:
 		hud->SetFirstTimerDigitPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
-		DebugOut(L"EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION \n");
 		break;
 	case EXTRA_INFO_FIRST_POWER_ARROW_IN_HUD_POSITION:
 		hud->SetFirstPowerArrowPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
-		DebugOut(L"EXTRA_INFO_FIRST_POWER_ARROW_IN_HUD_POSITION \n");
 		break;
 	case EXTRA_INFO_ICONP_IN_HUD_POSITION:
 		hud->SetIconPPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
-		DebugOut(L"EXTRA_INFO_ICONP_IN_HUD_POSITION \n");
 		break;
 	case EXTRA_INFO_ICON_MARIO_IN_HUD_POSITION:
 		hud->SetIconMarioPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
-		DebugOut(L"EXTRA_INFO_ICON_MARIO_IN_HUD_POSITION \n");
 		break;
 	default:
 		break;
@@ -219,9 +210,8 @@ void CWorldScene::_ParseSection_EXTRA_INFORMATION(string line)
 void CWorldScene::_ParseSection_OBJECTS(string line)
 {
 	vector<string> tokens = split(line);
-
 	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
-
+	//objects.clear();
 	if (tokens.size() < 3) return; // skip invalid lines - an object set must have at least id, x, y
 	int tag = 0, option_tag_1 = 0, option_tag_2 = 0;
 	int object_type = atoi(tokens[0].c_str());
@@ -272,9 +262,11 @@ void CWorldScene::_ParseSection_OBJECTS(string line)
 			if (tag == OBJECT_TYPE_HAMMER)
 				obj->SetSpeed(MARIO_WALKING_SPEED_MIN / 2, 0);
 		}
+		DebugOut(L"[INFO] World object created!\n");
 		break;
 	case WORLD_SCENE_HUD:
 		hud = new HUD();
+		DebugOut(L"[INFO] HUD created!\n");
 		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
@@ -300,7 +292,7 @@ void CWorldScene::Load()
 	cam = CCamera::GetInstance();
 	cam->SetCameraPosition(CAMERA_WORLD_SCENE_POSTION_X, CAMERA_WORLD_SCENE_POSTION_Y);
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
-
+	DebugOut(L"object size1: %d \n", objects.size());
 	ifstream f;
 	f.open(sceneFilePath);
 
@@ -349,13 +341,26 @@ void CWorldScene::Load()
 	}
 
 	f.close();
-
+	DebugOut(L"object size2: %d \n", objects.size());
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
+	for (int i = 0; i < objects.size(); i++) {
+		float x = objects[i]->GetStartX();
+		float y = objects[i]->GetStartY();
+		DebugOut(L"x,y: %f,%f \n", x, y);
+	}
+	float px = player->GetStartX();
+	float py = player->GetStartY();
+	DebugOut(L"px,py: %f,%f \n", px, py);
+	float hx = hud->GetStartX();
+	float hy = hud->GetStartY();
+	DebugOut(L"hx,hy: %f,%f \n", hx, hy);
 }
 
 void CWorldScene::Update(DWORD dt)
 {
+	DebugOut(L"Update \n");
 	vector<LPGAMEOBJECT> coObjects;
+	coObjects.clear();
 	for (size_t i = 1; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
@@ -390,6 +395,12 @@ void CWorldScene::Unload()
 
 	objects.clear();
 
+	delete current_map;
+	delete hud;
+
+	player = nullptr;
+	current_map = nullptr;
+	hud = nullptr;
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }

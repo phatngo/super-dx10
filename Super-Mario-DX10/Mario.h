@@ -205,6 +205,7 @@ class CMario : public CGameObject
 	bool isPipedDown = false;
 	int pipeDirection = -1;
 	Timer stopPipingTimer;
+	Timer switchSceneTimer;
 	int lives = 0;
 public: 
 	int GetMarioLives() { return this->lives; }
