@@ -56,7 +56,14 @@ public:
 	};
 	void ChooseScene()
 	{
-		CGame::GetInstance()->SwitchScene(sceneId);
+		if (sceneId != 0) {
+			CGame::GetInstance()->SwitchScene(sceneId);
+		}
+		else {
+			if (BackUp::GetInstance()->GetCurrentSceneId() > 0) {
+				CGame::GetInstance()->SwitchScene(BackUp::GetInstance()->GetCurrentSceneId());
+			}
+		}
 	}
 };
 

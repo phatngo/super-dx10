@@ -188,7 +188,6 @@ void CWorldScene::_ParseSection_EXTRA_INFORMATION(string line)
 		break;
 	case HUD_INITIAL_POSITION_COORDINATE:
 		hud->SetPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
-		DebugOut(L"HUD_INITIAL_POSITION_COORDINATE \n");
 		break;
 	case EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION:
 		hud->SetFirstTimerDigitPosition((float)atof(tokens[1].c_str()), (float)atof(tokens[2].c_str()));
@@ -447,7 +446,7 @@ void CWorldScenceKeyHandler::OnKeyDown(int KeyCode)
 				player->SetState(PLAYER_STATE_DOWN);
 			break;
 		case DIK_S:
-			if (player->sceneId > 0)
+			if (player->sceneId > 0 || BackUp::GetInstance()->GetCurrentSceneId() > 0)
 				player->ChooseScene();
 			DebugOut(L"Enter Map");
 			break;

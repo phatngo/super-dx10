@@ -90,6 +90,7 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						float x, y;
 						e->obj->GetPosition(x, y);
 						BackUp::GetInstance()->SetWorldPlayerPostion(x, y);
+						BackUp::GetInstance()->SetCurrentSceneId(sceneId);
 					}
 					else
 						sceneId = -1;

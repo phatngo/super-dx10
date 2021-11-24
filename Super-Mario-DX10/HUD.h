@@ -71,28 +71,13 @@ public:
 	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	virtual void GetBoundingBox(float& oLeft, float& oTop, float& oRight, float& oBottom) {};
-	void SetFirstPointPosition(float x, float y) { 
-		firstPointPositionX = x; firstPointPositionY = y; 
-		DebugOut(L"[INFO] EXTRA_INFO_FIRST_POINT_IN_HUD_POSITION \n");
-	}
+	void SetFirstPointPosition(float x, float y) { firstPointPositionX = x; firstPointPositionY = y; }
 	void SetLivePosition(float x, float y) { livePositionX = x; livePositionY = y; }
-	void SetLastMoneyPosition(float x, float y) { 
-		lastMoneyPositionX = x; lastMoneyPositionY = y; 
-	DebugOut(L"[INFO] EXTRA_INFO_LAST_POINT_IN_HUD_POSITION \n");
-	}
-	void SetFirstTimerDigitPosition(float x, float y) { 
-		firstTimerPositionX = x; firstTimerPositionY = y; 
-		DebugOut(L"EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION \n");
-	}
-	void SetFirstPowerArrowPosition(float x, float y) { firstPowerArrowPositionX = x; firstPowerArrowPositionY = y; 
-	DebugOut(L"EXTRA_INFO_FIRST_POWER_ARROW_IN_HUD_POSITION \n");
-	}
-	void SetIconPPosition(float x, float y) { iconPPositionX = x; iconPPositionY = y; 
-	DebugOut(L"EXTRA_INFO_ICONP_IN_HUD_POSITION \n");
-	}
-	void SetIconMarioPosition(float x, float y) { iconMarioPositionX = x; iconMarioPositionY = y; 
-	DebugOut(L"EXTRA_INFO_ICON_MARIO_IN_HUD_POSITION \n");
-	}
+	void SetLastMoneyPosition(float x, float y) { lastMoneyPositionX = x; lastMoneyPositionY = y; }
+	void SetFirstTimerDigitPosition(float x, float y) { firstTimerPositionX = x; firstTimerPositionY = y; }
+	void SetFirstPowerArrowPosition(float x, float y) { firstPowerArrowPositionX = x; firstPowerArrowPositionY = y; }
+	void SetIconPPosition(float x, float y) { iconPPositionX = x; iconPPositionY = y; }
+	void SetIconMarioPosition(float x, float y) { iconMarioPositionX = x; iconMarioPositionY = y; }
 	HUD();
 };
 
