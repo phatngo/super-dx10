@@ -85,8 +85,12 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					bool cl, cr, cu, cd;
 					tmp->GetMove(cl, cu, cr, cd);
 					SetMove(cl, cu, cr, cd);
-					if (e->obj->tag == OBJECT_TYPE_PORTAL)
+					if (e->obj->tag == OBJECT_TYPE_PORTAL) {
 						sceneId = tmp->GetSceneId();
+						float x, y;
+						e->obj->GetPosition(x, y);
+						BackUp::GetInstance()->SetWorldPlayerPostion(x, y);
+					}
 					else
 						sceneId = -1;
 				}

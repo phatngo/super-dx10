@@ -238,7 +238,14 @@ void CWorldScene::_ParseSection_OBJECTS(string line)
 			DebugOut(L"[ERROR] PLAYER object was created before!\n");
 			return;
 		}
-		obj = new CWorldPlayer(x, y);
+		float backup_x, backup_y;
+		BackUp::GetInstance()->GetWorldPlayerPostion(backup_x, backup_y);
+		if (backup_x == 0.0f && backup_y == 0.0f) {
+			obj = new CWorldPlayer(x, y);
+		}
+		else {
+			obj = new CWorldPlayer(backup_x, backup_y);
+		}
 		player = (CWorldPlayer*)obj;
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
@@ -279,8 +286,21 @@ void CWorldScene::_ParseSection_OBJECTS(string line)
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		hud->SetAnimationSet(ani_set);
 	}
-	if(object_type != WORLD_SCENE_HUD) {
+	if(object_type != WORLD_SCENE_HUD && object_type != WORLD_SCENE_PLAYER) {
 		obj->SetPosition(x, y);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		obj->SetAnimationSet(ani_set);
+		objects.push_back(obj);
+	}
+	if (object_type == WORLD_SCENE_PLAYER) {
+		float backup_x, backup_y;
+		BackUp::GetInstance()->GetWorldPlayerPostion(backup_x, backup_y);
+		if (backup_x == 0.0f || backup_y == 0.0f) {
+			obj->SetPosition(x, y);
+		}
+		else {
+			obj->SetPosition(backup_x, backup_y);
+		}
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 		obj->SetAnimationSet(ani_set);
 		objects.push_back(obj);
@@ -341,19 +361,6 @@ void CWorldScene::Load()
 	}
 
 	f.close();
-	DebugOut(L"object size2: %d \n", objects.size());
-	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
-	for (int i = 0; i < objects.size(); i++) {
-		float x = objects[i]->GetStartX();
-		float y = objects[i]->GetStartY();
-		DebugOut(L"x,y: %f,%f \n", x, y);
-	}
-	float px = player->GetStartX();
-	float py = player->GetStartY();
-	DebugOut(L"px,py: %f,%f \n", px, py);
-	float hx = hud->GetStartX();
-	float hy = hud->GetStartY();
-	DebugOut(L"hx,hy: %f,%f \n", hx, hy);
 }
 
 void CWorldScene::Update(DWORD dt)
