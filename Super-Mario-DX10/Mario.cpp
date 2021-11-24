@@ -27,7 +27,7 @@
 
 CMario::CMario(float x, float y) : CGameObject()
 {
-	level = MARIO_LEVEL_SMALL;
+	level = BackUp::GetInstance()->GetMarioLevel();
 	untouchable = 0;
 	SetState(MARIO_STATE_IDLE);
 	lives = MARIO_INITIAL_LIVES;
