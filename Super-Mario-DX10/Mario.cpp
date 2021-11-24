@@ -35,8 +35,8 @@ CMario::CMario(float x, float y) : CGameObject()
 	start_y = y; 
 	this->x = x; 
 	this->y = y; 
-	totalPoint = 0;
-	totalMoney = 0;
+	totalPoint = BackUp::GetInstance()->GetPoint();
+	totalMoney = BackUp::GetInstance()->GetMoney();
 	isKickingKoopas = false;
 	isOnGround = true;
 	isChangeDirection = false;
