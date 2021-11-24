@@ -8,6 +8,8 @@
 
 #define UNKNOW_VALUE -1 
 
+#define WORLD_SCENE 0
+
 
 class CScene
 {
@@ -30,7 +32,7 @@ public:
 	virtual vector<LPGAMEOBJECT> GetSceneObjects();
 	virtual void  SetSceneObjects(vector<LPGAMEOBJECT> objects)=0;
 	virtual CMario* GetPlayer() = 0;
-	virtual void SetSceneDone() { this->isSceneDone = true; }
+	virtual void SetSceneDone(bool isSceneDone) { this->isSceneDone = isSceneDone; }
 	bool GetSceneDone() { return isSceneDone; }
 	int GetMapWidth() { return mapWidth; }
 };

@@ -15,7 +15,7 @@
 
 class Card: public CGameObject
 {
-	int currentFrame;
+	int currentFrame = -1;
   public:
 	void Render();
 	Card();

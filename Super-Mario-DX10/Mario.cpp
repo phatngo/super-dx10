@@ -23,10 +23,11 @@
 #include "Card.h"
 #include "Scence.h"
 #include "Sprites.h"
+#include "BackUp.h"
 
 CMario::CMario(float x, float y) : CGameObject()
 {
-	level = MARIO_LEVEL_SMALL;
+	level = BackUp::GetInstance()->GetMarioLevel();
 	untouchable = 0;
 	SetState(MARIO_STATE_IDLE);
 	lives = MARIO_INITIAL_LIVES;
@@ -34,8 +35,8 @@ CMario::CMario(float x, float y) : CGameObject()
 	start_y = y; 
 	this->x = x; 
 	this->y = y; 
-	totalPoint = 0;
-	totalMoney = 0;
+	totalPoint = BackUp::GetInstance()->GetPoint();
+	totalMoney = BackUp::GetInstance()->GetMoney();
 	isKickingKoopas = false;
 	isOnGround = true;
 	isChangeDirection = false;
@@ -43,6 +44,14 @@ CMario::CMario(float x, float y) : CGameObject()
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJECT> *objects)
 {
+	BackUp::GetInstance()->SetMarioLevel(level);
+	if (switchSceneTimer.IsStarted() && switchSceneTimer.ElapsedTime() >= 1000) {
+		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(false);
+		switchSceneTimer.Reset();
+		CGame::GetInstance()->SwitchScene(WORLD_SCENE);
+		isDestroyed = true;
+		return;
+	}
 	if (isPipedUp) {
 		if (start_Y - y >= MARIO_DY_GET_OUT_FROM_PIPE) {
 			//isPipedDown = false;
@@ -523,7 +532,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 			Card* card = dynamic_cast<Card*>(e->obj);
 			if (e->ny > 0) {
 				card->SetState(CARD_STATE_FLY_UP);
-				CGame::GetInstance()->GetCurrentScene()->SetSceneDone();
+				CGame::GetInstance()->GetCurrentScene()->SetSceneDone(true);
+				switchSceneTimer.Start();
 			}
             }
 		}
@@ -562,6 +572,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 
 void CMario::Render()
 {
+	if (isDestroyed) return;
 	float alpha = ALPHA;
 	if (untouchable) alpha = UNTOUCHABLE_ALPHA;
 	ani = -1;
@@ -1080,7 +1091,8 @@ void CMario::SetState(int state)
 	case MARIO_STATE_DIE:
 		vy = -MARIO_DIE_DEFLECT_SPEED;
 		isFlyingToTheSky = false;
-		if (lives != 0) {
+		switchSceneTimer.Start();
+			if (lives != 0) {
 			lives--;
 		}
 		break;
@@ -1161,6 +1173,7 @@ void CMario::AddPoint(float x, float y, int point) {
 		break;
 	}
 	this->totalPoint += point;
+	BackUp::GetInstance()->SetPoint(this->totalPoint);
 	EffectPoint* effectPoint = new EffectPoint();
 	effectPoint->SetPosition(x, y);
 	effectPoint->SetAnimationSet(tmp_ani_set);

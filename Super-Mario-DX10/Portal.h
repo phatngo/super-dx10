@@ -16,10 +16,10 @@
 
 class CPortal : public CGameObject
 {
-	int scene_id;	// target scene to switch to 
+	int scene_id = -1;	// target scene to switch to 
 
-	int width;
-	int height;
+	int width = 0;
+	int height = 0;
 public:
 	float start_x, start_y;
 	bool pipeUp = false;

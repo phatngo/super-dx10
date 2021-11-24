@@ -28,9 +28,9 @@
 
 class CQuestionBrick : public CGameObject
 {
-	bool isObjectCreated;
+	bool isObjectCreated = false;
 	Timer pointAppearanceTimer;
-	int repeatTime;
+	int repeatTime = 0;
 public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();

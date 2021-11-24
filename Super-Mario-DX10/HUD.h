@@ -23,7 +23,6 @@
 #define POINT_DIGIT_NUMBER                  7
 #define TIMER_DIGIT_NUMBER                  3
 
-#define UNKNOWN_VALUE -1.0f
 #define TOTAL_GAME_TIME 300
 #define TIME_TO_CHANGE_SECOND 800
 #define POWERMELTER_FILLED_ARROW_SPRITE 50005
@@ -31,6 +30,8 @@
 #define MARIO_ICON_SPRITE 50003
 #define ICON_P_ON_TIME 100
 #define ICON_P_OFF_TIME 500
+#define HUD_GENERAL_ANI 0
+#define HUD_ANI_SET_ID 127
 
 
 class HUD : public CGameObject
@@ -39,28 +40,28 @@ class HUD : public CGameObject
 	vector<Font*>pointDigits;
 	vector<Font*>moneyDigits;
 	vector<Font*>gameTimerDigits;
-	int power;
-	float firstPointPositionX = UNKNOWN_VALUE;
-	float firstPointPositionY = UNKNOWN_VALUE;
-	float lastMoneyPositionX = UNKNOWN_VALUE;
-	float lastMoneyPositionY = UNKNOWN_VALUE;
-	float preScene_y;
+	unsigned int power;
+	float firstPointPositionX = 0.0f;
+	float firstPointPositionY = 0.0f;
+	float lastMoneyPositionX = 0.0f;
+	float lastMoneyPositionY = 0.0f;
+	float preScene_y = 0.0f;
 	Font* mario_lives;
-	float livePositionX;
-	float livePositionY;
-	float firstTimerPositionX;
-	float firstTimerPositionY;
-	float firstPowerArrowPositionX;
-	float firstPowerArrowPositionY;
-	float iconPPositionX;
-	float iconPPositionY;
-	float iconMarioPositionX;
-	float iconMarioPositionY;
-	int game_time;
+	float livePositionX = 0.0f;
+	float livePositionY = 0.0f;
+	float firstTimerPositionX = 0.0f;
+	float firstTimerPositionY = 0.0f;
+	float firstPowerArrowPositionX = 0.0f;
+	float firstPowerArrowPositionY = 0.0f;
+	float iconPPositionX = 0.0f;
+	float iconPPositionY = 0.0f;
+	float iconMarioPositionX = 0.0f;
+	float iconMarioPositionY = 0.0f;
+	int game_time = 0;
 	Timer timer;
 	Timer iconPTimerOn;
-	bool isIconPBlinking;
-	Timer iconPTimerOff;
+	bool isIconPBlinking = false;
+	Timer iconPTimerOff ;
 
 public:
 

@@ -166,7 +166,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 	LPANIMATION ani = new CAnimation();
 
 	int ani_id = atoi(tokens[0].c_str());
-	for (int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
+	for (unsigned int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
 	{
 		int sprite_id = atoi(tokens[i].c_str());
 		int frame_time = atoi(tokens[i+1].c_str());
@@ -189,7 +189,7 @@ void CPlayScene::_ParseSection_ANIMATION_SETS(string line)
 
 	CAnimations *animations = CAnimations::GetInstance();
 
-	for (int i = 1; i < tokens.size(); i++)
+	for (unsigned int i = 1; i < tokens.size(); i++)
 	{
 		int ani_id = atoi(tokens[i].c_str());
 		
@@ -211,10 +211,10 @@ void CPlayScene::_ParseSection_EXTRA_INFORMATION(string line)
 	switch (atoi(tokens[0].c_str()))
 	{
 	case EXTRA_INFO_FIRST_POINT_IN_HUD_POSITION:
-		hud->SetFirstPointPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+		hud->SetFirstPointPosition((float) atof(tokens[1].c_str()), (float) atof(tokens[2].c_str()));
 		break;
 	case EXTRA_INFO_LAST_POINT_IN_HUD_POSITION:
-		hud->SetLastMoneyPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+		hud->SetLastMoneyPosition((float) atof(tokens[1].c_str()), (float) atof(tokens[2].c_str()));
 		break;
 	case EXTRA_INFO_CAMERA_STANDARD_Y_COORDINATE:
 		CCamera::GetInstance()->SetStandardCameraPositionY(atoi(tokens[1].c_str()));
@@ -223,25 +223,25 @@ void CPlayScene::_ParseSection_EXTRA_INFORMATION(string line)
 		CCamera::GetInstance()->SetCameraFurthestPositionY(atoi(tokens[1].c_str()));
 		break;
 	case EXTRA_INFO_MARIO_MAX_X_COORDINATE:
-		player->SetMaxXCoordinate(atoi(tokens[1].c_str()));
+		player->SetMaxXCoordinate((float)atof(tokens[1].c_str()));
 		break;
 	case EXTRA_INFO_LIVE_IN_HUD_POSITION:
-		hud->SetLivePosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+		hud->SetLivePosition((float) atof(tokens[1].c_str()), (float) atof(tokens[2].c_str()));
 		break;
 	case HUD_INITIAL_POSITION_COORDINATE:
-		hud->SetPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+		hud->SetPosition((float) atof(tokens[1].c_str()), (float) atof(tokens[2].c_str()));
 		break;
 	case EXTRA_INFO_FIRST_TIMER_DIGIT_IN_HUD_POSITION:
-		hud->SetFirstTimerDigitPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+		hud->SetFirstTimerDigitPosition((float) atof(tokens[1].c_str()), (float) atof(tokens[2].c_str()));
 		break;
 	case EXTRA_INFO_FIRST_POWER_ARROW_IN_HUD_POSITION:
-		hud->SetFirstPowerArrowPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+		hud->SetFirstPowerArrowPosition((float) atof(tokens[1].c_str()), (float) atof(tokens[2].c_str()));
 		break;
 	case EXTRA_INFO_ICONP_IN_HUD_POSITION:
-		hud->SetIconPPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+		hud->SetIconPPosition((float) atof(tokens[1].c_str()), (float) atof(tokens[2].c_str()));
 		break;
 	case EXTRA_INFO_ICON_MARIO_IN_HUD_POSITION:
-		hud->SetIconMarioPosition(atof(tokens[1].c_str()), atof(tokens[2].c_str()));
+		hud->SetIconMarioPosition((float) atof(tokens[1].c_str()), (float) atof(tokens[2].c_str()));
 		break;
 	default:
 		break;
@@ -272,8 +272,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float x = UNKNOWN_VALUE, y = UNKNOWN_VALUE;
 		int ani_set_id = UNKNOWN_VALUE;
 		if (object_type != OBJECT_TYPE_GRID) {
-			x = atof(tokens[1].c_str());
-			y = atof(tokens[2].c_str());
+			x = (float) atof(tokens[1].c_str());
+			y = (float) atof(tokens[2].c_str());
 			ani_set_id = atoi(tokens[3].c_str());
 		}
 
@@ -294,7 +294,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		CGameObject* obj = NULL;
 		CGameObject* obj_of_questionBrick = NULL;
-		LPANIMATION_SET ani_set_of_obj;
+		LPANIMATION_SET ani_set_of_obj = nullptr;
 
 		switch(object_type) 
 		{
@@ -555,12 +555,22 @@ void CPlayScene::Render()
 */
 void CPlayScene::Unload()
 {
-	for (int i = 0; i < objects.size(); i++)
-		delete objects[i];
+	if (player != nullptr)
+		delete player;
 
 	objects.clear();
+	units.clear();
+
+	objectsRenderFirst.clear();
+	objectsRenderSecond.clear();
+	objectsRenderThird.clear();
 	
-	player = NULL;
+	delete hud;
+
+	current_map = nullptr;
+	player = nullptr;
+	grid = nullptr;
+	hud = nullptr;
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }

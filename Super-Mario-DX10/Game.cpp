@@ -8,6 +8,7 @@
 #include "HUD.h"
 #include "Camera.h"
 #include "Textures.h"
+#include "WorldScene.h"
 
 CGame* CGame::__instance = NULL;
 
@@ -495,8 +496,14 @@ void CGame::_ParseSection_SCENES(string line)
 	int id = atoi(tokens[0].c_str());
 	LPCWSTR path = ToLPCWSTR(tokens[1]);
 
-	LPSCENE scene = new CPlayScene(id, path);
-	scenes[id] = scene;
+	if(id == WORLD_SCENE){
+		LPSCENE scene = new CWorldScene(id, path);
+		scenes[id] = scene;
+	}
+	else {
+		LPSCENE scene = new CPlayScene(id, path);
+		scenes[id] = scene;
+	}
 
 }
 
@@ -545,6 +552,12 @@ void CGame::SwitchScene(int scene_id)
 
 	scenes[current_scene]->Unload();
 
+	CTextures::GetInstance()->Clear();
+	CSprites::GetInstance()->Clear();
+	CAnimations::GetInstance()->Clear();
+	CAnimationSets::GetInstance()->Clear();
+
+
 	current_scene = scene_id;
 	LPSCENE s = scenes[current_scene];
 	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
@@ -592,7 +605,7 @@ void CGame::SwitchExtraScene(int scene_id, float start_x, float start_y, bool pi
 	if (isHaveToReload)
 		s->Load();
 	omario->SetIsPipe(isPipeDown);
-	((CPlayScene*)scenes[current_scene])->GetHUD()->SetAnimationSet(CAnimationSets::GetInstance()->Get(127));
+	((CPlayScene*)scenes[current_scene])->GetHUD()->SetAnimationSet(CAnimationSets::GetInstance()->Get(HUD_ANI_SET_ID));
 }
 
 void CGame::SwitchBackToOldScene(int scene_id, float start_x, float start_y, bool pipeUp) {
@@ -622,7 +635,7 @@ void CGame::SwitchBackToOldScene(int scene_id, float start_x, float start_y, boo
 	omario->SetPosition(start_x, start_y);
 	((CPlayScene*)scenes[current_scene])->SetPlayer(omario);
 
-	((CPlayScene*)scenes[current_scene])->GetHUD()->SetAnimationSet(CAnimationSets::GetInstance()->Get(127));
+	((CPlayScene*)scenes[current_scene])->GetHUD()->SetAnimationSet(CAnimationSets::GetInstance()->Get(HUD_ANI_SET_ID));
 
 	//load extra scene if necessary
 	if (isHaveToReload) {

@@ -3,22 +3,24 @@
 
 
 #define CAMERA_EXTRA_Y 40
+#define CAMERA_WORLD_SCENE_POSTION_X -9.0f
+#define CAMERA_WORLD_SCENE_POSTION_Y -17.0f
 
 
 class CCamera
 {
 
 	static CCamera* __instance;
-	int cameraPositionY_prescene;
-	int cameraPositionX;
-	int cameraPositionY;
-	float playerStartX;
-	int standardCameraPositionY;
-	int cameraFurthestPositionY;
-	int preScene_standardCameraPositionY;
-	int preScene_furthestCameraPositionY;
+	int cameraPositionY_prescene = 0;
+	int cameraPositionX = 0;
+	int cameraPositionY = 0;
+	float playerStartX = 0.0f;
+	int standardCameraPositionY = 0;
+	int cameraFurthestPositionY = 0;
+	int preScene_standardCameraPositionY = 0;
+	int preScene_furthestCameraPositionY = 0;
 	bool isAbove = false;
-	int mapWidth;
+	int mapWidth = 0;
 public:
 	void SetPreSceneStandardCameraPositionY(int camY) { this->preScene_standardCameraPositionY = camY; }
 	int GetPreSceneStandardCameraPositionY() { return this->preScene_standardCameraPositionY; }
@@ -37,5 +39,7 @@ public:
 	bool IsAbove() { return this->isAbove; }
 	void SetIsAbove(bool b) { this->isAbove = b; }
 	void SetCameraPosition(float marioX);
+	void SetCameraPosition(float x, float y) { CGame::GetInstance()->SetCamPos(x, y); cameraPositionX = (int)x; cameraPositionY = (int)y; }
+	void GetWorldSceneCameraPosition(float& x, float& y) { x = (float) cameraPositionX; y = (float) cameraPositionY; }
 };
 

@@ -31,7 +31,7 @@ protected:
 	Unit* unit = NULL;
 	Grid* grid = NULL;
 
-	HUD* hud;
+	HUD* hud = nullptr;
 
 
 	//Camera
