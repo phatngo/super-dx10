@@ -44,6 +44,7 @@ CMario::CMario(float x, float y) : CGameObject()
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJECT> *objects)
 {
+	BackUp::GetInstance()->SetMarioLevel(level);
 	if (switchSceneTimer.IsStarted() && switchSceneTimer.ElapsedTime() >= 1000) {
 		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(false);
 		switchSceneTimer.Reset();

@@ -6,6 +6,7 @@
 #include "WorldScene.h"
 #include "WorldMapObject.h"
 #include "Game.h"
+#include "BackUp.h"
 
 CWorldPlayer::CWorldPlayer(float x, float y) : CGameObject()
 {
@@ -15,7 +16,6 @@ CWorldPlayer::CWorldPlayer(float x, float y) : CGameObject()
 	this->x = x;
 	this->y = y;
 	SetMove(false, false, true, false);
-	ani = WORLD_PLAYER_INITAL_ANI_SET_ID;
 }
 void CWorldPlayer::CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents)
 {
@@ -101,6 +101,9 @@ void CWorldPlayer::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 void CWorldPlayer::Render()
 {
+	ani = BackUp::GetInstance()->GetMarioLevel();
+	if (ani != MARIO_LEVEL_TAIL)
+		ani -= 1;
 	animation_set->at(ani)->Render(x, y);
 	RenderBoundingBox();
 }
