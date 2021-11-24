@@ -21,7 +21,7 @@ public:
 	int GetMarioLevel() { return this->level; }
 	void SetWorldPlayerPostion(float x, float y) { worldplayer_x = x; worldplayer_y = y; }
 	void GetWorldPlayerPostion(float& x, float& y) { x = worldplayer_x; y = worldplayer_y; }
-	void SetCurrentSceneId(int scene_id) { this->scene_id = scene_id; DebugOut(L"Set \n"); }
+	void SetCurrentSceneId(int scene_id) { this->scene_id = scene_id;}
 	int GetCurrentSceneId() { return this->scene_id; }
 };
 
