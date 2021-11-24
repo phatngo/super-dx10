@@ -358,7 +358,6 @@ void CWorldScene::Load()
 
 void CWorldScene::Update(DWORD dt)
 {
-	DebugOut(L"Update \n");
 	vector<LPGAMEOBJECT> coObjects;
 	coObjects.clear();
 	for (size_t i = 1; i < objects.size(); i++)

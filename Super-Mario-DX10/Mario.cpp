@@ -45,7 +45,7 @@ CMario::CMario(float x, float y) : CGameObject()
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJECT> *objects)
 {
 	if (switchSceneTimer.IsStarted() && switchSceneTimer.ElapsedTime() >= 1000) {
-		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(true);
+		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(false);
 		switchSceneTimer.Reset();
 		CGame::GetInstance()->SwitchScene(WORLD_SCENE);
 		isDestroyed = true;
@@ -1090,7 +1090,8 @@ void CMario::SetState(int state)
 	case MARIO_STATE_DIE:
 		vy = -MARIO_DIE_DEFLECT_SPEED;
 		isFlyingToTheSky = false;
-		if (lives != 0) {
+		switchSceneTimer.Start();
+			if (lives != 0) {
 			lives--;
 		}
 		break;
