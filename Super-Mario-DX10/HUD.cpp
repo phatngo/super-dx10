@@ -17,6 +17,7 @@ HUD::HUD() {
 
 void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	
+	//Update mario's point
 	int totalPoint = BackUp::GetInstance()->GetPoint();
 	int i;
 	pointDigits.clear();
@@ -221,6 +222,32 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	}
 	moneyDigits.push_back(font);
 
+	// Update Mario's lives
+	mario_lives = new Font(
+		livePositionX,
+		this->y + livePositionY
+	);
+	int lives = BackUp::GetInstance()->GetMarioLives();
+	switch (lives)
+	{
+	case DIGIT_0:
+		mario_lives->SetAni(ANI_0);
+		break;
+	case DIGIT_1:
+		mario_lives->SetAni(ANI_1);
+		break;
+	case DIGIT_2:
+		mario_lives->SetAni(ANI_2);
+		break;
+	case DIGIT_3:
+		mario_lives->SetAni(ANI_3);
+		break;
+	case DIGIT_4:
+		mario_lives->SetAni(ANI_4);
+		break;
+	default:
+		break;
+	}
 	
 	// Update things only happening when in playscene
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
@@ -242,33 +269,6 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		}
 		else {
 			this->y = this->start_Y;
-		}
-
-		// Update Mario's lives
-		mario_lives = new Font(
-			livePositionX,
-			this->y + livePositionY
-		);
-		int lives = player->GetMarioLives();
-		switch (lives)
-		{
-		case DIGIT_0:
-			mario_lives->SetAni(ANI_0);
-			break;
-		case DIGIT_1:
-			mario_lives->SetAni(ANI_1);
-			break;
-		case DIGIT_2:
-			mario_lives->SetAni(ANI_2);
-			break;
-		case DIGIT_3:
-			mario_lives->SetAni(ANI_3);
-			break;
-		case DIGIT_4:
-			mario_lives->SetAni(ANI_4);
-			break;
-		default:
-			break;
 		}
 
 		gameTimerDigits.clear();
@@ -382,9 +382,11 @@ void HUD::Render() {
 		CCamera::GetInstance()->GetCameraX() + iconMarioPositionX,
 		this->y + iconMarioPositionY);
 
+	if(mario_lives!=nullptr)
+	  mario_lives->Render();
+
 	if (dynamic_cast<CPlayScene*>(CGame::GetInstance()->GetCurrentScene())) {
 
-		mario_lives->Render();
 
 		for (i = 0; i < gameTimerDigits.size(); i++) {
 			gameTimerDigits[i]->Render();

@@ -30,7 +30,7 @@ CMario::CMario(float x, float y) : CGameObject()
 	level = BackUp::GetInstance()->GetMarioLevel();
 	untouchable = 0;
 	SetState(MARIO_STATE_IDLE);
-	lives = MARIO_INITIAL_LIVES;
+	lives = BackUp::GetInstance()->GetMarioLives();
 	start_x = x; 
 	start_y = y; 
 	this->x = x; 
@@ -44,6 +44,7 @@ CMario::CMario(float x, float y) : CGameObject()
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJECT> *objects)
 {
+	BackUp::GetInstance()->SetMarioLives(lives);
 	BackUp::GetInstance()->SetMarioLevel(level);
 	if (switchSceneTimer.IsStarted() && switchSceneTimer.ElapsedTime() >= 1000) {
 		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(false);
@@ -1091,10 +1092,10 @@ void CMario::SetState(int state)
 	case MARIO_STATE_DIE:
 		vy = -MARIO_DIE_DEFLECT_SPEED;
 		isFlyingToTheSky = false;
-		switchSceneTimer.Start();
-			if (lives != 0) {
+		if (lives != 0) {
 			lives--;
 		}
+		switchSceneTimer.Start();
 		break;
 	case MARIO_STATE_SIT:
 		if (level != MARIO_LEVEL_SMALL) {

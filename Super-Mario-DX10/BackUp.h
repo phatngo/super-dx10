@@ -10,6 +10,7 @@ private:
 	float worldplayer_x = 0.0f;
 	float worldplayer_y = 0.0f;
 	int scene_id = 0;
+	int mario_lives = 4;
 	static BackUp* __instance;
 public:
 	static BackUp* GetInstance();
@@ -23,5 +24,7 @@ public:
 	void GetWorldPlayerPostion(float& x, float& y) { x = worldplayer_x; y = worldplayer_y; }
 	void SetCurrentSceneId(int scene_id) { this->scene_id = scene_id;}
 	int GetCurrentSceneId() { return this->scene_id; }
+	void SetMarioLives(int mario_lives) { this->mario_lives = mario_lives; }
+	int GetMarioLives() { return this->mario_lives; }
 };
 
