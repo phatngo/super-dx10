@@ -207,6 +207,7 @@ class CMario : public CGameObject
 	Timer stopPipingTimer;
 	Timer switchSceneTimer;
 	int lives = 0;
+	bool isDead = false;
 public: 
 	int GetMarioLives() { return this->lives; }
 	Timer GetStopPipingTimer() { return this->stopPipingTimer; }

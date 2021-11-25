@@ -24,6 +24,8 @@
 #include "Scence.h"
 #include "Sprites.h"
 #include "BackUp.h"
+#include "Camera.h"
+
 
 CMario::CMario(float x, float y) : CGameObject()
 {
@@ -46,6 +48,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 {
 	BackUp::GetInstance()->SetMarioLives(lives);
 	BackUp::GetInstance()->SetMarioLevel(level);
+
 	if (switchSceneTimer.IsStarted() && switchSceneTimer.ElapsedTime() >= 1000) {
 		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(false);
 		switchSceneTimer.Reset();
@@ -53,6 +56,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 		isDestroyed = true;
 		return;
 	}
+	float hud_x, hud_y;
+	((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetHUD()->GetPosition(hud_x, hud_y);
+	if (!CCamera::GetInstance()->IsAbove() && this->y > hud_y) {
+		DebugOut(L"Die \n");
+		if(!switchSceneTimer.IsStarted())
+		switchSceneTimer.Start();
+	}
+
 	if (isPipedUp) {
 		if (start_Y - y >= MARIO_DY_GET_OUT_FROM_PIPE) {
 			//isPipedDown = false;
@@ -566,9 +577,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 		vy = -MARIO_PIPE_SPEED;
 		y += vy * dt;
 	}
-
-	
-
 }
 
 void CMario::Render()
