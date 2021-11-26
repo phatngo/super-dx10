@@ -8,7 +8,11 @@
 
 #define UNKNOW_VALUE -1 
 
-#define WORLD_SCENE 0
+#define SCENCE_TYPE_PLAY 2
+#define SCENCE_TYPE_WORLD 1
+#define SCENCE_TYPE_INTRO 0
+
+#define WORLD_SCENE_ID   0
 
 
 class CScene

@@ -52,7 +52,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	if (switchSceneTimer.IsStarted() && switchSceneTimer.ElapsedTime() >= 1000) {
 		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(false);
 		switchSceneTimer.Reset();
-		CGame::GetInstance()->SwitchScene(WORLD_SCENE);
+		CGame::GetInstance()->SwitchScene(WORLD_SCENE_ID);
 		isDestroyed = true;
 		return;
 	}

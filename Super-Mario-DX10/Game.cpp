@@ -491,12 +491,39 @@ void CGame::_ParseSection_SETTINGS(string line)
 void CGame::_ParseSection_SCENES(string line)
 {
 	vector<string> tokens = split(line);
-
+	int scene_type = -1;
+	LPSCENE scene;
 	if (tokens.size() < 2) return;
 	int id = atoi(tokens[0].c_str());
 	LPCWSTR path = ToLPCWSTR(tokens[1]);
+	if(tokens.size() > 3)
+		scene_type = atoi(tokens[2].c_str());
 
-	if(id == WORLD_SCENE){
+	switch (scene_type)
+	{
+	case SCENCE_TYPE_INTRO:
+		//will implement later
+		break;
+	case SCENCE_TYPE_WORLD: {
+		scene = new CWorldScene(id, path);
+		scenes[id] = scene;
+		break; 
+	}
+	case SCENCE_TYPE_PLAY: {
+		scene = new CPlayScene(id, path);
+		scenes[id] = scene;
+		break; 
+	}
+	default:
+		DebugOut(L"Scene unknown \n");
+		break;
+	}
+
+	/*
+	if (scene_type == SCENCE_TYPE_INTRO) {
+		//will implement later
+	}
+	else if(scene_type == SCENCE_TYPE_WORLD){
 		LPSCENE scene = new CWorldScene(id, path);
 		scenes[id] = scene;
 	}
@@ -504,7 +531,7 @@ void CGame::_ParseSection_SCENES(string line)
 		LPSCENE scene = new CPlayScene(id, path);
 		scenes[id] = scene;
 	}
-
+	*/
 }
 
 /*
