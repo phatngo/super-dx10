@@ -23,8 +23,6 @@ protected:
 	vector<LPGAMEOBJECT> objectsRenderFirst;
 	vector<LPGAMEOBJECT> objectsRenderSecond;
 	vector<LPGAMEOBJECT> objectsRenderThird;
-	CMap* current_map = NULL;
-	
 
 	//Grid
 	vector<Unit*> units;
@@ -32,10 +30,7 @@ protected:
 	Grid* grid = NULL;
 
 	HUD* hud = nullptr;
-
-
-	//Camera
-	CCamera* cam = NULL; 
+	CCamera* cam = NULL;
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_TILEMAP_DATA(string line);
