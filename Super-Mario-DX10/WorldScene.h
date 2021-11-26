@@ -16,7 +16,6 @@ class CWorldScene:public CScene
 {
 protected:			
 	vector<LPGAMEOBJECT> objects;
-	CMap* current_map = NULL;
 	HUD* hud = nullptr;
 	CCamera* cam = NULL;
 	CWorldPlayer* player = NULL;
@@ -34,11 +33,9 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-	virtual vector<LPGAMEOBJECT> GetSceneObjects();
 	CWorldPlayer* GetWorldPlayer() { return player; }
 	CMario* GetPlayer() { return (CMario*)player; }
 	//Added by myself
-	virtual void  SetSceneObjects(vector<LPGAMEOBJECT> objects);
 	void AddObjects(CGameObject* gameObj) {
 		this->objects.insert(this->objects.end() - 2, gameObj);
 	}

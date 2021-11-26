@@ -1,5 +1,6 @@
 #pragma once
 #include "Game.h"
+#include "Scence.h"
 
 
 #define CAMERA_EXTRA_Y 40

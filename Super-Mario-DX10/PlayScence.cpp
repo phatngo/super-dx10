@@ -576,15 +576,7 @@ void CPlayScene::Unload()
 }
 
 
-vector<LPGAMEOBJECT> CPlayScene::GetSceneObjects()
-{
-	return this->objects;
-}
 
-void CPlayScene::SetSceneObjects(vector<LPGAMEOBJECT> newObjects)
-{
-	this->objects = newObjects;
-}
 
 void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {

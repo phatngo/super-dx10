@@ -53,14 +53,14 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-	virtual vector<LPGAMEOBJECT> GetSceneObjects();
+	
 
 	//Added by myself
 	Unit* GetUnit() { return unit; }
 	Grid* GetGrid() { return grid; }
 
 	//Added by myself
-	virtual void  SetSceneObjects(vector<LPGAMEOBJECT> objects);
+	
 	void AddObjects(CGameObject* gameObj) { 
 		this->objects.insert(this->objects.end()-2, gameObj);
 	}
