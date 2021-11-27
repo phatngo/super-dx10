@@ -306,6 +306,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			obj->SetPosition(x, y);
 			LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 			obj->SetAnimationSet(ani_set);
+			obj->SetOriginalAniSet(ani_set);
 			objects.push_back(obj);
 		}
 		if (hud != NULL)

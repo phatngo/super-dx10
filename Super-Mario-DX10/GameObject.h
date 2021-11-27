@@ -75,6 +75,7 @@ public:
 	DWORD dt; 
 
 	LPANIMATION_SET animation_set;
+	LPANIMATION_SET original_animation_set;
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; start_X = x; start_Y = y; }
@@ -86,6 +87,8 @@ public:
 	int GetState() { return this->state; }
 	void SetTag(int tag) { this->tag = tag; }
 	void SetType(int type) { this->type = type; }
+	void SetOriginalAniSet(LPANIMATION_SET ani_set) { original_animation_set = ani_set; }
+	LPANIMATION_SET GetOriginalAniSet() { return original_animation_set; }
 
 	void RenderBoundingBox(int alpha = 32);
 
