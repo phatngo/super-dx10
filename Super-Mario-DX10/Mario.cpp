@@ -259,7 +259,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 							}
 						}
 					}
-					else if (e->nx != 0)
+					else if (e->nx != 0 || e->ny > 0)
 					{
 						//If mario is touchable
 						if (untouchable == 0)
