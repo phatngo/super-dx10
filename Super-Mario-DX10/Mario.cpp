@@ -44,6 +44,17 @@ CMario::CMario(float x, float y) : CGameObject()
 	isChangeDirection = false;
 }
 
+void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e, float x0) {
+	if (e->ny > 0) {
+		vy = -MARIO_JUMP_SPEED_Y;
+	}
+	if (e->nx != 0) {
+		x = x0 + dx;
+	}
+	e->obj->SetIsDestroyed();
+	AddMoney();
+}
+
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJECT> *objects)
 {
 	BackUp::GetInstance()->SetMarioLives(lives);
@@ -398,34 +409,26 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 			CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 			if (e->ny < 0) {
 				isOnGround = true;
-				if (brick->IsPipe() && brick->IsAbleToGoIn()) {
-					
-				}
-				else {
-					if (CGame::GetInstance()->GetCurrentScene()->GetSceneDone()) {
+				if (CGame::GetInstance()->GetCurrentScene()->GetSceneDone()) {
 						vx = MARIO_WALKING_SPEED_MAX;
-					}
 				}
 				}
 			}
 			if (dynamic_cast<CFlashAnimationBrick*>(e->obj)) {
-			if (e->ny < 0) {
-				isOnGround = true;
-				if (state == MARIO_STATE_RELEASE_JUMP)
-					SetState(MARIO_STATE_IDLE);
-			}
+				if (e->obj->GetState() == COIN_STATE) {
+					OnCollisionWithCoin(e, x0);
+				}
+				else {
+					if (e->ny < 0) {
+						isOnGround = true;
+						if (state == MARIO_STATE_RELEASE_JUMP)
+							SetState(MARIO_STATE_IDLE);
+					}
+				}
             }
 			if (dynamic_cast<CCoin*>(e->obj))
 			{
-				CCoin* coin = dynamic_cast<CCoin*>(e->obj);
-				if (e->ny > 0) {
-					vy = -MARIO_JUMP_SPEED_Y;
-				}
-				if (e->nx != 0) {
-					x = x0 + dx;
-				}
-				coin->SetIsDestroyed();
-				AddMoney();
+				OnCollisionWithCoin(e, x0);
 			}
 			if (dynamic_cast<CFireBullet*>(e->obj)) {
 				if (untouchable == 0)
