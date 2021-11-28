@@ -290,15 +290,20 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 
 	if (state == KOOPAS_STATE_IN_SHELL) {
-		if (!isHold) {
+		
 			if (shellTimer.ElapsedTime() >= KOOPAS_SHELL_TIME && shellTimer.IsStarted()) {
 				SetState(KOOPAS_STATE_SHAKE);
 				shellTimer.Reset();
 			}
-		}
+		
 	}
     else if (state == KOOPAS_STATE_SHAKE) {
 		if (respawnTimer.ElapsedTime() >= KOOPPAS_RESPAWN_TIME && respawnTimer.IsStarted()) {
+			if (isHold) {
+				nx = mario->nx;
+				isHold = false;
+				isMarioThrow = false;
+			}
 			SetState(KOOPAS_STATE_WALKING);
 			respawnTimer.Reset();
 		}
@@ -337,7 +342,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			break;
 		}
 	}
-	else if (isHold && isMarioThrow) {
+	else if (isHold && isMarioThrow && state == KOOPAS_STATE_IN_SHELL) {
 		this->isHold = false;
 		this->SetState(KOOPAS_STATE_SPINNING);
 	}
@@ -403,9 +408,7 @@ void CKoopas::SetState(int state)
 	case KOOPAS_STATE_IN_SHELL:
 		y += KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_SHELL_HEIGHT;
 		vx = 0;
-		if (!isHold) {
-			shellTimer.Start();
-		}
+		shellTimer.Start();
 		vy = 0;
 		break;
 	case KOOPAS_STATE_DEATH:
