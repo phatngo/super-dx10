@@ -70,7 +70,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	float hud_x, hud_y;
 	((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetHUD()->GetPosition(hud_x, hud_y);
 	if (!CCamera::GetInstance()->IsAbove() && this->y > hud_y) {
-		DebugOut(L"Die \n");
 		if(!switchSceneTimer.IsStarted())
 		switchSceneTimer.Start();
 	}
@@ -112,10 +111,25 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 
 	// Simple fall down
 	if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX) {
-		vy += 0;
+		if (vy < 0) {
+			if (fallDownTimer.IsStarted() && fallDownTimer.ElapsedTime() >= MARIO_FALL_DOWN_TIME) {
+				vy = 0;
+				vy += (MARIO_GRAVITY * dt);
+				isFallingDown = true;
+			}
+			else {
+				vy += 0;
+			}
+		}
 	}
 	else {
 		vy += MARIO_GRAVITY * dt;
+	}
+
+	if (abs(vx) == 0) {
+		isFallingDown = false;
+		if(fallDownTimer.IsStarted())
+		fallDownTimer.Reset();
 	}
 
 
@@ -1067,8 +1081,10 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_JUMP:
 		if (isOnGround) {
-			if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX) {
+			if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX && !isFallingDown) {
 				vy = -MARIO_JUMP_SPEED_Y/2;
+				isFlyingToTheSky = true;
+				fallDownTimer.Start();
 			}
 			else {
 				vy = -MARIO_JUMP_SPEED_Y;

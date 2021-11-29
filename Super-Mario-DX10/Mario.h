@@ -14,6 +14,7 @@
 #define MARIO_SPEED_RUN_FLY_MAX	    0.40f
 #define MARIO_SPEED_RUN_FLY_MAX	    0.40f
 #define MARIO_PIPE_SPEED	        0.02f
+#define MARIO_FALL_DOWN_TIME        1000
 
 
 #define MARIO_JUMP_SPEED_Y		                    0.43f
@@ -193,6 +194,7 @@ class CMario : public CGameObject
 	bool isOnGround = true;
 	Timer kickTimer;
 	Timer pipeTimer;
+	Timer fallDownTimer;
 	bool isChangeDirection;
 	float postion_y = 0.0f;
 	bool isSitDown = false;
@@ -206,6 +208,7 @@ class CMario : public CGameObject
 	bool isPipedUp = false;
 	bool isPipedDown = false;
 	int pipeDirection = -1;
+	bool isFallingDown = false;
 	Timer stopPipingTimer;
 	Timer switchSceneTimer;
 	int lives = 0;
