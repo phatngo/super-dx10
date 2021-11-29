@@ -88,12 +88,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	
 	if (!isHold) {
 		vx += ax * dt;
-		if (CGame::GetInstance()->IsKeyDown(DIK_Z) && (CGame::GetInstance()->IsKeyDown(DIK_RIGHT) || (CGame::GetInstance()->IsKeyDown(DIK_LEFT))) && abs(vx) >= MARIO_RUNNING_SPEED_MAX) {
-			if (vx >= MARIO_SPEED_RUN_FLY_MAX) {
-				vx = MARIO_SPEED_RUN_FLY_MAX;
-			}
-			else if (vx <= -MARIO_SPEED_RUN_FLY_MAX) {
-				vx = -MARIO_SPEED_RUN_FLY_MAX;
+		if (CGame::GetInstance()->IsKeyDown(DIK_Z) 
+			&& (CGame::GetInstance()->IsKeyDown(DIK_RIGHT) || (CGame::GetInstance()->IsKeyDown(DIK_LEFT))) 
+			&& abs(vx) >= MARIO_RUNNING_SPEED_MAX) {
+			if (isOnGround) {
+				if (vx >= MARIO_SPEED_RUN_FLY_MAX) {
+					vx = MARIO_SPEED_RUN_FLY_MAX;
+				}
+				else if (vx <= -MARIO_SPEED_RUN_FLY_MAX) {
+					vx = -MARIO_SPEED_RUN_FLY_MAX;
+				}
 			}
 		}
 		else {

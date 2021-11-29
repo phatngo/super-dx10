@@ -328,8 +328,11 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			}
 		}
 		//Update mario's power
+
 		if ((player->GetSpeedX() != 0 && CGame::GetInstance()->IsKeyDown(DIK_Z)) || power != 0) {
-			power = (unsigned int)(abs(player->GetSpeedX()) * NUMBER_OF_POWER_ARROW / MARIO_SPEED_RUN_FLY_MAX);
+			if (player->IsOnGround()) {
+				power = (unsigned int)(abs(player->GetSpeedX()) * NUMBER_OF_POWER_ARROW / MARIO_SPEED_RUN_FLY_MAX);
+			}
 		}
 		else {
 			power = 0;

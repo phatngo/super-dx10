@@ -244,4 +244,5 @@ public:
 	Timer GetPipeTimer() { return this->pipeTimer; }
 	float GetSpeedX() { return this->vx; }
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e, float x0);
+	bool IsOnGround() { return this->isOnGround; }
 };
