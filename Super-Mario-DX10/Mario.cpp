@@ -82,8 +82,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 		}
 	}
 
-	
-	
 	if (kickTimer.IsStarted() && kickTimer.ElapsedTime() >= KICK_TIME && isKickingKoopas) {
 		isKickingKoopas = false;
 		kickTimer.Reset();
@@ -114,7 +112,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 
 	// Simple fall down
 	if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX) {
-		isFlyingToTheSky = true;
 		vy += 0;
 	}
 	else {
@@ -1069,14 +1066,14 @@ void CMario::SetState(int state)
 		isFlyingToTheSky = false;
 		break;
 	case MARIO_STATE_JUMP:
-		if (isOnGround && !isReadyToRunMax) {
-			vy = -MARIO_JUMP_SPEED_Y;
-			isOnGround = false;
-		}
-		if (isOnGround && isReadyToRunMax) {
-			isFlyingToTheSky = true;
-			vy = -MARIO_JUMP_SPEED_Y;
-			ax = MARIO_ACCELERATION;
+		if (isOnGround) {
+			if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX) {
+				vy = -MARIO_JUMP_SPEED_Y/2;
+			}
+			else {
+				vy = -MARIO_JUMP_SPEED_Y;
+				isOnGround = false;
+			}
 		}
 		break; 
 	case MARIO_STATE_IDLE:

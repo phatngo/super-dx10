@@ -484,9 +484,6 @@ void CPlayScenceKeyHandler::OnKeyUp(int KeyCode)
 	if (KeyCode == DIK_LEFT && mario->IsHold()) {
 		mario->SetState(MARIO_STATE_IDLE);
 	}
-	if (KeyCode == DIK_Z) {
-		mario->SetIsReadyToRunMax(false);
-	}
 }
 
 
