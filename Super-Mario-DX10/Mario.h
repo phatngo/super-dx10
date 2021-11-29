@@ -171,6 +171,8 @@
 
 #define MARIO_INITIAL_LIVES 4
 
+#define SWITCH_SCENE_TIME 1000
+
 
 
 class CMario : public CGameObject

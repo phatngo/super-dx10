@@ -230,6 +230,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			}
 			else if (dynamic_cast<CFlashAnimationBrick*>(e->obj))
 			{
+				
 				CFlashAnimationBrick* flashAnimationBrick = dynamic_cast<CFlashAnimationBrick*>(e->obj);
 				if (e->ny < 0)
 				{

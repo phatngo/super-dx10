@@ -60,7 +60,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	BackUp::GetInstance()->SetMarioLives(lives);
 	BackUp::GetInstance()->SetMarioLevel(level);
 
-	if (switchSceneTimer.IsStarted() && switchSceneTimer.ElapsedTime() >= 1000) {
+	if (switchSceneTimer.IsStarted() && switchSceneTimer.ElapsedTime() >= SWITCH_SCENE_TIME) {
 		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(false);
 		switchSceneTimer.Reset();
 		CGame::GetInstance()->SwitchScene(WORLD_SCENE_ID);
