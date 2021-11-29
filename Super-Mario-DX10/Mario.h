@@ -14,7 +14,7 @@
 #define MARIO_SPEED_RUN_FLY_MAX	    0.40f
 #define MARIO_SPEED_RUN_FLY_MAX	    0.40f
 #define MARIO_PIPE_SPEED	        0.02f
-#define MARIO_FALL_DOWN_TIME        1000
+#define MARIO_FALL_DOWN_TIME        1200
 
 
 #define MARIO_JUMP_SPEED_Y		                    0.43f

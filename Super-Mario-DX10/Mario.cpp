@@ -117,9 +117,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX && isOnGround) {
 		if (vy < 0) {
 			if (fallDownTimer.IsStarted() && fallDownTimer.ElapsedTime() >= MARIO_FALL_DOWN_TIME) {
-				vy = 0;
-				vy += (MARIO_GRAVITY * dt);
 				isFallingDown = true;
+				vy = 0;
 			}
 			else {
 				vy += 0;
@@ -129,6 +128,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	else {
 		if (level == MARIO_LEVEL_TAIL) {
 			vy += MARIO_GRAVITY/2.0f * dt;
+		}
+		else {
+			vy += MARIO_GRAVITY * dt;
+		}
+	}
+
+	if (isFallingDown) {
+		if (level == MARIO_LEVEL_TAIL) {
+			vy += (MARIO_GRAVITY * dt)/5;
 		}
 		else {
 			vy += MARIO_GRAVITY * dt;
