@@ -16,10 +16,26 @@ void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	    y += dy;
 	
 	CMario* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+	float mLeft, mTop, mRight, mBottom;
+	float oLeft, oTop, oRight, oBottom;
+	if (player != NULL)
+	{
+		player->GetBoundingBox(mLeft, mTop, mRight, mBottom);
+		GetBoundingBox(oLeft, oTop, oRight, oBottom);
+		if (isColliding(floor(mLeft), mTop, ceil(mRight), mBottom) 
+			&& player->GetTailTurningTime().IsStarted()
+			&& oTop - mTop >= 12)
+		{
+			if (state != QUESTION_BRICK_ANI_STOP) {
+				if (state == QUESTION_BRICK_STATE_IDLE) {
+					SetState(QUESTION_BRICK_STATE_JUMPING);
+				}
+			}
+		}
+	}
 	switch (this->state)
 	{
 	case QUESTION_BRICK_STATE_JUMPING:
-		this->SetState(QUESTION_BRICK_STATE_FALLING);
 		if (tag == COIN_TAG) {
 			//Delay until coin disappears => Effect point appears
 			if (pointAppearanceTimer.IsStarted()) {
@@ -28,6 +44,7 @@ void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 				pointAppearanceTimer.Reset();
 			}
 		}
+		this->SetState(QUESTION_BRICK_STATE_FALLING);
 		break;
 	case QUESTION_BRICK_STATE_FALLING:
 		if (repeatTime <= 0) {
@@ -86,6 +103,9 @@ void CQuestionBrick::SetState(int state) {
 	case QUESTION_BRICK_STATE_JUMPING:
 	{
 		vy = -QUESTION_BRICK_JUMP_SPEED;
+		if (repeatTime == 0) {
+			isObjectCreated = true;
+		}
 		CreateObject();
 		if (tag == COIN_TAG) {
 			pointAppearanceTimer.Start();
@@ -109,6 +129,7 @@ void CQuestionBrick::SetState(int state) {
 }
 
 void CQuestionBrick::CreateObject() {
+	if (!isObjectCreated) {
 		switch (this->tag)
 		{
 		case COIN_TAG:
@@ -123,6 +144,7 @@ void CQuestionBrick::CreateObject() {
 		default:
 			break;
 		}
+	}
 }
 
 void CQuestionBrick::CreateCoin() {

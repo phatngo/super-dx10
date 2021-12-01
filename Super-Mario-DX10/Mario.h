@@ -6,10 +6,10 @@
 #include "BackUp.h"
 
 #define MARIO_WALKING_SPEED_START	0.0001f 
-#define MARIO_WALKING_SPEED_MAX		0.15f
+#define MARIO_WALKING_SPEED_MAX		0.10f
 #define MARIO_RUNNING_SPEED_MAX		0.20f
 #define MARIO_SPEED_MAX				0.25f
-#define MARIO_ACCELERATION			0.0007f
+#define MARIO_ACCELERATION			0.0005f
 #define MARIO_WALKING_SPEED_MIN		0.05f
 #define MARIO_SPEED_RUN_FLY_MAX	    0.40f
 #define MARIO_SPEED_RUN_FLY_MAX	    0.40f
@@ -21,7 +21,7 @@
 #define MARIO_JUMP_DEFLECT_SPEED                    0.3f
 
 #define MARIO_GRAVITY			    0.002f
-#define MARIO_ACCEL_WALK_X	        0.0005f
+#define MARIO_ACCEL_WALK_X	        0.0003f
 
 #define MARIO_DIE_DEFLECT_SPEED	 0.5f
 
@@ -176,7 +176,7 @@
 
 #define SWITCH_SCENE_TIME 1000
 
-#define TAIL_TURNING_TIMER 300
+#define TAIL_TURNING_TIMER 500
 
 
 
@@ -250,4 +250,5 @@ public:
 	float GetSpeedX() { return this->vx; }
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e, float x0);
 	bool IsOnGround() { return this->isOnGround; }
+	Timer GetTailTurningTime() { return tailTurningTimer; }
 };

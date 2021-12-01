@@ -78,7 +78,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 
 	if (isPipedUp) {
 		if (start_Y - y >= MARIO_DY_GET_OUT_FROM_PIPE) {
-			//isPipedDown = false;
 			isPipedUp = false;
 		}
 	}
@@ -94,7 +93,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 			if (isOnGround) {
 				if (level == MARIO_LEVEL_TAIL) {
 					if (!tailTurningTimer.IsStarted()
-						&& !isFlyingToTheSky) {
+						&& !isFlyingToTheSky && abs(vx) <= MARIO_WALKING_SPEED_MAX) {
 						tailTurningTimer.Start();
 					}
 				}
@@ -140,7 +139,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	}
 	else {
 		if (level == MARIO_LEVEL_TAIL) {
-			vy += MARIO_GRAVITY/2.0f * dt;
+			vy += MARIO_GRAVITY * dt;
 		}
 		else {
 			vy += MARIO_GRAVITY * dt;
@@ -149,7 +148,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 
 	if (isFallingDown) {
 		if (level == MARIO_LEVEL_TAIL) {
-			vy += (MARIO_GRAVITY * dt)/5;
+			vy += (MARIO_GRAVITY * dt);
 		}
 		else {
 			vy += MARIO_GRAVITY * dt;
@@ -440,7 +439,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 					if(e->obj->GetState()!= QUESTION_BRICK_STATE_STOP)
 						questionBrick->SetState(QUESTION_BRICK_STATE_JUMPING);	
 				}
-				else if (e->ny < 0) {
+				if (e->ny < 0) {
 					isOnGround = true;
 					if (state == MARIO_STATE_RELEASE_JUMP)
 						SetState(MARIO_STATE_IDLE);
@@ -724,10 +723,7 @@ void CMario::Render()
 				else if (vx == 0)
 				{
 					if (nx > 0) {
-						if (tailTurningTimer.IsStarted()) {
-							ani = MARIO_ANI_TAIL_TURNING_RIGHT;
-						}
-						else if (vy < 0) {
+						if (vy < 0) {
 							if (state == MARIO_STATE_JUMP)
 								ani = MARIO_ANI_TAIL_JUMPINGUP_RIGHT;
 							else
@@ -740,10 +736,7 @@ void CMario::Render()
 							ani = MARIO_ANI_TAIL_IDLE_RIGHT;
 					}
 					else {
-						if (tailTurningTimer.IsStarted()) {
-							ani = MARIO_ANI_TAIL_TURNING_LEFT;
-						}
-						else if (vy < 0) {
+						if (vy < 0) {
 							if (state == MARIO_STATE_JUMP)
 								ani = MARIO_ANI_TAIL_JUMPINGUP_LEFT;
 							else
@@ -1064,7 +1057,15 @@ void CMario::Render()
 			}
 
 		}
-		//DebugOut(L"ani: %d \n", ani);
+
+		if (tailTurningTimer.IsStarted()) {
+			if (nx > 0) {
+				ani = MARIO_ANI_TAIL_TURNING_RIGHT;
+			}
+			else {
+				ani = MARIO_ANI_TAIL_TURNING_LEFT;
+			}
+		}
 		animation_set->at(ani)->Render(x, postion_y, alpha);
 	}
 	if (isPipedDown) {
