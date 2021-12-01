@@ -29,7 +29,8 @@
 
 CMario::CMario(float x, float y) : CGameObject()
 {
-	level = BackUp::GetInstance()->GetMarioLevel();
+	level = MARIO_LEVEL_TAIL;
+	//level = BackUp::GetInstance()->GetMarioLevel();
 	untouchable = 0;
 	SetState(MARIO_STATE_IDLE);
 	lives = BackUp::GetInstance()->GetMarioLives();
@@ -42,6 +43,7 @@ CMario::CMario(float x, float y) : CGameObject()
 	isKickingKoopas = false;
 	isOnGround = true;
 	isChangeDirection = false;
+	
 }
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e, float x0) {
@@ -70,7 +72,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	float hud_x, hud_y;
 	((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetHUD()->GetPosition(hud_x, hud_y);
 	if (!CCamera::GetInstance()->IsAbove() && this->y > hud_y) {
-		if(!switchSceneTimer.IsStarted())
+		if(!switchSceneTimer.IsStarted() )
 		switchSceneTimer.Start();
 	}
 
@@ -88,15 +90,24 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	
 	if (!isHold) {
 		vx += ax * dt;
-		if (CGame::GetInstance()->IsKeyDown(DIK_A) 
-			&& (CGame::GetInstance()->IsKeyDown(DIK_RIGHT) || (CGame::GetInstance()->IsKeyDown(DIK_LEFT))) 
-			&& abs(vx) >= MARIO_RUNNING_SPEED_MAX) {
+		if (CGame::GetInstance()->IsKeyDown(DIK_A)) {
 			if (isOnGround) {
-				if (vx >= MARIO_SPEED_RUN_FLY_MAX) {
-					vx = MARIO_SPEED_RUN_FLY_MAX;
+				if (level == MARIO_LEVEL_TAIL) {
+					if (!tailTurningTimer.IsStarted()
+						&& !isFlyingToTheSky) {
+						tailTurningTimer.Start();
+					}
 				}
-				else if (vx <= -MARIO_SPEED_RUN_FLY_MAX) {
-					vx = -MARIO_SPEED_RUN_FLY_MAX;
+
+				if (!tailTurningTimer.IsStarted()
+					&&(CGame::GetInstance()->IsKeyDown(DIK_RIGHT) || (CGame::GetInstance()->IsKeyDown(DIK_LEFT)))
+					&& abs(vx) >= MARIO_RUNNING_SPEED_MAX) {
+					if (vx >= MARIO_SPEED_RUN_FLY_MAX) {
+						vx = MARIO_SPEED_RUN_FLY_MAX;
+					}
+					else if (vx <= -MARIO_SPEED_RUN_FLY_MAX) {
+						vx = -MARIO_SPEED_RUN_FLY_MAX;
+					}
 				}
 			}
 		}
@@ -109,7 +120,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 			}
 		}
 	}
-
+	if (tailTurningTimer.IsStarted() && tailTurningTimer.ElapsedTime() >= TAIL_TURNING_TIMER) {
+		tailTurningTimer.Reset();
+	}
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 
@@ -711,30 +724,37 @@ void CMario::Render()
 				else if (vx == 0)
 				{
 					if (nx > 0) {
-						if (vy < 0) {
+						if (tailTurningTimer.IsStarted()) {
+							ani = MARIO_ANI_TAIL_TURNING_RIGHT;
+						}
+						else if (vy < 0) {
 							if (state == MARIO_STATE_JUMP)
 								ani = MARIO_ANI_TAIL_JUMPINGUP_RIGHT;
 							else
 								ani = MARIO_ANI_TAIL_JUMPINGDOWN_RIGHT;
 						}
 						else if (state == MARIO_STATE_SIT) {
-							ani = MARIO_ANI_TAIL_SIT_LEFT;
+							ani = MARIO_ANI_TAIL_SIT_RIGHT;
 						}
 						else
 							ani = MARIO_ANI_TAIL_IDLE_RIGHT;
 					}
 					else {
-						if (vy < 0) {
+						if (tailTurningTimer.IsStarted()) {
+							ani = MARIO_ANI_TAIL_TURNING_LEFT;
+						}
+						else if (vy < 0) {
 							if (state == MARIO_STATE_JUMP)
 								ani = MARIO_ANI_TAIL_JUMPINGUP_LEFT;
 							else
 								ani = MARIO_ANI_TAIL_JUMPINGDOWN_LEFT;
 						}
-						if (state == MARIO_STATE_SIT) {
-							ani = MARIO_ANI_TAIL_SIT_RIGHT;
+						else if (state == MARIO_STATE_SIT) {
+							ani = MARIO_ANI_TAIL_SIT_LEFT;
 						}
-						else
+						else {
 							ani = MARIO_ANI_TAIL_IDLE_LEFT;
+						}
 					}
 				}
 				else if (vx > 0) {
@@ -746,15 +766,17 @@ void CMario::Render()
 							ani = MARIO_ANI_TAIL_BRAKING_LEFT;
 						}
 						else {
-							if (vx < MARIO_WALKING_SPEED_MAX) {
-								ani = MARIO_ANI_TAIL_WALKING_RIGHT;
-							}
-							else if (vx >= MARIO_WALKING_SPEED_MAX && vx < MARIO_SPEED_RUN_FLY_MAX) {
-								ani = MARIO_ANI_TAIL_WALKING_FAST_RIGHT;
-							}
-							else if (vx >= MARIO_SPEED_RUN_FLY_MAX) {
-								ani = MARIO_ANI_TAIL_MAX_SPEED_RIGHT;
-							}
+							
+								if (vx < MARIO_WALKING_SPEED_MAX) {
+									ani = MARIO_ANI_TAIL_WALKING_RIGHT;
+								}
+								else if (vx >= MARIO_WALKING_SPEED_MAX && vx < MARIO_SPEED_RUN_FLY_MAX) {
+									ani = MARIO_ANI_TAIL_WALKING_FAST_RIGHT;
+								}
+								else if (vx >= MARIO_SPEED_RUN_FLY_MAX) {
+									ani = MARIO_ANI_TAIL_MAX_SPEED_RIGHT;
+								}
+							
 						}
 					}
 				}
@@ -766,15 +788,17 @@ void CMario::Render()
 						if (ax > 0 && nx > 0)
 							ani = MARIO_ANI_TAIL_BRAKING_RIGHT;
 						else {
-							if (abs(vx) < MARIO_WALKING_SPEED_MAX) {
-								ani = MARIO_ANI_TAIL_WALKING_LEFT;
-							}
-							else if (abs(vx) >= MARIO_WALKING_SPEED_MAX && abs(vx) < MARIO_SPEED_RUN_FLY_MAX) {
-								ani = MARIO_ANI_TAIL_WALKING_FAST_LEFT;
-							}
-							else if (abs(vx) >= MARIO_SPEED_RUN_FLY_MAX) {
-								ani = MARIO_ANI_TAIL_MAX_SPEED_LEFT;
-							}
+						
+								if (abs(vx) < MARIO_WALKING_SPEED_MAX) {
+									ani = MARIO_ANI_TAIL_WALKING_LEFT;
+								}
+								else if (abs(vx) >= MARIO_WALKING_SPEED_MAX && abs(vx) < MARIO_SPEED_RUN_FLY_MAX) {
+									ani = MARIO_ANI_TAIL_WALKING_FAST_LEFT;
+								}
+								else if (abs(vx) >= MARIO_SPEED_RUN_FLY_MAX) {
+									ani = MARIO_ANI_TAIL_MAX_SPEED_LEFT;
+								}
+							
 						}
 					}
 				}
@@ -1040,6 +1064,7 @@ void CMario::Render()
 			}
 
 		}
+		//DebugOut(L"ani: %d \n", ani);
 		animation_set->at(ani)->Render(x, postion_y, alpha);
 	}
 	if (isPipedDown) {

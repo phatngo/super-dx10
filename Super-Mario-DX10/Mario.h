@@ -103,8 +103,8 @@
 #define MARIO_ANI_TAIL_JUMPINGDOWN_RIGHT	35
 #define MARIO_ANI_TAIL_JUMPINGUP_LEFT		42
 #define MARIO_ANI_TAIL_JUMPINGDOWN_LEFT		43
-#define MARIO_ANI_TAIL_SIT_RIGHT 	        45
-#define MARIO_ANI_TAIL_SIT_LEFT 	        37
+#define MARIO_ANI_TAIL_SIT_RIGHT 	        37
+#define MARIO_ANI_TAIL_SIT_LEFT 	        45
 #define MARIO_ANI_TAIL_HOLD_IDLE_RIGHT		79
 #define MARIO_ANI_TAIL_HOLD_WALK_RIGHT	    80
 #define MARIO_ANI_TAIL_HOLD_JUMP_RIGHT		81
@@ -119,6 +119,8 @@
 #define MARIO_ANI_TAIL_FLY_UP_LEFT		    110
 #define MARIO_ANI_TAIL_FLY_DOWN_LEFT        111
 #define MARIO_ANI_TAIL_FLY_FLAPPING_LEFT    112
+#define MARIO_ANI_TAIL_TURNING_RIGHT        95
+#define MARIO_ANI_TAIL_TURNING_LEFT         96
 
 
 #define MARIO_ANI_TRANSFORM_BIG_RIGHT	    115
@@ -174,6 +176,8 @@
 
 #define SWITCH_SCENE_TIME 1000
 
+#define TAIL_TURNING_TIMER 300
+
 
 
 class CMario : public CGameObject
@@ -211,6 +215,7 @@ class CMario : public CGameObject
 	bool isFallingDown = false;
 	Timer stopPipingTimer;
 	Timer switchSceneTimer;
+	Timer tailTurningTimer;
 	int lives = 0;
 	bool isDead = false;
 public: 
