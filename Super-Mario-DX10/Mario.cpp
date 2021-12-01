@@ -88,7 +88,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	
 	if (!isHold) {
 		vx += ax * dt;
-		if (CGame::GetInstance()->IsKeyDown(DIK_Z) 
+		if (CGame::GetInstance()->IsKeyDown(DIK_A) 
 			&& (CGame::GetInstance()->IsKeyDown(DIK_RIGHT) || (CGame::GetInstance()->IsKeyDown(DIK_LEFT))) 
 			&& abs(vx) >= MARIO_RUNNING_SPEED_MAX) {
 			if (isOnGround) {

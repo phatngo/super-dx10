@@ -460,8 +460,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		//if(mario->GetState()!=MARIO_STATE_RELEASE_JUMP)
 		mario->SetState(MARIO_STATE_JUMP);
 		break;
-	case DIK_A: 
-		mario->Reset();
+	default:
 		break;
 	}
 }
@@ -516,7 +515,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		mario->SetPosition(673.0f, 350.0f);
 
 	}
-	else if (game->IsKeyDown(DIK_Z)) {
+	else if (game->IsKeyDown(DIK_A)) {
 		if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT)) {
 			mario->SetIsReadyToRunMax(true);
 		}
