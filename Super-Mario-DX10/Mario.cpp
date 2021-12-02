@@ -259,20 +259,34 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 					{
 						if (goomba->GetState()!=GOOMBA_STATE_DIE)
 						{
-							if (level > MARIO_LEVEL_SMALL)
-							{
-								if (level == MARIO_LEVEL_TAIL) {
-									level = MARIO_LEVEL_TRANSFORM_BIG;
-									this->transformTimer.Start();
+							if (level == MARIO_LEVEL_TAIL && tailTurningTimer.IsStarted()) {
+								if (goomba->GetState() != GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS) {
+									goomba->SetState(GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS);
+									goomba->SetKillingKoopasDiretion(-this->nx);
+									if (goomba->GetTag() == GOOMBA_TAG_YELLOW) {
+										this->AddPoint(oLeft, oTop - GOOMBA_BBOX_NORMAL_HEIGHT, EFFECT_POINT_100);
+									}
+									else {
+										this->AddPoint(oLeft, oTop - GOOMBA_BBOX_NORMAL_HEIGHT, EFFECT_POINT_400);
+									}
 								}
-								else {
-									level = MARIO_LEVEL_TRANSFORM_SMALL;
-									this->transformTimer.Start();
-								}
-								    StartUntouchable();
 							}
-							else 
-								SetState(MARIO_STATE_DIE);
+							else {
+								if (level > MARIO_LEVEL_SMALL)
+								{
+									if (level == MARIO_LEVEL_TAIL) {
+										level = MARIO_LEVEL_TRANSFORM_BIG;
+										this->transformTimer.Start();
+									}
+									else {
+										level = MARIO_LEVEL_TRANSFORM_SMALL;
+										this->transformTimer.Start();
+									}
+									StartUntouchable();
+								}
+								else
+									SetState(MARIO_STATE_DIE);
+							}
 						}
 					}
 				}
