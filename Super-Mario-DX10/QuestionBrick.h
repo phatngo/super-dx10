@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Timer.h"
+#include "Brick.h"
 
 #define QUESTION_BRICK_STATE_IDLE 602
 #define QUESTION_BRICK_STATE_JUMPING 603
@@ -24,6 +25,7 @@
 #define TIME_UNTIL_POINT_APPEAR 700
 
 #define POINT_SPRITE_ID_100  50049
+
 
 
 class CQuestionBrick : public CGameObject

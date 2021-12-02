@@ -24,6 +24,22 @@ void CFlashAnimationBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		SetState(FLASH_BRICK_STATE_FLASHING);
 		
 	}
+	CMario* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+	float mLeft, mTop, mRight, mBottom;
+	float oLeft, oTop, oRight, oBottom;
+	if (player != NULL)
+	{
+		player->GetBoundingBox(mLeft, mTop, mRight, mBottom);
+		GetBoundingBox(oLeft, oTop, oRight, oBottom);
+		if (isColliding(floor(mLeft), mTop, ceil(mRight), mBottom)
+			&& player->GetTailTurningTime().IsStarted()
+			&& oTop - mTop >= LEAST_DISTANCE_BETWEEN_MTOP_BTOP_TAIL)
+		{
+			if (state != COIN_STATE) {
+					SetState(FLASH_BRICK_STATE_NON_EXIST);
+			}
+		}
+	}
 }
 
 void CFlashAnimationBrick::Render() {
@@ -44,6 +60,7 @@ void CFlashAnimationBrick::SetState(int state) {
 	{
 	case FLASH_BRICK_STATE_NON_EXIST:
 		CreatePieces();
+		isDestroyed = true;
 		break;
 	default:
 		break;

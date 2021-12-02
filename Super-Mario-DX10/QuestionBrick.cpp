@@ -24,7 +24,7 @@ void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		GetBoundingBox(oLeft, oTop, oRight, oBottom);
 		if (isColliding(floor(mLeft), mTop, ceil(mRight), mBottom) 
 			&& player->GetTailTurningTime().IsStarted()
-			&& oTop - mTop >= 12)
+			&& oTop - mTop >= LEAST_DISTANCE_BETWEEN_MTOP_BTOP_TAIL)
 		{
 			if (state != QUESTION_BRICK_ANI_STOP) {
 				if (state == QUESTION_BRICK_STATE_IDLE) {
