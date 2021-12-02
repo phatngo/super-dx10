@@ -186,7 +186,7 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 	if (state == GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS) {
-		if (start_Y - y >= 25)
+		if (start_Y - y >= GOOMBA_MAX_JUMP_KILLED_BY_KOOPAS_DY)
 			this->SetState(GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS);
 	}
 	if (state == GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS) {
