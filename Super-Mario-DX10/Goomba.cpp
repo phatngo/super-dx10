@@ -72,19 +72,15 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		updateRedGoomba(dt, coObjects);
 
 	CMario* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+
 	if (tag == GOOMBA_TAG_YELLOW) {
 		if (state == GOOMBA_STATE_DIE) {
 			//After being killed, goomba becomes dead then delay for a while, then disappears
 			if (this->transformToNonExistTimer.ElapsedTime() >= GOOMBA_DELAY_TIME && this->transformToNonExistTimer.IsStarted()) {
-				//this->SetState(GOOMBA_STATE_NON_EXIST);
 				isDestroyed = true;
 				player->AddPoint(this->x, this->y - GOOMBA_BBOX_NORMAL_HEIGHT);
 				transformToNonExistTimer.Reset();
 			}
-		}
-		if (state == GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS) {
-			if (start_Y - y >= 25)
-				this->SetState(GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS);
 		}
 	}
 	else {
@@ -189,7 +185,17 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
-
+	if (state == GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS) {
+		if (start_Y - y >= 25)
+			this->SetState(GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS);
+	}
+	if (state == GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS) {
+		isOnGround = false;
+		if (killingKoopasDirection > 0)
+			vx = -GOOMBA_FALLING_KILLED_BY_KOOPAS_SPEED_X;
+		else
+			vx = GOOMBA_FALLING_KILLED_BY_KOOPAS_SPEED_X;
+	}
 }
 void CGoomba::updateYellowGoomba(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -302,7 +308,6 @@ void CGoomba::updateYellowGoomba(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 			if (dynamic_cast<CKoopas*>(e->obj)) {
 				CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
 				if (e->ny < 0 && koopas->GetState() == KOOPAS_STATE_SPINNING) {
-					DebugOut(L"aaaaaaaaaaaaaaaaaa \n");
 					ay = -ay;
 					if (nx > 1)
 						vx = GOOMBA_WALKING_SPEED;
@@ -340,8 +345,10 @@ void CGoomba::updateRedGoomba(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		float min_tx, min_ty, nx = 0, ny;
 		float rdx = 0;
 		float rdy = 0;
+
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
+		float x0 = x, y0 = y;
 		x += min_tx * dx + nx * PUSHBACK;
 		y += min_ty * dy + ny * PUSHBACK;
 
@@ -362,12 +369,20 @@ void CGoomba::updateRedGoomba(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
 				if (e->ny != 0)
 				{
-					if (state == GOOMBA_STATE_FALLING_LOW || state == GOOMBA_STATE_FALLING_HIGH) {
-						lowFallingTime++;
+					if (state != GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS) {
+						if (state == GOOMBA_STATE_FALLING_LOW || state == GOOMBA_STATE_FALLING_HIGH) {
+							lowFallingTime++;
+						}
+						vy = 0;
+						isOnGround = true;
 					}
-					vy = 0;
+					else {
+						vy += ay * dt;
+						y = y0 + dy;
+						x = x0 + dx;
+						isOnGround = false;
+					}
 					ay = GOOMBA_GRAVITY;
-					isOnGround = true;
 				}
 				if (e->nx != 0)
 				{
@@ -425,7 +440,8 @@ void CGoomba::Render()
 			ani = GOOMBA_ANI_YELLOW_DIE;
 		}
 	}
-	else {
+	else 
+	{
 		ani = GOOMBA_ANI_RED_JUMPING;
 		if (isOnGround)
 		{
@@ -449,6 +465,8 @@ void CGoomba::Render()
 				break;
 			case GOOMBA_STATE_RED_DIE:
 				ani = GOOMBA_ANI_RED_DIE;
+			case GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS:
+				ani = GOOMBA_ANI_RED_WALK;
 				break;
 			default:
 				break;
@@ -501,6 +519,9 @@ void CGoomba::Render()
 			default:
 				break;
 			}
+		}
+		if (this->state == GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS) {
+			ani = GOOMBA_ANI_RED_WALK;
 		}
 	}
 	animation_set->at(ani)->Render(x, y);
@@ -595,9 +616,9 @@ void CGoomba::SetState(int state)
 		ay = -GOOMBA_GRAVITY;
 		break;
 	case GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS:
-		vy = GOOMBA_FALLING_KILLED_BY_KOOPAS_SPEED_Y;
-		ay = GOOMBA_GRAVITY;
-		vx = -this->killingKoopasDirection * GOOMBA_FALLING_KILLED_BY_KOOPAS_SPEED_X;
+			vy = GOOMBA_FALLING_KILLED_BY_KOOPAS_SPEED_Y;
+			ay = GOOMBA_GRAVITY;
+			vx = -this->killingKoopasDirection * GOOMBA_FALLING_KILLED_BY_KOOPAS_SPEED_X;
 		break;
 	case GOOMBA_STATE_JUMPING_AWAY_FROM_QUESTION_BRICK:
 		vx = GOOMBA_JUMPING_LOW_SPEED_X;
