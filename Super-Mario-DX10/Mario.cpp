@@ -230,7 +230,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 				CGoomba *goomba = dynamic_cast<CGoomba *>(e->obj);
 
 				// jump on top >> kill Goomba and deflect a bit 
-				if (e->ny < 0 && goomba->GetState() != GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS)
+				if (e->ny < 0 && goomba->GetState() != GOOMBA_STATE_JUMPING_KILLED_BY_HITTING)
 				{
 					if(goomba->GetTag()==GOOMBA_TAG_YELLOW){
 						if (goomba->GetState() != GOOMBA_STATE_DIE)
@@ -250,8 +250,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
 				}
-				else if (e->ny < 0 && goomba->GetState() == GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS) {
-					goomba->SetState(GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS);
+				else if (e->ny < 0 && goomba->GetState() == GOOMBA_STATE_JUMPING_KILLED_BY_HITTING) {
+					goomba->SetState(GOOMBA_STATE_FALLING_KILLED_BY_HITTING);
 				}
 				else if (e->nx != 0)
 				{
@@ -260,8 +260,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 						if (goomba->GetState()!=GOOMBA_STATE_DIE)
 						{
 							if (level == MARIO_LEVEL_TAIL && tailTurningTimer.IsStarted()) {
-								if (goomba->GetState() != GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS) {
-									goomba->SetState(GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS);
+								if (goomba->GetState() != GOOMBA_STATE_JUMPING_KILLED_BY_HITTING) {
+									goomba->SetState(GOOMBA_STATE_JUMPING_KILLED_BY_HITTING);
 									goomba->SetKillingKoopasDiretion(-this->nx);
 									if (goomba->GetTag() == GOOMBA_TAG_YELLOW) {
 										this->AddPoint(oLeft, oTop - GOOMBA_BBOX_NORMAL_HEIGHT, EFFECT_POINT_100);

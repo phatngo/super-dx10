@@ -185,13 +185,13 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
-	if (state == GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS) {
-		if (start_Y - y >= GOOMBA_MAX_JUMP_KILLED_BY_KOOPAS_DY)
-			this->SetState(GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS);
+	if (state == GOOMBA_STATE_JUMPING_KILLED_BY_HITTING) {
+		if (start_Y - y >= GOOMBA_MAX_JUMP_KILLED_BY_HITTING_DY)
+			this->SetState(GOOMBA_STATE_FALLING_KILLED_BY_HITTING);
 	}
-	if (state == GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS) {
-		isOnGround = false;
-		if (killingKoopasDirection > 0)
+	if (state == GOOMBA_STATE_FALLING_KILLED_BY_HITTING &&  tag == GOOMBA_TAG_RED) {
+			isOnGround = false;
+			if(killingKoopasDirection > 0)
 			vx = -GOOMBA_FALLING_KILLED_BY_KOOPAS_SPEED_X;
 		else
 			vx = GOOMBA_FALLING_KILLED_BY_KOOPAS_SPEED_X;
@@ -210,7 +210,7 @@ void CGoomba::updateYellowGoomba(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
 	// turn off collision when die
 
-	if (state != GOOMBA_STATE_DIE || state != GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS) {
+	if (state != GOOMBA_STATE_DIE || state != GOOMBA_STATE_JUMPING_KILLED_BY_HITTING) {
 		CalcPotentialCollisions(coObjects, coEvents);
 	}
 
@@ -250,7 +250,7 @@ void CGoomba::updateYellowGoomba(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 				if (e->ny < 0)
 				{
 					vy = GOOMBA_DIE_DEFLECT_SPEED;
-					if (state != GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS) {
+					if (state != GOOMBA_STATE_FALLING_KILLED_BY_HITTING) {
 						vy = 0;
 					}
 					else {
@@ -369,7 +369,7 @@ void CGoomba::updateRedGoomba(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
 				if (e->ny != 0)
 				{
-					if (state != GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS) {
+					if (state != GOOMBA_STATE_FALLING_KILLED_BY_HITTING) {
 						if (state == GOOMBA_STATE_FALLING_LOW || state == GOOMBA_STATE_FALLING_HIGH) {
 							lowFallingTime++;
 						}
@@ -465,7 +465,7 @@ void CGoomba::Render()
 				break;
 			case GOOMBA_STATE_RED_DIE:
 				ani = GOOMBA_ANI_RED_DIE;
-			case GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS:
+			case GOOMBA_STATE_JUMPING_KILLED_BY_HITTING:
 				ani = GOOMBA_ANI_RED_WALK;
 				break;
 			default:
@@ -520,7 +520,7 @@ void CGoomba::Render()
 				break;
 			}
 		}
-		if (this->state == GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS) {
+		if (this->state == GOOMBA_STATE_FALLING_KILLED_BY_HITTING) {
 			ani = GOOMBA_ANI_RED_WALK;
 		}
 	}
@@ -610,12 +610,12 @@ void CGoomba::SetState(int state)
 		vx = 0;
 		vy = 0;
 		break;
-	case GOOMBA_STATE_JUMPING_KILLED_BY_KOOPAS:
+	case GOOMBA_STATE_JUMPING_KILLED_BY_HITTING:
 		vy = -GOOMBA_JUMPING_KILLED_BY_KOOPAS_SPEED_Y;
 		vx = -this->killingKoopasDirection * GOOMBA_JUMPING_KILLED_BY_KOOPAS_SPEED_X;
 		ay = -GOOMBA_GRAVITY;
 		break;
-	case GOOMBA_STATE_FALLING_KILLED_BY_KOOPAS:
+	case GOOMBA_STATE_FALLING_KILLED_BY_HITTING:
 			vy = GOOMBA_FALLING_KILLED_BY_KOOPAS_SPEED_Y;
 			ay = GOOMBA_GRAVITY;
 			vx = -this->killingKoopasDirection * GOOMBA_FALLING_KILLED_BY_KOOPAS_SPEED_X;
