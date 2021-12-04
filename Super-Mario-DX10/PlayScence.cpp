@@ -515,7 +515,9 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		//Near red goomba
 		//mario->SetPosition(673.0f, 350.0f);
 		//Near breakable brick
-		mario->SetPosition(1960.0f, 350.0f);
+		//mario->SetPosition(1960.0f, 350.0f);
+		//Near green koopas' area
+		mario->SetPosition(1300.0f, 350.0f);
 
 	}
 	else if (game->IsKeyDown(DIK_A)) {

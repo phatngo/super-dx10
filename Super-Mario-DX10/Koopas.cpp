@@ -399,11 +399,13 @@ void CKoopas::Render()
 		else
 			ani = KOOPAS_ANI_WALKING_RIGHT;
 	}
-	if (tag == KOOPAS_GREEN_PARA || tag == KOOPAS_RED_PARA)
-		if (nx < 0)
-			ani = KOOPAS_ANI_PARA_LEFT;
-		else
-			ani = KOOPAS_ANI_PARA_RIGHT;
+	if (state != KOOPAS_STATE_FALL_DOWN && state != KOOPAS_STATE_SHELL_UP) {
+		if ((tag == KOOPAS_GREEN_PARA || tag == KOOPAS_RED_PARA))
+			if (nx < 0)
+				ani = KOOPAS_ANI_PARA_LEFT;
+			else
+				ani = KOOPAS_ANI_PARA_RIGHT;
+	}
 	if (state == KOOPAS_STATE_SHAKE) {
 		ani = KOOPAS_ANI_SHAKE;
 	}
@@ -449,6 +451,12 @@ void CKoopas::SetState(int state)
 		vy = 0;
 		break;
 	case KOOPAS_STATE_SHELL_UP:
+		if (vy != 0) {
+			vy = 0;
+		}
+		if (ay != 0) {
+			ay = 0;
+		}
 		vy = -KOOPAS_RED_SPEED;
 		vx = -this->killingDirection * KOOPAS_WALKING_SPEED;
 		ay = -KOOPAS_GRAVITY;

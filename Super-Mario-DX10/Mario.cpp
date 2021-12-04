@@ -380,21 +380,28 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 				else {
 					if (e->nx != 0) {
 						if (untouchable == 0) {
-							if (level > MARIO_LEVEL_SMALL)
-							{
-								if (level == MARIO_LEVEL_TAIL) {
-									level = MARIO_LEVEL_TRANSFORM_BIG;
-									this->transformTimer.Start();
-								}
-								else {
-									level = MARIO_LEVEL_TRANSFORM_SMALL;
-									this->transformTimer.Start();
-								}
-								StartUntouchable();
+							if (level == MARIO_LEVEL_TAIL && tailTurningTimer.IsStarted()) {
+								AddPoint(oLeft, oTop - KOOPAS_BBOX_SHELL_HEIGHT);
+								koopas->SetState(KOOPAS_STATE_SHELL_UP);
+								koopas->SetKillingDirection(-this->nx);
 							}
-							else
-								//Makes mario die
-								SetState(MARIO_STATE_DIE);
+							else {
+								if (level > MARIO_LEVEL_SMALL)
+								{
+									if (level == MARIO_LEVEL_TAIL) {
+										level = MARIO_LEVEL_TRANSFORM_BIG;
+										this->transformTimer.Start();
+									}
+									else {
+										level = MARIO_LEVEL_TRANSFORM_SMALL;
+										this->transformTimer.Start();
+									}
+									StartUntouchable();
+								}
+								else
+									//Makes mario die
+									SetState(MARIO_STATE_DIE);
+							}
 						}
 					}
 					if (e->ny != 0) {
