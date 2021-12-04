@@ -144,21 +144,27 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				CBrick* object = dynamic_cast<CBrick*>(e->obj);
 				object->GetBoundingBox(oLeft, oTop, oRight, oBottom);
 				if (e->ny != 0) {
-					vy = 0;
-					ay = KOOPAS_GRAVITY;
-					if (state == KOOPAS_STATE_SHELL_UP)
-						vx = 0;
-					if (tag == KOOPAS_GREEN_PARA)
-					{
-						y = e->obj->y - KOOPAS_BBOX_HEIGHT;
-						vy = -KOOPAS_JUMP_SPEED;
-						if (marioX <= x) {
-							this->nx = -1;
+					if (state != KOOPAS_STATE_FALL_DOWN) {
+						vy = 0;
+						ay = KOOPAS_GRAVITY;
+						if (state == KOOPAS_STATE_SHELL_UP)
+							vx = 0;
+						if (tag == KOOPAS_GREEN_PARA)
+						{
+							y = e->obj->y - KOOPAS_BBOX_HEIGHT;
+							vy = -KOOPAS_JUMP_SPEED;
+							if (marioX <= x) {
+								this->nx = -1;
+							}
+							else {
+								this->nx = 1;
+							}
+							vx = this->nx * KOOPAS_WALKING_SPEED;
 						}
-						else {
-							this->nx = 1;
-						}
-						vx = this->nx * KOOPAS_WALKING_SPEED;
+					}
+					else {
+						y = y0 + dy;
+						x = x0 + dx;
 					}
 				}
 				if (e->nx != 0)
@@ -187,37 +193,43 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			{
 				if (e->ny < 0)
 				{
-					vy = 0;
-					ay = KOOPAS_GRAVITY;
-					if (state == KOOPAS_STATE_SHELL_UP || state == KOOPAS_STATE_SHAKE)
-						vx = 0;
-					if (tag == KOOPAS_RED && state == KOOPAS_STATE_WALKING)
-					{
-						if (this->nx > 0 && x >= e->obj->x + KOOPAS_TURN_DIFF)
-							if (CalTurnable(e->obj, coObjects))
-							{
+					if (state != KOOPAS_STATE_FALL_DOWN) {
+						vy = 0;
+						ay = KOOPAS_GRAVITY;
+						if (state == KOOPAS_STATE_SHELL_UP || state == KOOPAS_STATE_SHAKE)
+							vx = 0;
+						if (tag == KOOPAS_RED && state == KOOPAS_STATE_WALKING)
+						{
+							if (this->nx > 0 && x >= e->obj->x + KOOPAS_TURN_DIFF)
+								if (CalTurnable(e->obj, coObjects))
+								{
+									this->nx = -1;
+									vx = this->nx * KOOPAS_WALKING_SPEED;
+								}
+							if (this->nx < 0 && x <= e->obj->x - KOOPAS_TURN_DIFF)
+								if (CalTurnable(e->obj, coObjects))
+								{
+									this->nx = 1;
+									vx = this->nx * KOOPAS_WALKING_SPEED;
+								}
+						}
+						if (tag == KOOPAS_GREEN_PARA)
+						{
+							y = e->obj->y - KOOPAS_BBOX_HEIGHT;
+							vy = -KOOPAS_JUMP_SPEED;
+							if (marioX <= x) {
 								this->nx = -1;
-								vx = this->nx * KOOPAS_WALKING_SPEED;
 							}
-						if (this->nx < 0 && x <= e->obj->x - KOOPAS_TURN_DIFF)
-							if (CalTurnable(e->obj, coObjects))
-							{
+							else {
 								this->nx = 1;
-								vx = this->nx * KOOPAS_WALKING_SPEED;
 							}
-					}
-					if (tag == KOOPAS_GREEN_PARA)
-					{
-						y = e->obj->y - KOOPAS_BBOX_HEIGHT;
-						vy = -KOOPAS_JUMP_SPEED;
-						if (marioX <= x) {
-							this->nx = -1;
-						}
-						else {
-							this->nx = 1;
-						}
-						vx = this->nx * KOOPAS_WALKING_SPEED;
+							vx = this->nx * KOOPAS_WALKING_SPEED;
 
+						}
+					}
+					else {
+						y = y0 + dy;
+						x = x0 + dx;
 					}
 				}
 				else
@@ -234,31 +246,36 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				CFlashAnimationBrick* flashAnimationBrick = dynamic_cast<CFlashAnimationBrick*>(e->obj);
 				if (e->ny < 0)
 				{
-					vy = 0;
-					ay = KOOPAS_GRAVITY;
-					if (state == KOOPAS_STATE_SHELL_UP)
-						vx = 0;
-					if (tag == KOOPAS_RED && state == KOOPAS_STATE_WALKING)
-					{
-						if (this->nx > 0 && x >= e->obj->x + KOOPAS_TURN_DIFF)
-							if (CalTurnable(e->obj, coObjects))
-							{
-								this->nx = -1;
-								vx = this->nx * KOOPAS_WALKING_SPEED;
-							}
-						if (this->nx < 0 && x <= e->obj->x - KOOPAS_TURN_DIFF)
-							if (CalTurnable(e->obj, coObjects))
-							{
-								this->nx = 1;
-								vx = this->nx * KOOPAS_WALKING_SPEED;
-							}
+					if (state != KOOPAS_STATE_FALL_DOWN) {
+						vy = 0;
+						ay = KOOPAS_GRAVITY;
+						if (state == KOOPAS_STATE_SHELL_UP)
+							vx = 0;
+						if (tag == KOOPAS_RED && state == KOOPAS_STATE_WALKING)
+						{
+							if (this->nx > 0 && x >= e->obj->x + KOOPAS_TURN_DIFF)
+								if (CalTurnable(e->obj, coObjects))
+								{
+									this->nx = -1;
+									vx = this->nx * KOOPAS_WALKING_SPEED;
+								}
+							if (this->nx < 0 && x <= e->obj->x - KOOPAS_TURN_DIFF)
+								if (CalTurnable(e->obj, coObjects))
+								{
+									this->nx = 1;
+									vx = this->nx * KOOPAS_WALKING_SPEED;
+								}
+						}
+						if (tag == KOOPAS_GREEN_PARA)
+						{
+							y = e->obj->y - KOOPAS_BBOX_HEIGHT;
+							vy = -KOOPAS_JUMP_SPEED;
+						}
 					}
-					if (tag == KOOPAS_GREEN_PARA)
-					{
-						y = e->obj->y - KOOPAS_BBOX_HEIGHT;
-						vy = -KOOPAS_JUMP_SPEED;
+					else {
+						y = y0 + dy;
+						x = x0 + dx;
 					}
-
 				}
 				else
 				{
@@ -348,11 +365,20 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		this->SetState(KOOPAS_STATE_SPINNING);
 	}
 
+	if (state == KOOPAS_STATE_SHELL_UP) {
+		if (start_Y - y >= KOOPAS_DY_FALLDOWN) {
+			SetState(KOOPAS_STATE_FALL_DOWN);
+		}
+	}
+	DebugOut(L"state: %d \n", state);
 }
 void CKoopas::Render()
 {
 	int ani = -1;
-	if (state == KOOPAS_STATE_SHELL_UP || state == KOOPAS_STATE_DEATH) {
+	if (state == KOOPAS_STATE_SHELL_UP || state == KOOPAS_STATE_FALL_DOWN) {
+		ani = KOOPAS_ANI_SHELL_UP;
+	}
+	else if (state == KOOPAS_STATE_DEATH) {
 		ani = KOOPAS_ANI_SHELL_UP;
 		this->SetState(KOOPAS_STATE_IN_SHELL);
 	}
@@ -421,6 +447,16 @@ void CKoopas::SetState(int state)
 		vx = 0;
 		respawnTimer.Start();
 		vy = 0;
+		break;
+	case KOOPAS_STATE_SHELL_UP:
+		vy = -KOOPAS_RED_SPEED;
+		vx = -this->killingDirection * KOOPAS_WALKING_SPEED;
+		ay = -KOOPAS_GRAVITY;
+		break;
+	case KOOPAS_STATE_FALL_DOWN:
+		vy = KOOPAS_RED_SPEED;
+		vx = -this->killingDirection * KOOPAS_WALKING_SPEED;
+		ay = KOOPAS_GRAVITY;
 		break;
 	default:
 		break;

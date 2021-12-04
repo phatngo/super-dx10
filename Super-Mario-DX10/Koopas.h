@@ -22,6 +22,7 @@
 #define KOOPAS_STATE_IN_SHELL	400
 #define KOOPAS_STATE_DEATH		500
 #define KOOPAS_STATE_SHAKE		600
+#define KOOPAS_STATE_FALL_DOWN	700
 
 #define KOOPAS_REVIVE_TIME		2000
 #define KOOPAS_SHELL_TIME		5000
@@ -48,6 +49,7 @@
 
 #define KOOPAS_EXTRA_SPEED 5
 #define KOOPAS_DY_TRANSFROM_FROM_WALKING_TO_IN_SHELL 4.0f
+#define KOOPAS_DY_FALLDOWN 25
 
 
 
@@ -60,6 +62,7 @@ class CKoopas : public CGameObject
 	Timer respawnTimer;
 	int temp = 0;
 	float koopas_y;
+	int killingDirection;
 public:
 	bool isHold = false;
 	bool isKillable = false;
@@ -77,4 +80,5 @@ public:
 	bool CalRevivable();
 	bool CalTurnable(LPGAMEOBJECT object, vector<LPGAMEOBJECT>* coObjects);
 	int GetTag() { return this->tag; }
+	void SetKillingDirection(int nx) { this->killingDirection = nx; }
 };
