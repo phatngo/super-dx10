@@ -61,6 +61,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 {
 	BackUp::GetInstance()->SetMarioLives(lives);
 	BackUp::GetInstance()->SetMarioLevel(level);
+	isBlocked = false;
 
 	if (switchSceneTimer.IsStarted() && switchSceneTimer.ElapsedTime() >= SWITCH_SCENE_TIME) {
 		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(false);
@@ -122,6 +123,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	if (tailTurningTimer.IsStarted() && tailTurningTimer.ElapsedTime() >= TAIL_TURNING_TIMER) {
 		tailTurningTimer.Reset();
 	}
+	
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 
@@ -1157,7 +1159,7 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_JUMP:
 		if (isOnGround) {
-			if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX && !isFallingDown) {
+			if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX && !isFallingDown && !isBlocked) {
 				vy = -MARIO_JUMP_SPEED_Y/2;
 				isFlyingToTheSky = true;
 				fallDownTimer.Start();

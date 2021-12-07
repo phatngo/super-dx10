@@ -460,7 +460,6 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		//if(mario->GetState()!=MARIO_STATE_RELEASE_JUMP)
 		if (!mario->isFallingDownFromSky()) {
 			mario->SetState(MARIO_STATE_JUMP);
-			DebugOut(L"aaaaaaaaaaaa \n");
 		}
 		break;
 	default:

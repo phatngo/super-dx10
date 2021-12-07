@@ -254,5 +254,5 @@ public:
 	Timer GetTailTurningTime() { return tailTurningTimer; }
 	Timer GetFallDownTimer() { return this->fallDownTimer; }
 	bool isFallingDownFromSky() { return this->isFallingDown; }
-	bool IsBlocked() { return this - isBlocked; }
+	bool IsBlocked() { return this->isBlocked; }
 };
