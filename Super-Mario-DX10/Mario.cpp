@@ -125,6 +125,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 
+	if (CCamera::GetInstance()->IsAbove()) {
+		if (y <= CCamera::GetInstance()->GetMaximunYCoordOfMario())
+			vy = 0;
+	}
+
 	// Simple fall down
 	if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX && isOnGround) {
 		if (vy < 0) {

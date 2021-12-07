@@ -4,6 +4,7 @@
 
 
 #define CAMERA_EXTRA_Y 40
+#define CAMERA_EXTRA_Y_ABOVE 20
 #define CAMERA_WORLD_SCENE_POSTION_X -9.0f
 #define CAMERA_WORLD_SCENE_POSTION_Y -17.0f
 
@@ -42,5 +43,6 @@ public:
 	void SetCameraPosition(float marioX);
 	void SetCameraPosition(float x, float y) { CGame::GetInstance()->SetCamPos(x, y); cameraPositionX = (int)x; cameraPositionY = (int)y; }
 	void GetWorldSceneCameraPosition(float& x, float& y) { x = (float) cameraPositionX; y = (float) cameraPositionY; }
+	int GetMaximunYCoordOfMario() { return cameraPositionY + CAMERA_EXTRA_Y_ABOVE; }
 };
 

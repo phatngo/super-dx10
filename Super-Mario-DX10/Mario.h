@@ -180,6 +180,7 @@
 
 
 
+
 class CMario : public CGameObject
 {
 	int level = 0;

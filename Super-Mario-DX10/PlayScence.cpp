@@ -492,6 +492,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 	CGame *game = CGame::GetInstance();
 	CMario *mario = ((CPlayScene*)scence)->GetPlayer();
 
+
 	// disable control key when Mario die 
 	if (mario->GetState() == MARIO_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_RIGHT) && !CGame::GetInstance()->GetCurrentScene()->GetSceneDone() && !mario->IsPipeUp() && !mario->IsPipeDown()) {
@@ -507,17 +508,18 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 			mario->SetIsThrow(false);
 	}
 	else if (game->IsKeyDown(DIK_T)) {
-		//This is for testing when teleporting to another position
-		// On top of pipe
+		//This is for testing when teleporting to another position:
+		// Map 1-1:
+		//On top of pipe
 		//mario->SetPosition(2258.0f, 50.0f);
 		//On cloudy brick
 		//mario->SetPosition(1488.0f, 150.0f);
 		//Near red goomba
-		//mario->SetPosition(673.0f, 350.0f);
+		mario->SetPosition(673.0f, 350.0f);
 		//Near breakable brick
 		//mario->SetPosition(1960.0f, 350.0f);
 		//Near green koopas' area
-		mario->SetPosition(1300.0f, 350.0f);
+		//mario->SetPosition(1300.0f, 350.0f);
 
 	}
 	else if (game->IsKeyDown(DIK_A)) {

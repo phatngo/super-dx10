@@ -370,7 +370,6 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			SetState(KOOPAS_STATE_FALL_DOWN);
 		}
 	}
-	DebugOut(L"state: %d \n", state);
 }
 void CKoopas::Render()
 {
