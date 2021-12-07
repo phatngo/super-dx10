@@ -129,18 +129,17 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 		if (y <= CCamera::GetInstance()->GetMaximunYCoordOfMario())
 			vy = 0;
 	}
-
-	// Simple fall down
-	if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX && isOnGround) {
-		if (vy < 0) {
-			if (fallDownTimer.IsStarted() && fallDownTimer.ElapsedTime() >= MARIO_FALL_DOWN_TIME) {
-				isFallingDown = true;
-				vy = 0;
-			}
-			else {
-				vy += 0;
-			}
+		if (fallDownTimer.IsStarted() && fallDownTimer.ElapsedTime() >= MARIO_FALL_DOWN_TIME) {
+			isFallingDown = true;
+			DebugOut(L"Timer ends \n");
 		}
+		else {
+			vy += 0;
+		}
+	
+	// Simple fall down
+	if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX) 
+	{
 	}
 	else {
 		if (level == MARIO_LEVEL_TAIL) {
@@ -1159,6 +1158,7 @@ void CMario::SetState(int state)
 				vy = -MARIO_JUMP_SPEED_Y/2;
 				isFlyingToTheSky = true;
 				fallDownTimer.Start();
+				DebugOut(L"timer started! \n");
 			}
 			else {
 				vy = -MARIO_JUMP_SPEED_Y;

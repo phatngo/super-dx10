@@ -14,7 +14,7 @@
 #define MARIO_SPEED_RUN_FLY_MAX	    0.40f
 #define MARIO_SPEED_RUN_FLY_MAX	    0.40f
 #define MARIO_PIPE_SPEED	        0.02f
-#define MARIO_FALL_DOWN_TIME        1200
+#define MARIO_FALL_DOWN_TIME        1000
 
 
 #define MARIO_JUMP_SPEED_Y		                    0.43f
@@ -189,7 +189,6 @@ class CMario : public CGameObject
 	ULONGLONG marioDT;
 	float maxVx = 0.0f;
 	int ani = 0;
-
 	float start_x = 0.0f;			// initial position of Mario at scene
 	float start_y = 0.0f;
 	Timer transformTimer;
@@ -252,4 +251,6 @@ public:
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e, float x0);
 	bool IsOnGround() { return this->isOnGround; }
 	Timer GetTailTurningTime() { return tailTurningTimer; }
+	Timer GetFallDownTimer() { return this->fallDownTimer; }
+	bool isFallingDownFromSky() { return this->isFallingDown; }
 };
