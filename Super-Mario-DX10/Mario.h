@@ -218,6 +218,7 @@ class CMario : public CGameObject
 	Timer tailTurningTimer;
 	int lives = 0;
 	bool isDead = false;
+	bool isBlocked = false;
 public: 
 	int GetMarioLives() { return this->lives; }
 	Timer GetStopPipingTimer() { return this->stopPipingTimer; }
@@ -253,4 +254,5 @@ public:
 	Timer GetTailTurningTime() { return tailTurningTimer; }
 	Timer GetFallDownTimer() { return this->fallDownTimer; }
 	bool isFallingDownFromSky() { return this->isFallingDown; }
+	bool IsBlocked() { return this - isBlocked; }
 };
