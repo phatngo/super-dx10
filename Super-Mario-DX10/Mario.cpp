@@ -59,8 +59,6 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e, float x0) {
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJECT> *objects)
 {
-	DebugOut(L"vy: %f \n", vy);
-
 	BackUp::GetInstance()->SetMarioLives(lives);
 	BackUp::GetInstance()->SetMarioLevel(level);
 	isBlocked = false;
@@ -742,14 +740,14 @@ void CMario::Render()
 				else if (vy < 0) {
 					if (nx > 0) {
 						if (vx == MARIO_SPEED_RUN_FLY_MAX) {
-							ani = MARIO_ANI_TAIL_FLY_UP_RIGHT;
+							ani = MARIO_ANI_TAIL_FLY_FLAPPING_RIGHT;
 						}
 						else
 							ani = MARIO_ANI_TAIL_JUMPINGUP_RIGHT;
 					}
 					else {
 						if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX) {
-							ani = MARIO_ANI_TAIL_FLY_UP_LEFT;
+							ani = MARIO_ANI_TAIL_FLY_FLAPPING_LEFT;
 						}
 						else
 							ani = MARIO_ANI_TAIL_JUMPINGUP_LEFT;
@@ -758,30 +756,40 @@ void CMario::Render()
 				else if (vx == 0)
 				{
 					if (nx > 0) {
-						if (vy < 0) {
-							if (state == MARIO_STATE_JUMP)
-								ani = MARIO_ANI_TAIL_JUMPINGUP_RIGHT;
-							else
-								ani = MARIO_ANI_TAIL_JUMPINGDOWN_RIGHT;
-						}
-						else if (state == MARIO_STATE_SIT) {
-							ani = MARIO_ANI_TAIL_SIT_RIGHT;
-						}
-						else
-							ani = MARIO_ANI_TAIL_IDLE_RIGHT;
-					}
-					else {
-						if (vy < 0) {
-							if (state == MARIO_STATE_JUMP)
-								ani = MARIO_ANI_TAIL_JUMPINGUP_LEFT;
-							else
-								ani = MARIO_ANI_TAIL_JUMPINGDOWN_LEFT;
-						}
-						else if (state == MARIO_STATE_SIT) {
-							ani = MARIO_ANI_TAIL_SIT_LEFT;
+						if(isFallingDown){
+							ani = MARIO_ANI_TAIL_FLAPPING_TAIL_RIGHT;
 						}
 						else {
-							ani = MARIO_ANI_TAIL_IDLE_LEFT;
+							if (vy < 0) {
+								if (state == MARIO_STATE_JUMP)
+									ani = MARIO_ANI_TAIL_JUMPINGUP_RIGHT;
+								else
+									ani = MARIO_ANI_TAIL_JUMPINGDOWN_RIGHT;
+							}
+							else if (state == MARIO_STATE_SIT) {
+								ani = MARIO_ANI_TAIL_SIT_RIGHT;
+							}
+							else
+								ani = MARIO_ANI_TAIL_IDLE_RIGHT;
+						}
+					}
+					else {
+						if (isFallingDown) {
+							ani = MARIO_ANI_TAIL_FLAPPING_TAIL_RIGHT;
+						}
+						else {
+							if (vy < 0) {
+								if (state == MARIO_STATE_JUMP)
+									ani = MARIO_ANI_TAIL_JUMPINGUP_LEFT;
+								else
+									ani = MARIO_ANI_TAIL_JUMPINGDOWN_LEFT;
+							}
+							else if (state == MARIO_STATE_SIT) {
+								ani = MARIO_ANI_TAIL_SIT_LEFT;
+							}
+							else {
+								ani = MARIO_ANI_TAIL_IDLE_LEFT;
+							}
 						}
 					}
 				}
@@ -1165,7 +1173,7 @@ void CMario::SetState(int state)
 	case MARIO_STATE_JUMP:
 		if (isOnGround) {
 			if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX && !isFallingDown && !isBlocked) {
-				vy = -MARIO_JUMP_SPEED_Y/2;
+				vy = -MARIO_JUMP_SPEED_Y/3;
 				isFlyingToTheSky = true;
 				fallDownTimer.Start();
 				DebugOut(L"timer started! \n");

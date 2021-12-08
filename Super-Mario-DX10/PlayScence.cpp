@@ -515,9 +515,9 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		//On top of pipe
 		//mario->SetPosition(2258.0f, 50.0f);
 		//On cloudy brick
-		//mario->SetPosition(1488.0f, 150.0f);
+		mario->SetPosition(1490.0f, 120.0f);
 		//Near red goomba
-		mario->SetPosition(673.0f, 350.0f);
+		//mario->SetPosition(673.0f, 350.0f);
 		//Near breakable brick
 		//mario->SetPosition(1960.0f, 350.0f);
 		//Near green koopas' area
