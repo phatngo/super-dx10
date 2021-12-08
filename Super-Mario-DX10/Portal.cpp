@@ -21,13 +21,14 @@ void CPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		mario->GetBoundingBox(mLeft, mTop, mRight, mBottom);
 		GetBoundingBox(oLeft, oTop, oRight, oBottom);
 		if (isColliding(floor(mLeft), floor(mTop), ceil(mRight), ceil(mBottom))
-			&& mLeft >= oLeft && mRight <= oRight)
+			//&& mLeft >= oLeft && mRight <= oRight
+			)
 		{
-				if (CGame::GetInstance()->IsKeyDown(DIK_UP)) {
+				if (CGame::GetInstance()->IsKeyDown(DIK_UP) && pipeUp) {
 					mario->SetIsPipe(IS_PIPE_UP);
 				}
 
-			    if (CGame::GetInstance()->IsKeyDown(DIK_DOWN)) {
+			    if (CGame::GetInstance()->IsKeyDown(DIK_DOWN) && !pipeUp) {
 				mario->SetIsPipe(IS_PIPE_DOWN);
 			    }
 		}
