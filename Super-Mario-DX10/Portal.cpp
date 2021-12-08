@@ -67,8 +67,5 @@ void CPortal::GetBoundingBox(float &l, float &t, float &r, float &b)
 	l = x;
 	t = y;
 	b = y + PORTAL_BBOX_HEIGHT;
-	if (scene_id == 4)
-		r = x + PORTAL_BBOX_WIDTH_1_3;
-	else
-		r = x + PORTAL_BBOX_WIDTH;
+	r = x + PORTAL_BBOX_WIDTH;
 }
