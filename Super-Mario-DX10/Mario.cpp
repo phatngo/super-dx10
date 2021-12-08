@@ -794,7 +794,10 @@ void CMario::Render()
 							ani = MARIO_ANI_TAIL_BRAKING_LEFT;
 						}
 						else {
-							
+							if (isFallingDown) {
+								ani = MARIO_ANI_TAIL_FLAPPING_TAIL_RIGHT;
+							}
+							else {
 								if (vx < MARIO_WALKING_SPEED_MAX) {
 									ani = MARIO_ANI_TAIL_WALKING_RIGHT;
 								}
@@ -804,7 +807,7 @@ void CMario::Render()
 								else if (vx >= MARIO_SPEED_RUN_FLY_MAX) {
 									ani = MARIO_ANI_TAIL_MAX_SPEED_RIGHT;
 								}
-							
+							}
 						}
 					}
 				}
@@ -816,7 +819,9 @@ void CMario::Render()
 						if (ax > 0 && nx > 0)
 							ani = MARIO_ANI_TAIL_BRAKING_RIGHT;
 						else {
-						
+							if (isFallingDown) {
+								ani = MARIO_ANI_TAIL_FLAPPING_TAIL_LEFT;
+							}
 								if (abs(vx) < MARIO_WALKING_SPEED_MAX) {
 									ani = MARIO_ANI_TAIL_WALKING_LEFT;
 								}
