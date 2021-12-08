@@ -59,6 +59,8 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e, float x0) {
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJECT> *objects)
 {
+	DebugOut(L"vy: %f \n", vy);
+
 	BackUp::GetInstance()->SetMarioLives(lives);
 	BackUp::GetInstance()->SetMarioLevel(level);
 	isBlocked = false;
@@ -136,28 +138,26 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 			DebugOut(L"Timer ends \n");
 		}
 		else {
-			vy += 0;
 		}
 	
-	// Simple fall down
-	if (abs(vx) == MARIO_SPEED_RUN_FLY_MAX) 
-	{
-	}
-	else {
-		if (level == MARIO_LEVEL_TAIL) {
-			vy += MARIO_GRAVITY * dt;
-		}
-		else {
-			vy += MARIO_GRAVITY * dt;
-		}
-	}
+	
 
 	if (isFallingDown) {
 		if (level == MARIO_LEVEL_TAIL) {
-			vy += (MARIO_GRAVITY * dt);
+			vy = MARIO_JUMP_SPEED_Y/10;
 		}
 		else {
 			vy += MARIO_GRAVITY * dt;
+		}
+	}
+	else {
+		if (abs(vx) != MARIO_SPEED_RUN_FLY_MAX) {
+			if (level == MARIO_LEVEL_TAIL) {
+				vy += (MARIO_GRAVITY * dt);
+			}
+			else {
+				vy += MARIO_GRAVITY * dt;
+			}
 		}
 	}
 
