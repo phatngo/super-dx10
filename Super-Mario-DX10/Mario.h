@@ -11,10 +11,9 @@
 #define MARIO_SPEED_MAX				0.25f
 #define MARIO_ACCELERATION			0.0005f
 #define MARIO_WALKING_SPEED_MIN		0.05f
-#define MARIO_SPEED_RUN_FLY_MAX	    0.40f
-#define MARIO_SPEED_RUN_FLY_MAX	    0.40f
+#define MARIO_SPEED_RUN_FLY_MAX	    0.32f
 #define MARIO_PIPE_SPEED	        0.02f
-#define MARIO_FALL_DOWN_TIME        1100
+#define MARIO_FALL_DOWN_TIME        1500
 
 
 #define MARIO_JUMP_SPEED_Y		                    0.43f
@@ -218,6 +217,7 @@ class CMario : public CGameObject
 	int lives = 0;
 	bool isDead = false;
 	bool isBlocked = false;
+	bool isBlockedAbove = false;
 public: 
 	int GetMarioLives() { return this->lives; }
 	Timer GetStopPipingTimer() { return this->stopPipingTimer; }

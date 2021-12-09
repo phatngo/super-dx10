@@ -62,6 +62,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	BackUp::GetInstance()->SetMarioLives(lives);
 	BackUp::GetInstance()->SetMarioLevel(level);
 	isBlocked = false;
+	isBlockedAbove = false;
 
 	if (switchSceneTimer.IsStarted() && switchSceneTimer.ElapsedTime() >= SWITCH_SCENE_TIME) {
 		CGame::GetInstance()->GetCurrentScene()->SetSceneDone(false);
@@ -128,15 +129,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	CGameObject::Update(dt);
 
 	if (CCamera::GetInstance()->IsAbove()) {
-		if (y <= CCamera::GetInstance()->GetMaximunYCoordOfMario())
+		if (y <= CCamera::GetInstance()->GetMaximunYCoordOfMario()) {
 			vy = 0;
+			isBlockedAbove = true;
+		}
 	}
-		if (fallDownTimer.IsStarted() && fallDownTimer.ElapsedTime() >= MARIO_FALL_DOWN_TIME) {
+
+	if (fallDownTimer.IsStarted() && fallDownTimer.ElapsedTime() >= MARIO_FALL_DOWN_TIME) {
 			isFallingDown = true;
 			DebugOut(L"Timer ends \n");
-		}
-		else {
-		}
+	}
 	
 	
 
@@ -805,6 +807,9 @@ void CMario::Render()
 							if (isFallingDown) {
 								ani = MARIO_ANI_TAIL_FLAPPING_TAIL_RIGHT;
 							}
+							else if (isBlockedAbove) {
+								ani = MARIO_ANI_TAIL_FLY_FLAPPING_RIGHT;
+							}
 							else {
 								if (vx < MARIO_WALKING_SPEED_MAX) {
 									ani = MARIO_ANI_TAIL_WALKING_RIGHT;
@@ -830,6 +835,10 @@ void CMario::Render()
 							if (isFallingDown) {
 								ani = MARIO_ANI_TAIL_FLAPPING_TAIL_LEFT;
 							}
+							else if (isBlockedAbove) {
+								ani = MARIO_ANI_TAIL_FLY_FLAPPING_LEFT;
+							}
+							else {
 								if (abs(vx) < MARIO_WALKING_SPEED_MAX) {
 									ani = MARIO_ANI_TAIL_WALKING_LEFT;
 								}
@@ -839,7 +848,7 @@ void CMario::Render()
 								else if (abs(vx) >= MARIO_SPEED_RUN_FLY_MAX) {
 									ani = MARIO_ANI_TAIL_MAX_SPEED_LEFT;
 								}
-							
+							}
 						}
 					}
 				}
