@@ -524,6 +524,12 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		//mario->SetPosition(1300.0f, 350.0f);
 
 	}
+	else if (game->IsKeyDown(DIK_0)) {
+		mario->SetLevel(MARIO_LEVEL_TAIL);
+		float x, y;
+		mario->GetPosition(x, y);
+		mario->SetPosition(x, y - MARIO_TAIL_BBOX_HEIGHT);
+	}
 	else if (game->IsKeyDown(DIK_A)) {
 		if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT)) {
 			mario->SetIsReadyToRunMax(true);

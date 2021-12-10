@@ -29,8 +29,7 @@
 
 CMario::CMario(float x, float y) : CGameObject()
 {
-	level = MARIO_LEVEL_TAIL;
-	//level = BackUp::GetInstance()->GetMarioLevel();
+	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
 	SetState(MARIO_STATE_IDLE);
 	lives = BackUp::GetInstance()->GetMarioLives();
@@ -72,6 +71,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 		return;
 	}
 	float hud_x, hud_y;
+
 	((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetHUD()->GetPosition(hud_x, hud_y);
 	if (!CCamera::GetInstance()->IsAbove() && this->y > hud_y) {
 		if(!switchSceneTimer.IsStarted() )
@@ -204,25 +204,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 		float rdx = 0; 
 		float rdy = 0;
 
-		// TODO: This is a very ugly designed function!!!!
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-		//DebugOut(L"[INFO] e1 is goomba: %d \n", dynamic_cast<CGoomba*>(e1->obj) ? 1 : 0);
-		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-		/*if (rdx != 0 && rdx != dx)
-			x += nx*abs(rdx);*/ 
-		// block every object first!
+
 		float y0 = y;
 		float x0 = x;
 
 		x = x0 + min_tx * dx + nx * PUSHBACK;
 		y = y0 + min_ty * dy + ny * PUSHBACK;
 		
-		//if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
 		
-		//
-		// Collision logic with other objects
-		//
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
@@ -771,8 +762,8 @@ void CMario::Render()
 							else if (state == MARIO_STATE_SIT) {
 								ani = MARIO_ANI_TAIL_SIT_RIGHT;
 							}
-							else
-								ani = MARIO_ANI_TAIL_IDLE_RIGHT;
+							else  
+							    ani = MARIO_ANI_TAIL_IDLE_RIGHT;
 						}
 					}
 					else {
@@ -1145,6 +1136,8 @@ void CMario::Render()
 		else if (level == MARIO_LEVEL_TAIL) {
 			CSprites::GetInstance()->Get(MARIO_SPRITE_PIPING_TAIL)->Draw(x, y);
 		}
+	}
+	if (isFallingDown) {
 	}
 	RenderBoundingBox();
 }
