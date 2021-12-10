@@ -76,13 +76,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define EXTRA_INFO_FIRST_POWER_ARROW_IN_HUD_POSITION 9
 #define EXTRA_INFO_ICONP_IN_HUD_POSITION 10
 #define EXTRA_INFO_ICON_MARIO_IN_HUD_POSITION 11
-
-#define UNKNOWN_VALUE -1
-
-
-
 #define OBJECT_TYPE_PORTAL	50
-
 #define MAX_SCENE_LINE 1024
 
 
@@ -183,8 +177,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		int object_type = atoi(tokens[0].c_str());
 
-		float x = UNKNOWN_VALUE, y = UNKNOWN_VALUE;
-		int ani_set_id = UNKNOWN_VALUE;
+		float x = -1, y = -1;
+		int ani_set_id = -1;
 		if (object_type != OBJECT_TYPE_GRID) {
 			x = (float) atof(tokens[1].c_str());
 			y = (float) atof(tokens[2].c_str());

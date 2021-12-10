@@ -5,6 +5,7 @@
 
 void Card::Render()
 {
+
 	int ani = CARD_ANI_GENERAL;	
 	if (this->currentFrame != -1) {
 		switch (this->currentFrame)

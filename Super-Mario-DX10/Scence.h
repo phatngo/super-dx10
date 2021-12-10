@@ -8,11 +8,6 @@
 #include "Map.h"
 
 
-
-
-
-#define UNKNOW_VALUE -1 
-
 #define SCENCE_TYPE_PLAY 2
 #define SCENCE_TYPE_WORLD 1
 #define SCENCE_TYPE_INTRO 0
@@ -28,7 +23,7 @@ protected:
 	LPCWSTR sceneFilePath;
 	bool isCameraAutoMove = false;
 	bool isSceneDone = false;
-	int mapWidth = UNKNOW_VALUE;
+	int mapWidth = -1;
 	CMap* current_map = NULL;
 	vector<LPGAMEOBJECT> objects;
 public: 

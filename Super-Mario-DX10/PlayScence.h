@@ -12,7 +12,6 @@
 #include "Grid.h"
 #include "HUD.h"
 
-#define UNKNOWN_VALUE -1
 #define IS_PIPE 10
 
 class CPlayScene: public CScene

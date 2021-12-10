@@ -20,8 +20,6 @@ CScene::CScene(int id, LPCWSTR filePath)
 }
 
 
-
-
 void CScene::_ParseSection_TEXTURES(string line)
 {
 	vector<string> tokens = split(line);

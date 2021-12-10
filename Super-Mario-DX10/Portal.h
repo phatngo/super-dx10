@@ -13,6 +13,7 @@
 
 #define TO_EXTRA_SCENE 1
 #define BACK_TO_MAIN_SCENE 2
+#define PORTAL_GENERAL_ANI 0
 
 class CPortal : public CGameObject
 {

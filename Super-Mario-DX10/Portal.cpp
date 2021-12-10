@@ -21,7 +21,6 @@ void CPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		mario->GetBoundingBox(mLeft, mTop, mRight, mBottom);
 		GetBoundingBox(oLeft, oTop, oRight, oBottom);
 		if (isColliding(floor(mLeft), floor(mTop), ceil(mRight), ceil(mBottom))
-			//&& mLeft >= oLeft && mRight <= oRight
 			)
 		{
 				if (CGame::GetInstance()->IsKeyDown(DIK_UP) && pipeUp) {
@@ -44,7 +43,6 @@ void CPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 					CGame::GetInstance()->SwitchExtraScene(scene_id, start_x, start_y, !mario->IsPipeUp());
 					mario->SetIsPipe(IS_NOT_PIPE);
 				}
-				//Swith-to-extra
 			}
 		}
 		else if (this->tag == BACK_TO_MAIN_SCENE) {
@@ -58,7 +56,7 @@ void CPortal::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
 void CPortal::Render()
 {
-	animation_set->at(0)->Render(x, y);
+	animation_set->at(PORTAL_GENERAL_ANI)->Render(x, y);
 	RenderBoundingBox();
 }
 

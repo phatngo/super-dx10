@@ -141,8 +141,8 @@ void Grid::Move(Unit* unit, float x, float y)
 void Grid::Get(CCamera* cam, vector<Unit*>& listUnits)
 {
 
-	float cam_x = cam->GetCameraX();
-	float cam_y = cam->GetCameraY();
+	float cam_x = (float) cam->GetCameraX();
+	float cam_y = (float) cam->GetCameraY();
 
 	int startCol = (int)((cam_x - VIEWPORT_PUSHBACK * 2) / CELL_WIDTH);
 	int endCol = (int)ceil((cam_x + SCREEN_WIDTH + VIEWPORT_PUSHBACK * 2) / CELL_WIDTH);

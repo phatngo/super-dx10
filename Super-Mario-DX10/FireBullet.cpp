@@ -45,8 +45,8 @@ void CFireBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	y += dy;
 	x += dx;
 
-	float cameraPositionY = CCamera::GetInstance()->GetCameraY();
-	float screenWidth = CGame::GetInstance()->GetScreenHeight();
+	int cameraPositionY = CCamera::GetInstance()->GetCameraY();
+	int screenWidth = CGame::GetInstance()->GetScreenHeight();
 	if (this->y < cameraPositionY || this->y > cameraPositionY + screenWidth) {
 		isDestroyed = true;
 	}

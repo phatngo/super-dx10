@@ -61,8 +61,6 @@ class CGame
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
 
-	int screen_width = 272;
-	int screen_height = 256;
 	int pre_scene = -1;
 	
 

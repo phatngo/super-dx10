@@ -37,7 +37,6 @@ void CCamera::SetCameraPosition(float marioX, int mapWidth) {
 }
 
 
-
 void CCamera::SetCameraPosition(float marioX) {
 	CMario* player = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 	if ((int)marioX < playerStartX) {

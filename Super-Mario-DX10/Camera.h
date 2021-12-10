@@ -2,7 +2,6 @@
 #include "Game.h"
 #include "Scence.h"
 
-
 #define CAMERA_EXTRA_Y 40
 #define CAMERA_EXTRA_Y_ABOVE 20
 #define CAMERA_WORLD_SCENE_POSTION_X -9.0f

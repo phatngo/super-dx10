@@ -8,6 +8,7 @@
 class CourseClear : public CGameObject
 {
 public:
+
 	void Render();
 	CourseClear(float x, float y);
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {};

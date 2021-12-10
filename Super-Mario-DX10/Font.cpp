@@ -1,5 +1,6 @@
 #include "Font.h"
 #include "Utils.h"
+
 Font::Font(float x, float y) {
 	this->SetPosition(x, y);
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();

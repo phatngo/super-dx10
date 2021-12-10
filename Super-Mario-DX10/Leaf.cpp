@@ -30,12 +30,12 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		break;
 	case LEAF_STATE_FLY_DOWN_RIGHT:
-		if (x - start_X >= 25) {
+		if (x - start_X >= LEAF_DY_TO_FALL_DOWN) {
 			this->SetState(LEAF_STATE_FLY_DOWN_LEFT);
 		}
 		break;
 	case LEAF_STATE_FLY_DOWN_LEFT:
-		if (start_X - x >= 25) {
+		if (start_X - x >= LEAF_DY_TO_FALL_DOWN) {
 			this->SetState(LEAF_STATE_FLY_DOWN_RIGHT);
 		}
 		break;

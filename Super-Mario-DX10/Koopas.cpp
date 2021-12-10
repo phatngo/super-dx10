@@ -472,20 +472,12 @@ void CKoopas::SetState(int state)
 }
 bool CKoopas::CalRevivable()
 {
-	/*Camera* cam = Camera::GetInstance();
-	if (!cam->isAreaCamera(x, y))
-		return false;*/
+
 	respawnTimer.Start();
 	return true;
 }
 bool CKoopas::CalTurnable(LPGAMEOBJECT object, vector<LPGAMEOBJECT>* coObjects)
 {
-	/*Camera* cam = Camera::GetInstance();
-	if (!cam->isAreaCamera(x, y))
-	{
-		temp = 1;
-		return false;
-	}*/
 	for (UINT i = 0; i < coObjects->size(); i++)
 		if (dynamic_cast<CFlashAnimationBrick*>(coObjects->at(i)) || dynamic_cast<CBlock*>(coObjects->at(i)))
 			if (abs(coObjects->at(i)->y == object->y))
@@ -514,5 +506,4 @@ void CKoopas::Reset()
 	SetState(KOOPAS_STATE_WALKING);
 	tag = start_tag;
 	type = MOVING;
-	//isEnable = true;
 }
