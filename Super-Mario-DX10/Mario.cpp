@@ -152,12 +152,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 	}
 	else {
 		if (abs(vx) != MARIO_SPEED_RUN_FLY_MAX) {
-			if (level == MARIO_LEVEL_TAIL) {
-				vy += (MARIO_GRAVITY * dt);
-			}
-			else {
 				vy += MARIO_GRAVITY * dt;
-			}
 		}
 	}
 
