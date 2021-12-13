@@ -189,6 +189,9 @@
     <ClCompile Include="IntroScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="IntroGround.cpp">
+      <Filter>Map Objects\Bricks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -307,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="IntroScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroGround.h">
+      <Filter>Map Objects\Bricks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
