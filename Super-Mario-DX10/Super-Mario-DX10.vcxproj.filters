@@ -186,6 +186,9 @@
     <ClCompile Include="BackUp.cpp">
       <Filter>BackUp</Filter>
     </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -301,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="BackUp.h">
       <Filter>BackUp</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
