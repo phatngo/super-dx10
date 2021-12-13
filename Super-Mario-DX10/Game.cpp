@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "Textures.h"
 #include "WorldScene.h"
+#include "IntroScene.h"
 
 CGame* CGame::__instance = NULL;
 
@@ -501,9 +502,11 @@ void CGame::_ParseSection_SCENES(string line)
 
 	switch (scene_type)
 	{
-	case SCENCE_TYPE_INTRO:
-		//will implement later
-		break;
+	case SCENCE_TYPE_INTRO: {
+		scene = new CIntroScene(id, path);
+		scenes[id] = scene;
+		break; 
+	}
 	case SCENCE_TYPE_WORLD: {
 		scene = new CWorldScene(id, path);
 		scenes[id] = scene;
@@ -514,6 +517,7 @@ void CGame::_ParseSection_SCENES(string line)
 		scenes[id] = scene;
 		break; 
 	}
+
 	default:
 		DebugOut(L"Scene unknown \n");
 		break;

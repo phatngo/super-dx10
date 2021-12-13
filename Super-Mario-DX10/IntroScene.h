@@ -5,7 +5,8 @@
 #include "Mario.h"
 #include "Game.h"
 #include "Timer.h"
-#include <dinput.h>
+#include "Camera.h"
+
 
 #define OBJECT_TYPE_MARIO		0
 #define OBJECT_TYPE_GROUND		4
@@ -51,7 +52,7 @@ public:
 	void _ParseSection_OBJECTS(string line);
 
 public:
-	vector<LPGAMEOBJECT> objects;
+	CCamera* cam = NULL;
 	LPANIMATION_SET BackGround;
 	LPANIMATION Three;
 	LPANIMATION_SET Arrow;
@@ -63,14 +64,15 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-
+	void _ParseSection_EXTRA_INFORMATION(string line){};
+	CMario* GetPlayer() { return NULL; }
 };
 
-class IntroSceneKeyHandler : public CScenceKeyHandler
+class CIntroSceneKeyHandler : public CScenceKeyHandler
 {
 public:
 	virtual void KeyState(BYTE* states) {};
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode) {};
-	IntroSceneKeyHandler(CScene* s) :CScenceKeyHandler(s) {};
+	CIntroSceneKeyHandler(CScene* s) :CScenceKeyHandler(s) {};
 };

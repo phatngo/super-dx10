@@ -1,23 +1,22 @@
 #include <iostream>
 #include <fstream>
-
 #include "IntroScene.h"
 #include "Textures.h"
 #include "Utils.h"
 #include "Brick.h"
-//#include "IntroGround.h"
+#include "IntroGround.h"
 #include "Leaf.h"
 #include "MushRoom.h"
 #include "Goomba.h"
 #include "Koopas.h"
-#include "Brick.h"
+#include "Camera.h"
 
 using namespace std;
 
 CIntroScene::CIntroScene(int id, LPCWSTR filePath) :
 	CScene(id, filePath)
 {
-	//key_handler = new CScenceKeyHandler(this);
+	key_handler = new CIntroSceneKeyHandler(this);
 	BackGround = nullptr;
 	Three = nullptr;
 	Arrow = nullptr;
@@ -71,7 +70,7 @@ void CIntroScene::_ParseSection_OBJECTS(string line) {
 	switch (object_type)
 	{
 	case OBJECT_TYPE_GROUND:
-		obj = new CBrick();
+		obj = new CIntroGround();
 		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
@@ -94,6 +93,8 @@ void CIntroScene::Update(DWORD dt) {
 }
 
 void CIntroScene::Load() {
+	cam = CCamera::GetInstance();
+	cam->SetCameraPosition(0.0f, -5.0f);
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
 
 	ifstream f;
@@ -134,7 +135,7 @@ void CIntroScene::Load() {
 }
 
 void CIntroScene::Render() {
-	BackGround->at(3)->Render(0, 0);
+	BackGround->at(3)->Render(128.0f, 88.0f);
 	Three->Render(THREE_X, THREE_Y);
 	for (size_t i = 0; i < objects.size(); i++)
 		objects[i]->Render();
@@ -158,7 +159,7 @@ void CIntroScene::Unload() {
 	DebugOut(L"Unload Intro Scene\n");
 }
 
-void IntroSceneKeyHandler::OnKeyDown(int KeyCode)
+void CIntroSceneKeyHandler::OnKeyDown(int KeyCode)
 {
 	CIntroScene* intro = ((CIntroScene*)CGame::GetInstance()->GetCurrentScene());
 	switch (KeyCode)
