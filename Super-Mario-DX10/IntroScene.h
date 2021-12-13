@@ -30,8 +30,8 @@
 #define ANISET_GROUND_ID	21
 #define ANISET_ARROW_ID	51
 
-#define THREE_X	112
-#define THREE_Y	96
+#define THREE_X	133
+#define THREE_Y	110
 #define ARROW_Y 144
 #define ARROW_X	70
 
