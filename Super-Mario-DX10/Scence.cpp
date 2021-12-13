@@ -2,14 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-#define SCENE_SECTION_UNKNOWN -1
-#define SCENE_SECTION_TEXTURES 1
-#define SCENE_SECTION_TILEMAP_DATA 2
-#define SCENE_SECTION_SPRITES 3
-#define SCENE_SECTION_ANIMATIONS 4
-#define SCENE_SECTION_ANIMATION_SETS	5
-#define SCENE_SECTION_OBJECTS	6
-#define SCENE_SECTION_EXTRA_INFORMATION 7
+
 
 #define MAX_SCENE_LINE 1024
 
@@ -135,7 +128,6 @@ void CScene::_ParseSection_ANIMATION_SETS(string line)
 
 void CScene::Load() {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
-	DebugOut(L"object size1: %d \n", objects.size());
 	ifstream f;
 	f.open(sceneFilePath);
 
@@ -184,4 +176,5 @@ void CScene::Load() {
 	}
 
 	f.close();
+	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }

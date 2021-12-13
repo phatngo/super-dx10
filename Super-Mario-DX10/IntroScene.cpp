@@ -20,7 +20,6 @@ CIntroScene::CIntroScene(int id, LPCWSTR filePath) :
 	BackGround = nullptr;
 	Three = nullptr;
 	Arrow = nullptr;
-	//StartScrolling();
 }
 
 void CIntroScene::_ParseSection_TEXTURES(string line) {
@@ -33,6 +32,7 @@ void CIntroScene::_ParseSection_SPRITES(string line) {
 
 void CIntroScene::_ParseSection_ANIMATIONS(string line) {
 	CScene::_ParseSection_ANIMATIONS(line);
+
 	if(CAnimations::GetInstance()->Get(800) != NULL)
 		Three = CAnimations::GetInstance()->Get(800);
 }
@@ -40,8 +40,10 @@ void CIntroScene::_ParseSection_ANIMATIONS(string line) {
 void CIntroScene::_ParseSection_ANIMATION_SETS(string line) {
 	CScene::_ParseSection_ANIMATION_SETS(line);
 
-	if(CAnimationSets::GetInstance()->Get(ANISET_BACKGROUND_ID)!=NULL)
+	if (CAnimationSets::GetInstance()->Get(ANISET_BACKGROUND_ID) != NULL) 
 		BackGround = CAnimationSets::GetInstance()->Get(ANISET_BACKGROUND_ID);
+
+	
 	if (CAnimationSets::GetInstance()->Get(ANISET_ARROW_ID) != NULL)
 		Arrow = CAnimationSets::GetInstance()->Get(ANISET_ARROW_ID);
 }
@@ -73,7 +75,6 @@ void CIntroScene::_ParseSection_OBJECTS(string line) {
 		obj = new CIntroGround();
 		break;
 	default:
-		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
 	}
 
@@ -81,7 +82,6 @@ void CIntroScene::_ParseSection_OBJECTS(string line) {
 
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 	obj->SetAnimationSet(ani_set);
-
 
 	objects.push_back(obj);
 }
@@ -94,7 +94,8 @@ void CIntroScene::Update(DWORD dt) {
 
 void CIntroScene::Load() {
 	cam = CCamera::GetInstance();
-	cam->SetCameraPosition(0.0f, -5.0f);
+	cam->SetCameraPosition(CAMERA_INTRO_SCENE_POSTION_X, CAMERA_INTRO_SCENE_POSTION_Y);
+	
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
 
 	ifstream f;
@@ -132,17 +133,19 @@ void CIntroScene::Load() {
 	f.close();
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
+	
 }
 
 void CIntroScene::Render() {
-	BackGround->at(3)->Render(128.0f, 88.0f);
+	BackGround->at(BACKGROUND_GENERAL_ANI)->Render(BACKGROUND_X, BACKGROUND_Y);
 	Three->Render(THREE_X, THREE_Y);
 	for (size_t i = 0; i < objects.size(); i++)
 		objects[i]->Render();
+
 	if (switchTimer.IsStarted())
-		Arrow->at(0)->Render(ARROW_X, ARROW_Y);
+		Arrow->at(ARROW_FLASHING_ANI)->Render(ARROW_X, ARROW_Y);
 	else
-		Arrow->at(1)->Render(ARROW_X, ARROW_Y);
+		Arrow->at(ARROW_STATIC_ANI)->Render(ARROW_X, ARROW_Y);
 }
 
 void CIntroScene::Unload() {
@@ -166,7 +169,6 @@ void CIntroSceneKeyHandler::OnKeyDown(int KeyCode)
 	{
 	case DIK_RETURN:
 		intro->switchTimer.Start();
-		DebugOut(L"Enter");
 		break;
 	default:
 		break;

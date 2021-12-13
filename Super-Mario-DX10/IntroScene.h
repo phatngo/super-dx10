@@ -8,39 +8,31 @@
 #include "Camera.h"
 
 
-#define OBJECT_TYPE_MARIO		0
-#define OBJECT_TYPE_GROUND		4
-#define OBJECT_TYPE_LEAF		5
-#define OBJECT_TYPE_GOOMBA		1
-#define OBJECT_TYPE_MUSHROOM	2
-#define OBJECT_TYPE_KOOPAS		3
-#define OBJECT_TYPE_OTHERS		6
 
-#define SCENE_SECTION_UNKNOWN -1
-#define SCENE_SECTION_TEXTURES 2
-#define SCENE_SECTION_SPRITES 3
-#define SCENE_SECTION_ANIMATIONS 4
-#define SCENE_SECTION_ANIMATION_SETS	5
-#define SCENE_SECTION_OBJECTS	6
-#define SCENE_TILE_MAP 7
-#define SCENE_GRID	8
+#define OBJECT_TYPE_GROUND	 4
 
-#define MAX_SCENE_LINE 1024
-#define ANISET_BACKGROUND_ID	50
-#define ANISET_GROUND_ID	21
-#define ANISET_ARROW_ID	51
+#define MAX_SCENE_LINE       1024
+#define ANISET_BACKGROUND_ID 50
+#define ANISET_GROUND_ID	 21
+#define ANISET_ARROW_ID	     51
 
 #define THREE_X	133
 #define THREE_Y	110
 #define ARROW_Y 143
 #define ARROW_X	65
+#define BACKGROUND_X 128.0f
+#define BACKGROUND_Y 88.0f
 
 #define GROUND_WIDTH	256
 
 #define SCROLLING_TIME	2000
 #define SWITCH_TIME	300
 
-#define WORLD_SCENE_ID	0
+#define BACKGROUND_GENERAL_ANI 3
+#define ARROW_FLASHING_ANI 0
+#define ARROW_STATIC_ANI   1 
+
+
 
 class CIntroScene : public CScene {
 public:
@@ -50,7 +42,7 @@ public:
 	void _ParseSection_ANIMATIONS(string line);
 	void _ParseSection_ANIMATION_SETS(string line);
 	void _ParseSection_OBJECTS(string line);
-
+	void _ParseSection_EXTRA_INFORMATION(string line) {};
 public:
 	CCamera* cam = NULL;
 	LPANIMATION_SET BackGround;
@@ -64,7 +56,6 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-	void _ParseSection_EXTRA_INFORMATION(string line){};
 	CMario* GetPlayer() { return NULL; }
 };
 
