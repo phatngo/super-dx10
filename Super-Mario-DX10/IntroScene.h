@@ -32,8 +32,8 @@
 
 #define THREE_X	133
 #define THREE_Y	110
-#define ARROW_Y 144
-#define ARROW_X	70
+#define ARROW_Y 143
+#define ARROW_X	65
 
 #define GROUND_WIDTH	256
 
