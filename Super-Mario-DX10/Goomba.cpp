@@ -465,6 +465,7 @@ void CGoomba::Render()
 				break;
 			case GOOMBA_STATE_RED_DIE:
 				ani = GOOMBA_ANI_RED_DIE;
+				break;
 			case GOOMBA_STATE_JUMPING_KILLED_BY_HITTING:
 				ani = GOOMBA_ANI_RED_WALK;
 				break;
