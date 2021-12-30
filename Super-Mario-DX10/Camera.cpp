@@ -32,7 +32,7 @@ void CCamera::SetCameraPosition(float marioX, int mapWidth) {
 		isAbove = true;
 		cameraPositionY = standardCameraPositionY - CGame::GetInstance()->GetScreenHeight() + CAMERA_EXTRA_Y;
 	}
-	CGame::GetInstance()->SetCamPos(cameraPositionX, cameraPositionY);
+	CGame::GetInstance()->SetCamPos((float)cameraPositionX, (float)cameraPositionY);
 
 }
 
@@ -59,7 +59,7 @@ void CCamera::SetCameraPosition(float marioX) {
 		isAbove = true;
 		cameraPositionY = standardCameraPositionY - CGame::GetInstance()->GetScreenHeight() + CAMERA_EXTRA_Y;
 	}
-	CGame::GetInstance()->SetCamPos(cameraPositionX, cameraPositionY);
+	CGame::GetInstance()->SetCamPos((float)cameraPositionX, (float)cameraPositionY);
 }
 
 D3DXVECTOR3 CCamera::GetPositionInCamera(D3DXVECTOR3 position)
