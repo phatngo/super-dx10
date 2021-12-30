@@ -137,11 +137,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJE
 
 	if (fallDownTimer.IsStarted() && fallDownTimer.ElapsedTime() >= MARIO_FALL_DOWN_TIME) {
 			isFallingDown = true;
-			DebugOut(L"Timer ends \n");
 	}
 	
-	
-
 	if (isFallingDown) {
 		if (level == MARIO_LEVEL_TAIL) {
 			vy = MARIO_JUMP_SPEED_Y/10;
@@ -1173,7 +1170,6 @@ void CMario::SetState(int state)
 				vy = -MARIO_JUMP_SPEED_Y/3;
 				isFlyingToTheSky = true;
 				fallDownTimer.Start();
-				DebugOut(L"timer started! \n");
 			}
 			else {
 				vy = -MARIO_JUMP_SPEED_Y;
